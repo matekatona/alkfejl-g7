@@ -32,6 +32,8 @@ Természetesen ha egy igazi robot jelenléte kell neki, akkor nem gond, ha nem m
 * Az alkalmazás használjon legalább 5 Qt­s signalt.
 * A dokumentáció készüljön a forráskód alapján (kiegészítve egyéb fájlokkal) Doxygen segítségével.
 * A dokumentációban legyen legalább 1 UML class diagram és legalább 1 UML szekvencia diagram.
+	lesz egy robot osztály, amiben lesz a kommunikáció, stb.
+	
 * A kliens program felhasználói felületet legyen esztétikus. Például az ablakot átméretezve ne essen szét az egész, hanem kövesse az átméretezést.
 * A GIT repositoryban látszódjanak a fejlesztés során készült commitok, vagyis ne egyetlen commit rakja be a kész programot a repositoryba a munka legvégén. A commitok ne szélsőségesen csak egy csapattagtól származzanak. A commit megjegyzések legyenek kifejezőek.
 * A GIT repositoryban látszódjon, hogy a munka során a csapat használt brancheket is. Ne egy lineáris commit lánc legyen. (Arra hivatkozni nem ér, hogy voltak branchek, csak mindig rebaselték őket.)
