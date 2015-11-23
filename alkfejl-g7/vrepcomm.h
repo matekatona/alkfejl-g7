@@ -12,6 +12,7 @@ public:
     int getPort();
     void connect(int port);
     QString recvUntilNewline();
+    QString recvAll();
     void send(QString data);
 signals:
 

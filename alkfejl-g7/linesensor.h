@@ -9,7 +9,6 @@ public:
     LineSensor();
 
 private:
-    static const int port_num = 27753;
 };
 
 #endif // LINESENSOR_H

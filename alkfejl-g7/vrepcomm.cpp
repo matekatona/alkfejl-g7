@@ -28,3 +28,10 @@ QString VREPComm::recvUntilNewline()
     }
     else return "";
 }
+
+QString VREPComm::recvAll()
+{
+    QString toReturn = allDataReceived + socket.readAll();
+    allDataReceived = "";
+    return toReturn;
+}
