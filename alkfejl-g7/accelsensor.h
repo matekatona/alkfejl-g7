@@ -3,7 +3,7 @@
 
 #include "abstractsensor.h"
 
-class AccelSensor : AbstractSensor
+class AccelSensor : public AbstractSensor
 {
 public:
     explicit AccelSensor();

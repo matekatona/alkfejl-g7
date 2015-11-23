@@ -9,8 +9,6 @@ class DiagClient;
 
 class DiagClient : public QMainWindow
 {
-    Q_OBJECT
-
 public:
     explicit DiagClient(QWidget *parent = 0);
     ~DiagClient();

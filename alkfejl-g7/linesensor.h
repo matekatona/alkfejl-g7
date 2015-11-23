@@ -3,7 +3,7 @@
 
 #include "abstractsensor.h"
 
-class LineSensor : AbstractSensor
+class LineSensor : public AbstractSensor
 {
 public:
     LineSensor();

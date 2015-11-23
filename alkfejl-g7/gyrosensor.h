@@ -3,7 +3,7 @@
 
 #include "abstractsensor.h"
 
-class GyroSensor : AbstractSensor
+class GyroSensor : public AbstractSensor
 {
 public:
     explicit GyroSensor();

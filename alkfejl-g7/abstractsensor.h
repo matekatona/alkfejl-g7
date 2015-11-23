@@ -3,15 +3,13 @@
 
 #include "vrepcomm.h"
 
-class AbstractSensor : VREPComm
+class AbstractSensor : public VREPComm
 {
 public:
     AbstractSensor();
 
 
 private:
-    QString recvUntilNewline();
-
 };
 
 #endif // ABSTRACTSENSOR_H

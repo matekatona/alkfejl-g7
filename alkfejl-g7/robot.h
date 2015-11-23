@@ -10,12 +10,13 @@ class Robot : public VREPComm
 {
 public:
     explicit Robot();
+    void init();
 signals:
 public slots:
 private:
     GyroSensor gyro;
     AccelSensor accel;
-    LineSensor line;
+    LineSensor linesens;
 };
 
 #endif // ROBOT_H
