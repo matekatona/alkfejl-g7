@@ -5,7 +5,6 @@
 
 class AccelSensor : AbstractSensor
 {
-    Q_OBJECT
 public:
     explicit AccelSensor();
 

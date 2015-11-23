@@ -5,7 +5,6 @@
 
 class LineSensor : AbstractSensor
 {
-    Q_OBJECT
 public:
     LineSensor();
 

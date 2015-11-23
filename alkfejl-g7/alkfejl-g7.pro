@@ -31,3 +31,5 @@ HEADERS  += diagclient.h \
     accelsensor.h
 
 FORMS    += diagclient.ui
+
+CONFIG += c++11

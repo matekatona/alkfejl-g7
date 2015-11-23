@@ -6,8 +6,7 @@
 class GyroSensor : AbstractSensor
 {
 public:
-    explicit AccelSensor();
-    GyroSensor();
+    explicit GyroSensor();
 
 private:
     static const int port_num = 26489;
