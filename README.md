@@ -123,7 +123,8 @@ D --> C: values;
 deactivate D;
 C --> B: values;
 deactivate C;
-@enduml)
+@enduml
+)
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
@@ -140,7 +141,8 @@ activate D;
 deactivate D;
 D --> C: endGraph;
 deactivate D;
-@enduml)
+@enduml
+)
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
