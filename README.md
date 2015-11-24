@@ -1,4 +1,45 @@
 ![Alt text](http://g.gravizo.com/g?
+/**
+*Abstract Sensor
+*/
+class AbstractSensor{
+	private QTCPSocket commSock;
+    public int readSensor%28%29;
+}
+
+/**
+*LineSensor
+*@opt all
+*/
+class LineSensor extends AbstractSensor {
+        private float[] sensorValues;
+        public bool isOk%28%29;
+        public int getValues%28float[] values%29;
+}
+
+/**
+*AccelSensor
+*@opt all
+*/
+class AccelSensor extends AbstractSensor {
+        private float[] sensorValues;
+        public float getX%28%29;
+        public float getY%28%29;
+        public float getZ%28%29;
+}
+
+/**
+*GyroSensor
+*@opt all
+*/
+class GyroSensor extends AbstractSensor {
+        private float[] sensorValues;
+        public float getX%28%29;
+        public float getY%28%29;
+        public float getZ%28%29;
+})
+
+![Alt text](http://g.gravizo.com/g?
 @startuml;
 actor User;
 participant "First Class" as A;
