@@ -115,7 +115,7 @@ C -> D: TCPSocketSend%28%29;
 deactivate A;
 deactivate B;
 deactivate C;
-B -> C: line.getValues%28%29;
+B -> C: linegetValues%28%29;
 activate C;
 C --> D: TCPSocketSend%28%29;
 activate D;
