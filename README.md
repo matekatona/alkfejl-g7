@@ -109,15 +109,15 @@ User -> A: Run;
 activate A;
 A -> B: run();
 activate B
-B -> C: command.run%28%29;
+B -> C: commandRun%28%29;
 activate C;
-C -> D: TCPSocket.send%28%29;
+C -> D: TCPSocketSend%28%29;
 deactivate A;
 deactivate B;
 deactivate C;
 B -> C: line.getValues%28%29;
 activate C;
-C --> D: TCPSocket.send%28%29;
+C --> D: TCPSocketSend%28%29;
 activate D;
 D --> C: values;
 deactivate D;
