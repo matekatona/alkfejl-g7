@@ -14,8 +14,9 @@ public:
     QString recvUntilNewline();
     QString recvAll();
     void send(QString data);
+    bool isReadyRead();
 signals:
-
+    void readyRead();
 public slots:
 
 private:

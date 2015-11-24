@@ -13,3 +13,7 @@ void Robot::init()
     gyro.connect(26489);
 }
 
+
+GyroSensor* Robot::getGyro() { return &gyro; }
+AccelSensor* Robot::getAccel() { return &accel; }
+LineSensor* Robot::getLineSens() { return &linesens; }

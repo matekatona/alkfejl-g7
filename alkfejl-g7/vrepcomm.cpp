@@ -2,11 +2,17 @@
 
 VREPComm::VREPComm(QObject *parent) : QObject(parent)
 {
+    QObject::connect(&socket,SIGNAL(readyRead()),this,SIGNAL(readyRead()));
 }
+
+bool VREPComm::isReadyRead() {  return socket.isReadable(); }
 
 void VREPComm::connect(int port)
 {
     socket.connectToHost("127.0.0.1", this->port=port);
+    if(!socket.waitForConnected(100)) //should replace this with signals
+    { throw std::runtime_error("Could not connect to socket!"); }
+
 }
 
 void VREPComm::send(QString data)

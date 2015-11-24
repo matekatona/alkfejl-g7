@@ -11,6 +11,9 @@ class Robot : public VREPComm
 public:
     explicit Robot();
     void init();
+    GyroSensor* getGyro();
+    AccelSensor* getAccel();
+    LineSensor* getLineSens();
 signals:
 public slots:
 private:
