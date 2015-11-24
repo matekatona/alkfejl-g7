@@ -107,7 +107,7 @@ participant "Sensors/Command" as C;
 participant "VREP" as D;
 User -> A: Run;
 activate A;
-A -> B: run();
+A -> B: run%28%29;
 activate B;
 B -> C: command.Run%28%29;
 activate C;
