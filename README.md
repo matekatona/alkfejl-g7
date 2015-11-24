@@ -4,7 +4,7 @@
 *@opt all
 */
 class AbstractSensor{
-    public QTCPSocket commSock;
+    QTCPSocket commSock;
     public int readSensor%28%29;
 }
 /**
@@ -35,6 +35,62 @@ class GyroSensor extends AbstractSensor {
         public float getX%28%29;
         public float getY%28%29;
         public float getZ%28%29;
+}
+/**
+*WheelSensor
+*@opt all
+*/
+class WheelSensor extends AbstractSensor {
+        float[] sensorValues;
+        public float getLeft%28%29;
+        public float getRight%28%29;
+})
+
+![Alt text](http://g.gravizo.com/g?
+/**
+*Command Socket
+*@opt all
+*/
+class CommandSocket{
+    QTCPSocket commSock;
+    public int connect%28%29;
+    public int disconnect%28%29;
+    public int getStatus%28%29;
+    public int run%28%29;
+    public int stop%28%29;
+    public int getSpeed%28%29;
+    public int setSpeed%28%29;
+})
+
+![Alt text](http://g.gravizo.com/g?
+/**
+*Robot
+*@opt all
+*@composed 1..* LineSensor
+*@composed 1..* AccelSensor
+*@composed 1..* GyroSensor
+*@composed 1 CommandSocket
+*/
+class Robot{
+})
+
+![Alt text](http://g.gravizo.com/g?
+/**
+*RobotHistory
+*@opt all
+*@assoc Plotter
+*/
+class RobotHistory{
+	List speedHistory;
+	List statusHistory;
+	signal historyChanged%28%29;
+}
+/**
+*Plotter
+*@opt all
+*/
+class Plotter{
+	slot graph%28%29;
 })
 
 ![Alt text](http://g.gravizo.com/g?
@@ -60,25 +116,19 @@ deactivate A;
 
 ![Alt text](http://g.gravizo.com/g?
 /**
-*Structural Things
-*@opt commentname
-*@note Notes can
-*be extended to
-*span multiple lines
-*/
-class Structural{}
-/**
-*@opt all
-*@note Class
-*/
-class Counter extends Structural {
-        static public int counter;
-        public int getCounter%28%29;
-}
-/**
-*@opt shape activeclass
-*@opt all
-*@note Active Class
-*/
-class RunningCounter extends Counter{}
+ * Associations with visibility
+ * UML User Guide p. 145
+ *
+ * @opt horizontal
+ * @hidden
+ */
+class UMLOptions {}
+
+/** @assoc * - "*\n\n+user " User */
+class UserGroup {}
+
+/** @navassoc "1\n\n+owner\r" - "*\n\n+key" Password */
+class User{}
+
+class Password{}
 )
