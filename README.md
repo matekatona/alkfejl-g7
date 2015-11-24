@@ -109,15 +109,15 @@ User -> A: Run;
 activate A;
 A -> B: run();
 activate B
-B -> C: command.run();
+B -> C: command.run%28%29;
 activate C;
-C -> D: TCPSocket.send();
+C -> D: TCPSocket.send%28%29;
 deactivate A;
 deactivate B;
 deactivate C;
-B -> C: line.getValues();
+B -> C: line.getValues%28%29;
 activate C;
-C --> D: TCPSocket.send();
+C --> D: TCPSocket.send%28%29;
 activate D;
 D --> C: values;
 deactivate D;
@@ -141,26 +141,5 @@ activate D;
 deactivate D;
 D --> C: endGraph;
 deactivate D;
-@enduml
-)
-
-![Alt text](http://g.gravizo.com/g?
-@startuml;
-actor User;
-participant "First Class" as A;
-participant "Second Class" as B;
-participant "Last Class" as C;
-User -> A: DoWork;
-activate A;
-A -> B: Create Request;
-activate B;
-B -> C: DoWork;
-activate C;
-C --> B: WorkDone;
-destroy C;
-B --> A: Request Created;
-deactivate B;
-A --> User: Done;
-deactivate A;
 @enduml
 )
