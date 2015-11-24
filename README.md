@@ -108,14 +108,14 @@ participant "VREP" as D;
 User -> A: Run;
 activate A;
 A -> B: run();
-activate B
-B -> C: commandRun%28%29;
+activate B;
+B -> C: command.Run%28%29;
 activate C;
 C -> D: TCPSocketSend%28%29;
 deactivate A;
 deactivate B;
 deactivate C;
-B -> C: linegetValues%28%29;
+B -> C: lineGetValues%28%29;
 activate C;
 C --> D: TCPSocketSend%28%29;
 activate D;
