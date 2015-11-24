@@ -100,64 +100,65 @@ class Plotter{
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
-
 actor User;
 participant "GUI" as A;
 participant "Robot" as B;
 participant "Sensors/Command" as C;
 participant "VREP" as D;
-
 User -> A: Run;
 activate A;
-
 A -> B: run();
 activate B
-
 B -> C: command.run();
 activate C;
-
 C -> D: TCPSocket.send();
 deactivate A;
 deactivate B;
 deactivate C;
-
 B -> C: line.getValues();
 activate C;
-
 C --> D: TCPSocket.send();
 activate D;
-
 D --> C: values;
 deactivate D;
-
 C --> B: values;
 deactivate C;
-
-@enduml
-)
+@enduml)
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
-
 participant "Receive values" as A;
 participant "Robot" as B;
 participant "RobotHistory" as C;
 participant "Plotter" as D;
-
 A -> B: values;
-
 B -> C: newValues();
-
 C -> D: actualHistory();
 activate D;
-
 D -> D: graph();
 activate D;
-
 deactivate D;
-
-D -> C: endGraph;
+D --> C: endGraph;
 deactivate D;
+@enduml)
 
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+actor User;
+participant "First Class" as A;
+participant "Second Class" as B;
+participant "Last Class" as C;
+User -> A: DoWork;
+activate A;
+A -> B: Create Request;
+activate B;
+B -> C: DoWork;
+activate C;
+C --> B: WorkDone;
+destroy C;
+B --> A: Request Created;
+deactivate B;
+A --> User: Done;
+deactivate A;
 @enduml
 )
