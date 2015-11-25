@@ -16,19 +16,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         diagclient.cpp \
     robot.cpp \
-    vrepcomm.cpp \
     linesensor.cpp \
     gyrosensor.cpp \
-    abstractsensor.cpp \
-    accelsensor.cpp
+    accelsensor.cpp \
+    abstractsensor.cpp
 
 HEADERS  += diagclient.h \
     robot.h \
-    vrepcomm.h \
     linesensor.h \
     gyrosensor.h \
-    abstractsensor.h \
-    accelsensor.h
+    accelsensor.h \
+    abstractsensor.h
 
 FORMS    += diagclient.ui
 

@@ -5,3 +5,5 @@ GyroSensor::GyroSensor()
 
 }
 
+// ugyanaz mint accel
+

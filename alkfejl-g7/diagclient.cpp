@@ -40,7 +40,7 @@ DiagClient::~DiagClient()
     delete ui;
 }
 
-void DiagClient::sendFromLineEdit(QLineEdit* theLineEdit, QTextEdit* theLogControl, VREPComm* commObject)
+void DiagClient::sendFromLineEdit(QLineEdit* theLineEdit, QTextEdit* theLogControl, AbstractSensor* commObject)
 {
     QString toSend = theLineEdit->text()+"\n";
     theLogControl->append(toSend);

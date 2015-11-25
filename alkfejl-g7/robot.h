@@ -1,12 +1,12 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include "vrepcomm.h"
+#include "abstractsensor.h"
 #include "linesensor.h"
 #include "accelsensor.h"
 #include "gyrosensor.h"
 
-class Robot : public VREPComm
+class Robot : public AbstractSensor
 {
 public:
     explicit Robot();

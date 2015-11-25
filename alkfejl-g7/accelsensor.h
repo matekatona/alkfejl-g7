@@ -7,9 +7,14 @@ class AccelSensor : public AbstractSensor
 {
 public:
     explicit AccelSensor();
+    float GetX();
+    float GetY();
+    float GetZ();
 
 private:
-    static const int port_num = 24931;
+    float currentX;
+    float currentY;
+    float currentZ;
 
 };
 

@@ -7,8 +7,11 @@ class LineSensor : public AbstractSensor
 {
 public:
     LineSensor();
+    bool isOk();
+    double getValue();
 
 private:
+    double currentValue;
 };
 
 #endif // LINESENSOR_H

@@ -34,7 +34,7 @@ private slots:
 private:
     Ui::DiagClient *ui;
     Robot robot;
-    void sendFromLineEdit(QLineEdit* theLineEdit, QTextEdit* theLogControl, VREPComm* commObject);
+    void sendFromLineEdit(QLineEdit* theLineEdit, QTextEdit* theLogControl, AbstractSensor* commObject);
 };
 
 #endif // DIAGCLIENT_H

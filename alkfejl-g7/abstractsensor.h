@@ -1,15 +1,32 @@
 #ifndef ABSTRACTSENSOR_H
 #define ABSTRACTSENSOR_H
 
-#include "vrepcomm.h"
+#include <QObject>
+#include <QTcpSocket>
 
-class AbstractSensor : public VREPComm
+class AbstractSensor : public QObject
 {
+    Q_OBJECT
 public:
-    AbstractSensor();
+    explicit AbstractSensor(QObject *parent = 0);
+    int getPort();
+    void connect(int port);
+    QString recvUntilNewline();
+    QString recvAll();
+    void send(QString data);
+    bool isReadyRead();
 
+signals:
+    void readyRead();
+
+public slots:
 
 private:
-};
+    QTcpSocket *socket;
+    QString allDataReceived;
 
+protected:
+    int port = 0;
+    QString readSensor();
+};
 #endif // ABSTRACTSENSOR_H
