@@ -1,3 +1,16 @@
+# UML diagram for Alkfejl-g7
+
+![Alt text](http://g.gravizo.com/g?
+class VREPComm{}
+class Robot extends VREPComm {}
+class AbstractSensor extends VREPComm {}
+class AccelSensor extends AbstractSensor {}
+class GyroSensor extends AbstractSensor {}
+class LineSensor extends AbstractSensor {}
+)
+
+## Other sample UML diagrams
+
 ![Alt text](http://g.gravizo.com/g?
 /**
 *Abstract Sensor

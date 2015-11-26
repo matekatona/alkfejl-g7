@@ -5,6 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
+QT       += qml quick
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,11 +15,26 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        diagclient.cpp
+        diagclient.cpp \
+    robot.cpp \
+    linesensor.cpp \
+    gyrosensor.cpp \
+    accelsensor.cpp \
+    abstractsensor.cpp
 
-HEADERS  += diagclient.h
+HEADERS  += diagclient.h \
+    robot.h \
+    linesensor.h \
+    gyrosensor.h \
+    accelsensor.h \
+    abstractsensor.h
 
-FORMS    +=
+FORMS    += diagclient.ui
+
+CONFIG += c++11
+
+DISTFILES += \
+    qmlclient.qml
 
 RESOURCES += \
     qml.qrc
