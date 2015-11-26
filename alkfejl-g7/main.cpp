@@ -5,16 +5,16 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    DiagClient w;
-    w.show();
+//    QApplication a(argc, argv);
+//    DiagClient w;
+//    w.show();
 
-    return a.exec();
+//    return a.exec();
 
-//    QGuiApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
-//    QQmlApplicationEngine engine;
-//    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-//    return app.exec();
+    return app.exec();
 }

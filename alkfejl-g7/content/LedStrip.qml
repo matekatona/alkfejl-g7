@@ -14,7 +14,8 @@ Item {
 
     Item {
         id: leds;
-        height:18;
+        width: 420;
+        height: 18;
         anchors.bottom: parent.bottom;
 
         Repeater {
@@ -37,7 +38,7 @@ Item {
 
     Text {
         id: label;
-        anchors.left: parent;
+        anchors.horizontalCenter: leds.horizontalCenter;
         color:"black";
         font.pixelSize: 14;
         style: Text.Raised;
