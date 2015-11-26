@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>content/GyroIndicator.qml</file>
+        <file>content/background.png</file>
+        <file>content/top.png</file>
+        <file>content/front.png</file>
+        <file>content/right.png</file>
+        <file>content/LedStrip.qml</file>
+        <file>content/led_off.png</file>
+        <file>content/led_on.png</file>
+    </qresource>
+</RCC>

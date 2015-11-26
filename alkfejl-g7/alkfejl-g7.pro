@@ -17,4 +17,7 @@ SOURCES += main.cpp\
 
 HEADERS  += diagclient.h
 
-FORMS    += diagclient.ui
+FORMS    +=
+
+RESOURCES += \
+    qml.qrc
