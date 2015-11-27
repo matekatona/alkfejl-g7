@@ -6,14 +6,19 @@ import "content"
 
 Window {
     id: mainWindow;
+    objectName: "mainWindow";
     visible: true
     minimumWidth: 900;
     minimumHeight: 700;
 
     property bool testPhase: true;
     property int angle: 0;
-    property var sensors: [true, true, false, false, true, true, true, false, false, true, true, true, false, false, true, true, true, false, false, true, false];
+    property var sensors: [true, true, false, true, true, true, true, false, false, true, true, true, false, false, true, false, true, false, false, true, false];
     property bool temp;
+
+    function test(){
+        testTimer.running=true;
+    }
 
     function timeTick(){
         if(mainWindow.testPhase){
@@ -74,6 +79,7 @@ Window {
 
         GyroIndicator{
             id: gyroX;
+            objectName: "gyroX";
             anchors.bottom: gyroY.top;
             anchors.right: parent.right;
             view: "front";

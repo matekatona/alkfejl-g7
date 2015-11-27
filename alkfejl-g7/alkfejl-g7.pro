@@ -21,14 +21,16 @@ SOURCES += main.cpp\
     linesensor.cpp \
     gyrosensor.cpp \
     accelsensor.cpp \
-    abstractsensor.cpp
+    abstractsensor.cpp \
+    qmlhandlercppside.cpp
 
 HEADERS  += diagclient.h \
     robot.h \
     linesensor.h \
     gyrosensor.h \
     accelsensor.h \
-    abstractsensor.h
+    abstractsensor.h \
+    qmlhandlercppside.h
 
 FORMS    += diagclient.ui
 
