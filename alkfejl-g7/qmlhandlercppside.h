@@ -12,8 +12,7 @@ public:
     ~QMLHandlerCppSide() = default;
 
 public slots:
-    /** Eseménykezelő a QML oldali addGreenEntry signalhoz. */
-    void addGreenEntryHandler();
+
 private:
     QQuickItem* findItemByName(const QString& name);
     QQuickItem* findItemByName(QObject *rootObject, const QString& name);

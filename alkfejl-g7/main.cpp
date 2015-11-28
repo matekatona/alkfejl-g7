@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
+    //app.setWindowIcon(QIcon("<file_name>"));
+
     QMLHandlerCppSide mainWindow(engine.rootObjects()[0], "mainWindow");
     QMLHandlerCppSide gyroX(engine.rootObjects()[0], "gyroX");
 
