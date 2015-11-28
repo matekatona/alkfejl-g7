@@ -6,9 +6,16 @@ DiagClient::DiagClient(QWidget *parent) :
     ui(new Ui::DiagClient)
 {
     ui->setupUi(this);
-    SetupConnections();
+ //   SetupConnections();
 }
 
+
+DiagClient::~DiagClient()
+{
+    delete ui;
+}
+
+/*
 void DiagClient::AnyNewDataAvailable()
 {
     if(robot.isReadyRead()) ui->textLogCtl->append(robot.recvAll());
@@ -35,11 +42,6 @@ void DiagClient::SetupConnections()
     }
 }
 
-DiagClient::~DiagClient()
-{
-    delete ui;
-}
-
 void DiagClient::sendFromLineEdit(QLineEdit* theLineEdit, QTextEdit* theLogControl, AbstractSensor* commObject)
 {
     QString toSend = theLineEdit->text()+"\n";
@@ -56,3 +58,4 @@ void DiagClient::on_btnSendCtl_clicked()            { on_lineSendCtl_returnPress
 void DiagClient::on_btnSendLine_clicked()           { on_lineSendLine_returnPressed(); }
 void DiagClient::on_btnSendAccel_clicked()          { on_lineSendAccel_returnPressed(); }
 void DiagClient::on_btnSendGyro_clicked()           { on_lineSendGyro_returnPressed(); }
+*/

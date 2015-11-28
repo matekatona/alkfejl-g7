@@ -7,6 +7,9 @@ class GyroSensor : public AbstractSensor
 {
 public:
     explicit GyroSensor();
+    float getX();
+    float getY();
+    float getZ();
 
 private:
     std::shared_ptr<float> px;

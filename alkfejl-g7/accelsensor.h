@@ -5,16 +5,13 @@
 #include "abstractsensor.h"
 
 
-using namespace std;
-
-
 class AccelSensor : public AbstractSensor
 {
 public:
     explicit AccelSensor();
-    float GetX();
-    float GetY();
-    float GetZ();
+    float getX();
+    float getY();
+    float getZ();
 
 private:
     std::shared_ptr<float> px;

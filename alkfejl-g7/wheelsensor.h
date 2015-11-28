@@ -2,6 +2,9 @@
 #define WHEELSENSOR_H
 
 
+#include "abstractsensor.h"
+
+
 class WheelSensor : public AbstractSensor
 {
 public:

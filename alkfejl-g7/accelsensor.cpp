@@ -1,11 +1,8 @@
 #include "accelsensor.h"
 
 
-using namespace std;
-
-
 AccelSensor::AccelSensor()
-    : AbstractSensor(port = 24931)
+    : AbstractSensor(24931)  // call superclass constructor with correct port number
 {
     this->cachex = this->px;
     this->cachey = this->py;
@@ -20,7 +17,7 @@ AccelSensor::AccelSensor()
  * \return -||-
  */
 float
-AccelSensor::GetX()
+AccelSensor::getX()
 {
     float x;
     // check for value in cache
@@ -51,7 +48,7 @@ AccelSensor::GetX()
  * \return -||-
  */
 float
-AccelSensor::GetY()
+AccelSensor::getY()
 {
     float y;
     // check for value in cache
@@ -82,7 +79,7 @@ AccelSensor::GetY()
  * \return -||-
  */
 float
-AccelSensor::GetZ()
+AccelSensor::getZ()
 {
     float z;
     // check for value in cache

@@ -17,11 +17,11 @@ class DiagClient : public QMainWindow
 public:
     explicit DiagClient(QWidget *parent = 0);
     ~DiagClient();
-    void SetupConnections();
+    // void SetupConnections();
 
 private slots:
-    void AnyNewDataAvailable();
-
+    // void AnyNewDataAvailable();
+/*
     void on_lineSendCtl_returnPressed();
     void on_lineSendLine_returnPressed();
     void on_lineSendAccel_returnPressed();
@@ -30,11 +30,11 @@ private slots:
     void on_btnSendLine_clicked();
     void on_btnSendAccel_clicked();
     void on_btnSendGyro_clicked();
-
+*/
 private:
     Ui::DiagClient *ui;
     Robot robot;
-    void sendFromLineEdit(QLineEdit* theLineEdit, QTextEdit* theLogControl, AbstractSensor* commObject);
+    // void sendFromLineEdit(QLineEdit* theLineEdit, QTextEdit* theLogControl, AbstractSensor* commObject);
 };
 
 #endif // DIAGCLIENT_H

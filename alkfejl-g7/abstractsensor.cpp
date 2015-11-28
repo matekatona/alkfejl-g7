@@ -1,10 +1,10 @@
 #include "abstractsensor.h"
 
 
-
-AbstractSensor::AbstractSensor(QObject *parent, int port) : QObject(parent)
+AbstractSensor::AbstractSensor(int port) :
+    socket(new QTcpSocket())
 {
-    socket = new QTcpSocket(this);
+    // socket = std::make_unique<QTcpSocket>(new QTcpSocket());
     this->port = port;
     this->connect();
 }
@@ -17,6 +17,12 @@ AbstractSensor::connect()
     {
         throw std::runtime_error("Could not connect to socket!");
     }
+}
+
+void
+AbstractSensor::disconnect()
+{
+    this->socket.release();
 }
 
 /*!

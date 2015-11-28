@@ -1,11 +1,8 @@
 #include "gyrosensor.h"
 
 
-using namespace std;
-
-
 GyroSensor::GyroSensor()
-    : AbstractSensor(port = 26489)
+    : AbstractSensor(26489)  // call superclass constructor with correct port number
 {
     this->cachex = this->px;
     this->cachey = this->py;
@@ -20,7 +17,7 @@ GyroSensor::GyroSensor()
  * \return -||-
  */
 float
-AccelSensor::GetX()
+GyroSensor::getX()
 {
     float x;
     // check for value in cache
@@ -51,7 +48,7 @@ AccelSensor::GetX()
  * \return -||-
  */
 float
-AccelSensor::GetY()
+GyroSensor::getY()
 {
     float y;
     // check for value in cache
@@ -82,7 +79,7 @@ AccelSensor::GetY()
  * \return -||-
  */
 float
-AccelSensor::GetZ()
+GyroSensor::getZ()
 {
     float z;
     // check for value in cache

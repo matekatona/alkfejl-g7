@@ -33,7 +33,7 @@ HEADERS  += diagclient.h \
 
 FORMS    += diagclient.ui
 
-CONFIG += c++11
+CONFIG += c++14
 
 DISTFILES += \
     qmlclient.qml

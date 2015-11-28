@@ -1,11 +1,8 @@
 #include "wheelsensor.h"
 
 
-using namespace std;
-
-
 WheelSensor::WheelSensor()
-    : AbstractSensor(port = 0x000000)
+    : AbstractSensor(30568)  // call superclass constructor with correct port number
 {
     this->cacheleft = this->pleft;
     this->cacheright = this->pright;
@@ -70,5 +67,5 @@ WheelSensor::getRight()
         // cache the other value
         this->pleft = std::make_shared<float>(left);
     }
-    return left;
+    return right;
 }
