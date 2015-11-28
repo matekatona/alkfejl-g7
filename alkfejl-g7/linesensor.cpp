@@ -1,21 +1,25 @@
 #include "linesensor.h"
 
 LineSensor::LineSensor()
+    : AbstractSensor(port = 27753)
 {
-    // connect?
+    this->currentValue = 0.0f;
 }
 
 bool
 LineSensor::isOk()
 {
-    return currentValue < 0.5f;
+    return (this->currentValue < 0.5f);
 }
 
 float
 LineSensor::getValue()
 {
     QString raw = this->readSensor();
-    // TODO check for error
-    currentValue = raw.toFloat();
-    return currentValue;
+    if(raw == "ERROR")
+    {
+        throw error;
+    }
+    this->currentValue = raw.toFloat();
+    return this->currentValue;
 }

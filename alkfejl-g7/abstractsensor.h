@@ -9,25 +9,18 @@ class AbstractSensor : public QObject
 {
     Q_OBJECT
 public:
-    explicit AbstractSensor(QObject *parent = 0);
-    int getPort();
-    void connect(int port);
-    QString recvUntilNewline();
-    QString recvAll();
-    void send(QString data);
-    bool isReadyRead();
+    explicit AbstractSensor(QObject *parent = 0, int port = 0);
 
 signals:
-    void readyRead();
 
 public slots:
 
 private:
     QTcpSocket *socket;
-    QString allDataReceived;
 
 protected:
     int port = 0;
+    void connect();
     QString readSensor();
 };
 #endif // ABSTRACTSENSOR_H

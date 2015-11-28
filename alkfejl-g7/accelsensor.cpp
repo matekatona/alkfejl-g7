@@ -1,8 +1,18 @@
 #include "accelsensor.h"
 
+
+using namespace std;
+
+
 AccelSensor::AccelSensor()
+    : AbstractSensor(port = 24931)
 {
-    // connect?
+    this->cachex = this->px;
+    this->cachey = this->py;
+    this->cachez = this->pz;
+    this->px.reset();
+    this->py.reset();
+    this->pz.reset();
 }
 
 /*!
@@ -12,19 +22,28 @@ AccelSensor::AccelSensor()
 float
 AccelSensor::GetX()
 {
-    // ez így szar mer egymás után akarod lekérdezni őket, de em összetartozó értékek jönnek majd
-    // kell majd weakptr móka meg cache meg a faszom
-    // ha van a cache-ben érvénye xyz akkor visszatérünk vele
-    // ha nincs akkor kérünk readSensor()-ral és frissítjük a cache-t
-    // érvénytelenítés nemtom hogy legyen
-    // mind3 olvasása után vagy timeout után sztem jo lesz (amelyik elöbb)
-    QString raw = this->readSensor();
-    QStringList values = raw.split(QRegExp("\\s"));
-    this->currentX = values[0].toFloat();
-    this->currentY = values[1].toFloat();
-    this->currentZ = values[2].toFloat();
-
-    return this->currentX;
+    float x;
+    // check for value in cache
+    std::shared_ptr<float> cx = this->cachex.lock();
+    if(cx)
+    {
+        // use cached value
+        x = *cx;
+        this->px.reset();
+    }
+    else
+    {
+        // read new values
+        QString raw = this->readSensor();
+        QStringList values = raw.split(QRegExp("\\s"));
+        x = values[0].toFloat();
+        float y = values[1].toFloat();
+        float z = values[2].toFloat();
+        // cache the other values
+        this->py = std::make_shared<float>(y);
+        this->pz = std::make_shared<float>(z);
+    }
+    return x;
 }
 
 /*!
@@ -34,13 +53,28 @@ AccelSensor::GetX()
 float
 AccelSensor::GetY()
 {
-    QString raw = this->readSensor();
-    QStringList values = raw.split(QRegExp("\\s"));
-    this->currentX = values[0].toFloat();
-    this->currentY = values[1].toFloat();
-    this->currentZ = values[2].toFloat();
-
-    return this->currentY;
+    float y;
+    // check for value in cache
+    std::shared_ptr<float> cy = this->cachey.lock();
+    if(cy)
+    {
+        // use cached value
+        y = *cy;
+        this->py.reset();
+    }
+    else
+    {
+        // read new values
+        QString raw = this->readSensor();
+        QStringList values = raw.split(QRegExp("\\s"));
+        float x = values[0].toFloat();
+        y = values[1].toFloat();
+        float z = values[2].toFloat();
+        // cache the other values
+        this->px = std::make_shared<float>(x);
+        this->pz = std::make_shared<float>(z);
+    }
+    return y;
 }
 
 /*!
@@ -50,11 +84,26 @@ AccelSensor::GetY()
 float
 AccelSensor::GetZ()
 {
-    QString raw = this->readSensor();
-    QStringList values = raw.split(QRegExp("\\s"));
-    this->currentX = values[0].toFloat();
-    this->currentY = values[1].toFloat();
-    this->currentZ = values[2].toFloat();
-
-    return this->currentZ;
+    float z;
+    // check for value in cache
+    std::shared_ptr<float> cz = this->cachez.lock();
+    if(cz)
+    {
+        // use cached value
+        z = *cz;
+        this->pz.reset();
+    }
+    else
+    {
+        // read new values
+        QString raw = this->readSensor();
+        QStringList values = raw.split(QRegExp("\\s"));
+        float x = values[0].toFloat();
+        float y = values[1].toFloat();
+        z = values[2].toFloat();
+        // cache the other values
+        this->px = std::make_shared<float>(x);
+        this->py = std::make_shared<float>(y);
+    }
+    return z;
 }

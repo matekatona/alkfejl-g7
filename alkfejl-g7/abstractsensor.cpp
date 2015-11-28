@@ -1,61 +1,23 @@
 #include "abstractsensor.h"
 
-AbstractSensor::AbstractSensor(QObject *parent) : QObject(parent)
+
+
+AbstractSensor::AbstractSensor(QObject *parent, int port) : QObject(parent)
 {
     socket = new QTcpSocket(this);
-    QObject::connect(socket, SIGNAL(readyRead()), this, SIGNAL(readyRead()));
-}
-
-bool
-AbstractSensor::isReadyRead()
-{
-    return socket->isReadable();
+    this->port = port;
+    this->connect();
 }
 
 void
-AbstractSensor::connect(int port)
+AbstractSensor::connect()
 {
-    socket->connectToHost("127.0.0.1", this->port=port);
-    if(!socket->waitForConnected(100)) //should replace this with signals
+    this->socket->connectToHost("127.0.0.1", this->port);
+    if(!this->socket->waitForConnected(1000))
     {
         throw std::runtime_error("Could not connect to socket!");
     }
-
 }
-
-void
-AbstractSensor::send(QString data)
-{
-    socket->write(data.toStdString().c_str(), data.length());
-}
-
-//untested
-//reads one line (ending with '\n' from the socket)
-// see QIODevice::readLine()
-QString
-AbstractSensor::recvUntilNewline()
-{
-    if(!allDataReceived.contains("\n"))
-        allDataReceived+=socket->readAll();
-    if(allDataReceived.contains("\n"))
-    {
-        int chopUntil = allDataReceived.indexOf("\n");
-        QString toReturn = allDataReceived.left(chopUntil);
-        allDataReceived=allDataReceived.mid(chopUntil);
-        return allDataReceived;
-    }
-    else return "";
-}
-
-QString
-AbstractSensor::recvAll()
-{
-    QString toReturn = allDataReceived + socket->readAll();
-    allDataReceived = "";
-    return toReturn;
-}
-
-// -----------------------------------------------------------------------
 
 /*!
  * \brief AbstractSensor::readSensor reads sensor data
@@ -64,9 +26,9 @@ AbstractSensor::recvAll()
 QString
 AbstractSensor::readSensor(){
     QString rawString;
-    if(socket->state() == QAbstractSocket::ConnectedState)
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        socket->write("GET");  // send get command
+        this->socket->write("GET");  // send get command
 
         QByteArray rawData = socket->readLine(100);  // read answer
         rawString.fromStdString(rawData.toStdString());
@@ -76,4 +38,3 @@ AbstractSensor::readSensor(){
 
     return rawString;
 }
-
