@@ -4,6 +4,9 @@
 #include <QQmlApplicationEngine>
 #include "qmlhandlercppside.h"
 
+#include "graph.h"
+#include <QtQml/QQmlContext>
+
 int main(int argc, char *argv[])
 {
 //    QApplication a(argc, argv);
@@ -14,6 +17,8 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    qmlRegisterType<Graph>("Graph", 1, 0, "Graph");
+
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
@@ -21,6 +26,12 @@ int main(int argc, char *argv[])
 
     QMLHandlerCppSide mainWindow(engine.rootObjects()[0], "mainWindow");
     QMLHandlerCppSide gyroX(engine.rootObjects()[0], "gyroX");
+    QMLHandlerCppSide speedGraph(engine.rootObjects()[0], "speedGraph");
+
+    for(int i=0;i<20;i++){
+        QMetaObject::invokeMethod(speedGraph.mainWindowObject, "removeFirstSample", Qt::DirectConnection);
+        QMetaObject::invokeMethod(speedGraph.mainWindowObject, "appendSample", Qt::DirectConnection, Q_ARG(double, i/40.0+0.5));
+    }
 
     QMetaObject::invokeMethod(mainWindow.mainWindowObject, "test", Qt::DirectConnection);
     /** TODO: QMLHandlerCppSide mainWindowObject tagváltozója legyen private (mint eredetileg) és a nevét is írjuk át valami logikusabbra.

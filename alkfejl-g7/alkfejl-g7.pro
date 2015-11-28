@@ -9,7 +9,7 @@ QT       += core gui \
     qml quick \
     widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = alkfejl-g7
 TEMPLATE = app
@@ -22,7 +22,11 @@ SOURCES += main.cpp\
     gyrosensor.cpp \
     accelsensor.cpp \
     abstractsensor.cpp \
-    qmlhandlercppside.cpp
+    qmlhandlercppside.cpp \
+    graph.cpp \
+    gridnode.cpp \
+    linenode.cpp \
+    noisynode.cpp
 
 HEADERS  += diagclient.h \
     robot.h \
@@ -30,7 +34,11 @@ HEADERS  += diagclient.h \
     gyrosensor.h \
     accelsensor.h \
     abstractsensor.h \
-    qmlhandlercppside.h
+    qmlhandlercppside.h \
+    graph.h \
+    gridnode.h \
+    linenode.h \
+    noisynode.h
 
 FORMS    += diagclient.ui
 

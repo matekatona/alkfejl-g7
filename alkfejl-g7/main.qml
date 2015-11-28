@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
+import Graph 1.0
 import "content"
 
 Window {
@@ -59,7 +60,11 @@ Window {
     Timer {
         id: testTimer;
         interval: 10; running: false; repeat: true;
-        onTriggered: mainWindow.timeTick();
+        onTriggered: {
+//            graph.removeFirstSample();
+//            graph.appendSample(graph.newSample(100));
+            mainWindow.timeTick();
+        }
     }
 
     Rectangle {
@@ -130,11 +135,6 @@ Window {
             anchors.left: parent.left;
             anchors.right: graphContainer.left;
 
-            Rectangle{
-                anchors.fill: parent;
-                color: "black";
-            }
-
             Button{
                 id: buttonGUISelfTest;
 
@@ -158,11 +158,6 @@ Window {
             anchors.right: gyroZ.left;
             anchors.bottom: parent.bottom;
 
-            Rectangle{
-                anchors.fill: parent;
-                color: "gray";
-            }
-
             LedStrip{
                 x:300;
                 y:400;
@@ -170,6 +165,29 @@ Window {
                 anchors.top: parent.top;
                 anchors.horizontalCenter: parent.horizontalCenter;
                 stripLabel: "Line Sensor";
+            }
+
+            Graph {
+                id: speedGraph;
+                objectName: "speedGraph";
+                height: 256;
+                anchors.left: parent.left;
+                anchors.right: parent.right;
+                anchors.bottom: parent.bottom;
+                anchors.margins: 10;
+
+
+
+                function newSample(i) {
+                    return i;
+                }
+
+                Component.onCompleted: {
+                    for (var i=0; i<100; ++i)
+                        appendSample(0);//appendSample(newSample(i));
+                }
+
+                property int offset: 100;
             }
         }
     }
