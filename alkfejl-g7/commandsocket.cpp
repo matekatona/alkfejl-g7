@@ -38,8 +38,7 @@ CommandSocket::disconnect()
  * \brief CommandSocket::getStatus
  * \return
  */
-int
-CommandSocket::getStatus()
+robot_status_t CommandSocket::getStatus()
 {
     QString rawString;
     robot_status_t status = STATUS_UNKNOWN;

@@ -22,7 +22,7 @@ public:
     explicit CommandSocket(int port = 0);
     void connect();
     void disconnect();
-    int getStatus();
+    robot_status_t getStatus();
     void run();
     void stop();
     float getSpeed();

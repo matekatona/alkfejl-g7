@@ -14,18 +14,19 @@ public:
     explicit Robot();
 
 signals:
-    void status();
-    void speed();
-    void gyrodata();
-    void acceldata();
-    void linedata();
-    void wheeldata();
+    void status(robot_status_t status);
+    void speed(float speed);
+    void gyrodata(float x, float y, float z);
+    void acceldata(float x, float y, float z);
+    void linedata(std::vector<float> line);
+    void wheeldata(float left, float right);
 
 public slots:
     void run();
     void stop();
     void getSpeed();
-    void setSpeed();
+    void getStatus();
+    void setSpeed(float speed);
     void getGyroData();
     void getAccelData();
     void getLineData();

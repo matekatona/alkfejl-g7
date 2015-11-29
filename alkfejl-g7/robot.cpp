@@ -15,63 +15,6 @@ Robot::Robot()
 }
 
 // -------------------------------------------------
-// --------------------- SIGNALS -------------------
-// -------------------------------------------------
-
-/*!
- * \brief status
- */
-void
-Robot::status()
-{
-
-}
-
-/*!
- * \brief speed
- */
-void
-Robot::speed()
-{
-
-}
-
-/*!
- * \brief gyro
- */
-void
-Robot::gyrodata()
-{
-
-}
-
-/*!
- * \brief accel
- */
-void
-Robot::acceldata()
-{
-
-}
-
-/*!
- * \brief line
- */
-void
-Robot::linedata(){
-
-}
-
-/*!
- * \brief wheel
- */
-void
-Robot::wheeldata()
-{
-
-}
-
-// -------------------------------------------------
 // ---------------------- SLOTS --------------------
 // -------------------------------------------------
 
@@ -81,7 +24,7 @@ Robot::wheeldata()
 void
 Robot::run()
 {
-
+    this->cmd->run();
 }
 
 /*!
@@ -90,7 +33,7 @@ Robot::run()
 void
 Robot::stop()
 {
-
+    this->cmd->stop();
 }
 
 /*!
@@ -98,16 +41,24 @@ Robot::stop()
  */
 void
 Robot::getSpeed(){
+    float speed = this->cmd->getSpeed();
+    // emit this->speed(speed);
+}
 
+void
+Robot::getStatus()
+{
+    robot_status_t status = this->cmd->getStatus();
+    // emit this->status(status);
 }
 
 /*!
  * \brief setSpeed
  */
 void
-Robot::setSpeed()
+Robot::setSpeed(float speed)
 {
-
+    this->cmd->setSpeed(speed);
 }
 
 /*!
@@ -116,7 +67,10 @@ Robot::setSpeed()
 void
 Robot::getGyroData()
 {
-
+    float gx = this->gyro->getX();
+    float gy = this->gyro->getY();
+    float gz = this->gyro->getZ();
+    // emit this->gyrodata(gx, gy, gz);
 }
 
 /*!
@@ -125,7 +79,10 @@ Robot::getGyroData()
 void
 Robot::getAccelData()
 {
-
+    float ax = this->accel->getX();
+    float ay = this->accel->getY();
+    float az = this->accel->getZ();
+    // emit this->acceldata(ax, ay, az);
 }
 
 /*!
@@ -133,8 +90,10 @@ Robot::getAccelData()
  */
 void
 Robot::getLineData()
-{
-
+{   // TODO this is not serious, but better than an empty function
+    float value = this->line->getValue();
+    std::vector<float> valvec = {value};
+    // emit this->linedata(valvec);
 }
 
 /*!
@@ -143,30 +102,7 @@ Robot::getLineData()
 void
 Robot::getWheelData()
 {
-
+    float left = this->wheel->getLeft();
+    float right = this->wheel->getRight();
+    // emit this->wheeldata(left, right);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -21,9 +21,12 @@ public:
 signals:
 
 public slots:
+    void connected();
+    void disconnected();
 
 private:
     std::unique_ptr<QTcpSocket> socket;
+    bool isConnected;
 
 protected:
     int port = 0;

@@ -5,11 +5,32 @@
  * \param port
  */
 AbstractSensor::AbstractSensor(int port) :
-    socket(new QTcpSocket())
+    socket(new QTcpSocket()),
+    isConnected(false),
+    port(port)
 {
-    // socket = std::make_unique<QTcpSocket>(new QTcpSocket());
-    this->port = port;
+    // TODO build error
+    // QObject::connect(this->socket, &QAbstractSocket::connected, this, &AbstractSensor::connected);
+    // QObject::connect(this->socket, &QAbstractSocket::disconnected, this, &AbstractSensor::disconnected);
     this->connect();
+}
+
+/*!
+ * \brief AbstractSensor::connected
+ */
+void
+AbstractSensor::connected()
+{
+    this->isConnected = true;
+}
+
+/*!
+ * \brief AbstractSensor::disconnected
+ */
+void
+AbstractSensor::disconnected()
+{
+    this->isConnected = false;
 }
 
 /*!
@@ -19,10 +40,9 @@ void
 AbstractSensor::connect()
 {
     this->socket->connectToHost("127.0.0.1", this->port);
-    if(!this->socket->waitForConnected(1000))
-    {
-        throw std::runtime_error("Could not connect to socket!");
-    }
+    // handling this with signals (or something likw this)
+    // if(!this->socket->waitForConnected(1000))
+        // throw std::runtime_error("Could not connect to socket!");
 }
 
 /*!
@@ -32,6 +52,7 @@ void
 AbstractSensor::disconnect()
 {
     this->socket.release();
+    // this->isConnected = false;  // will be set in disconnected() slot
 }
 
 /*!
@@ -41,7 +62,7 @@ AbstractSensor::disconnect()
 QString
 AbstractSensor::readSensor(){
     QString rawString;
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    if(this->isConnected && this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("GET");  // send get command
 
