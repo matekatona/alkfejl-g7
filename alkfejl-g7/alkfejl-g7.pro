@@ -16,7 +16,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        diagclient.cpp \
+    diagclient.cpp \
     robot.cpp \
     linesensor.cpp \
     gyrosensor.cpp \
@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     graph.cpp \
     gridnode.cpp \
     linenode.cpp \
-    noisynode.cpp
+    noisynode.cpp \
+    robothistory.cpp
 
 HEADERS  += diagclient.h \
     robot.h \
@@ -38,7 +39,8 @@ HEADERS  += diagclient.h \
     graph.h \
     gridnode.h \
     linenode.h \
-    noisynode.h
+    noisynode.h \
+    robothistory.h
 
 FORMS    += diagclient.ui
 

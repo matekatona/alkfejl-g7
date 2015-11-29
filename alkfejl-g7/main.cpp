@@ -2,10 +2,13 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QVarLengthArray>
 #include "qmlhandlercppside.h"
 
 #include "graph.h"
 #include <QtQml/QQmlContext>
+
+#include "robothistory.h"
 
 int main(int argc, char *argv[])
 {
