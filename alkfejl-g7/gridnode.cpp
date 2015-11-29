@@ -42,7 +42,7 @@
 
 #include "qmath.h"
 
-#define GRID_SIZE 32
+#define GRID_SIZE 25
 
 GridNode::GridNode()
     : m_geometry(QSGGeometry::defaultAttributes_Point2D(), 0)

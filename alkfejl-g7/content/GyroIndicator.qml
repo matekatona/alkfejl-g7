@@ -1,7 +1,7 @@
 import QtQuick 2.4
 
 Item {
-    id:gyroIndicator;
+    id: gyroIndicator;
     width: 200;
     height: 230;
 

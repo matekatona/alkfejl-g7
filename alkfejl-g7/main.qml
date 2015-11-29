@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import Graph 1.0
 import "content"
@@ -14,8 +15,16 @@ Window {
 
     property bool testPhase: true;
     property int angle: 0;
-    property var sensors: [true, true, false, true, true, true, true, false, false, true, true, true, false, false, true, false, true, false, false, true, false];
-    property bool temp;
+    property var sensorsInit: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+    property var sensors: sensorsInit.slice();
+   property bool temp;
+
+    property real graphHeight: 250;
+    property real graphMargin: 10;
+
+    property real buttonMargin: 20;
+
+    property real tableHeight: 35;
 
     function test(){
         testTimer.running=true;
@@ -37,12 +46,19 @@ Window {
             accelY.addAngle(-1);
         }
 
+        if(mainWindow.angle>260)
+            speedGraph.newSample(0.5-10/480);
+        else
+            speedGraph.newSample(0.5-10/480+Math.sin(mainWindow.angle/22.5 * Math.PI * 2)*0.5);
+
         angle++;
         if(angle%10==0){
             lineSens.setValues(mainWindow.sensors);
-            temp=mainWindow.sensors[0];
+            temp=mainWindow.sensors[11];
             mainWindow.sensors.shift();
-            mainWindow.sensors[20]=temp;
+            mainWindow.sensors[20]=!temp;
+
+            alertLamp.alert=!alertLamp.alert;
         }
 
         if(mainWindow.angle>360){
@@ -53,6 +69,8 @@ Window {
             else{
                 mainWindow.testPhase=true;
                 testTimer.running=false;
+                lineSens.setValues(mainWindow.sensorsInit);
+                alertLamp.alert=false;
             }
         }
     }
@@ -61,8 +79,6 @@ Window {
         id: testTimer;
         interval: 10; running: false; repeat: true;
         onTriggered: {
-//            graph.removeFirstSample();
-//            graph.appendSample(graph.newSample(100));
             mainWindow.timeTick();
         }
     }
@@ -71,16 +87,6 @@ Window {
         id: containerItem;
         anchors.fill: parent;
         color: "#E0E0E0"
-
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                lineSens.setValues(mainWindow.sensors);
-                gyroX.addAngle(5);
-                gyroY.addAngle(1);
-                gyroZ.addAngle(11);
-            }
-        }
 
         GyroIndicator{
             id: gyroX;
@@ -134,10 +140,13 @@ Window {
             anchors.top: parent.top;
             anchors.left: parent.left;
             anchors.right: graphContainer.left;
+            anchors.margins: mainWindow.buttonMargin;
 
             Button{
                 id: buttonGUISelfTest;
-
+                implicitWidth: 150;
+                implicitHeight: 50;
+                anchors.horizontalCenter: parent.horizontalCenter;
                 text: qsTr("GUI Self test");
 
                 onClicked: {
@@ -145,8 +154,12 @@ Window {
                 }
             }
 
-            Button{
-
+            AlertLamp{
+                id: alertLamp;
+                objectName: "alertLamp";
+                anchors.horizontalCenter: parent.horizontalCenter;
+                alertLabel: "Line lost";
+                alert: true;
             }
         }
 
@@ -159,35 +172,200 @@ Window {
             anchors.bottom: parent.bottom;
 
             LedStrip{
+                id: lineSens;
                 x:300;
                 y:400;
-                id: lineSens;
                 anchors.top: parent.top;
                 anchors.horizontalCenter: parent.horizontalCenter;
                 stripLabel: "Line Sensor";
             }
 
-            Graph {
-                id: speedGraph;
-                objectName: "speedGraph";
-                height: 256;
+            Item{
+                id: dataContainer;
+                anchors.top: lineSens.bottom;
+                anchors.left: parent.left;
+                anchors.right: parent.right;
+                anchors.bottom: graphBorder.top;
+
+                GridLayout{
+                    anchors.horizontalCenter: parent.horizontalCenter;
+                    anchors.verticalCenter: parent.verticalCenter;
+
+                    columns: 5;
+
+                    Text{
+                        text: "Acceleration X:";
+                    }
+                    Text{
+                        id: textAccelX;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Item{
+                        implicitWidth: dataContainer.width*0.1;
+                        implicitHeight: mainWindow.tableHeight;
+                    }
+
+                    Text{
+                        text: "Current status:";
+                    }
+                    Text{
+                        id: textCurStatus;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Text{
+                        text: "Acceleration Y:";
+                    }
+                    Text{
+                        id: textAccelY;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Item{
+                        implicitWidth: dataContainer.width*0.1;
+                        implicitHeight: mainWindow.tableHeight;
+                    }
+
+                    Text{
+                        text: "Set status:";
+                    }
+                    ComboBox{
+                        id: comboSetStatus;
+                        model: ["Run", "Stop"];
+                    }
+
+                    Text{
+                        text: "Acceleration Z:";
+                    }
+                    Text{
+                        id: textAccelZ;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Item{
+                        implicitWidth: dataContainer.width*0.1;
+                        implicitHeight: mainWindow.tableHeight;
+                    }
+
+                    Button{
+                        id: buttonStatusSend;
+                        text: "Send";
+                        Layout.columnSpan: 2;
+                        anchors.right: parent.right;
+                    }
+
+                    Text{
+                        text: "Gyroscope X:";
+                    }
+                    Text{
+                        id: textGyroX;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Item{
+                        implicitWidth: dataContainer.width*0.1;
+                        implicitHeight: mainWindow.tableHeight;
+                    }
+
+                    Text{
+                        text: "Current speed:";
+                    }
+                    Text{
+                        id: textCurSpeed;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Text{
+                        text: "Gyroscope Y:";
+                    }
+                    Text{
+                        id: textGyroY;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Item{
+                        implicitWidth: dataContainer.width*0.1;
+                        implicitHeight: mainWindow.tableHeight;
+                    }
+
+                    Text{
+                        text: "Set speed:";
+                    }
+                    TextField{
+                        id: editSetSpeed;
+                        text: "0,4";
+                        implicitWidth: comboSetStatus.width;
+                    }
+
+                    Text{
+                        text: "Gyroscope Z:";
+                    }
+                    Text{
+                        id: textGyroZ;
+                        text: "UNKNOWN";
+                        color: "gray";
+                    }
+
+                    Item{
+                        implicitWidth: dataContainer.width*0.1;
+                        implicitHeight: mainWindow.tableHeight;
+                    }
+
+                    Button{
+                        id: buttonSpeedSend;
+                        text: "Send";
+                        Layout.columnSpan: 2;
+                        anchors.right: parent.right;
+                    }
+                }
+            }
+
+            Rectangle {
+                id: graphBorder;
+                height: mainWindow.graphHeight+mainWindow.graphMargin;
                 anchors.left: parent.left;
                 anchors.right: parent.right;
                 anchors.bottom: parent.bottom;
-                anchors.margins: 10;
+                anchors.margins: mainWindow.graphMargin/2;
+                border.width: mainWindow.graphMargin/2;
+                border.color: "gray";
+            }
 
+            Graph {
+                id: speedGraph;
+                objectName: "speedGraph";
+                height: mainWindow.graphHeight;
+                anchors.left: parent.left;
+                anchors.right: parent.right;
+                anchors.bottom: parent.bottom;
+                anchors.margins: mainWindow.graphMargin;
 
 
                 function newSample(i) {
-                    return i;
+                    speedGraph.removeFirstSample();
+                    speedGraph.appendSample(i);
                 }
 
                 Component.onCompleted: {
                     for (var i=0; i<100; ++i)
-                        appendSample(0);//appendSample(newSample(i));
+                        appendSample(0);
                 }
 
                 property int offset: 100;
+            }
+
+            Text{
+                anchors.bottom: graphBorder.top;
+                anchors.margins: mainWindow.graphMargin;
+                text: "Speed [1m/s/div]";
             }
         }
     }

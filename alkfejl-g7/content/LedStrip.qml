@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 Item {
-    id:ledStrip;
+    id: ledStrip;
     width: 420;
     height: 48;
 
@@ -38,6 +38,7 @@ Item {
 
     Text {
         id: label;
+        y: 10;
         anchors.horizontalCenter: leds.horizontalCenter;
         color:"black";
         font.pixelSize: 14;
