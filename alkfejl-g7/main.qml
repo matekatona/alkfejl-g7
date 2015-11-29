@@ -271,7 +271,7 @@ Window {
                         id: buttonStatusSend;
                         text: "Send";
                         Layout.columnSpan: 2;
-                        anchors.right: parent.right;
+                        Layout.alignment: Qt.AlignLeft;
                     }
 
                     KeyValuePair{
@@ -290,6 +290,7 @@ Window {
 
                     KeyValuePair{
                         id: textCurSpeed;
+                        objectName: "textCurSpeed";
                         key: "Current speed:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -340,7 +341,7 @@ Window {
                         id: buttonSpeedSend;
                         text: "Send";
                         Layout.columnSpan: 2;
-                        anchors.right: parent.right;
+                        Layout.alignment: Qt.AlignLeft;
                     }
                 }
             }

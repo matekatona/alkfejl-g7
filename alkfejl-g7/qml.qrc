@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>content/icon.png</file>
         <file>main.qml</file>
         <file>content/GyroIndicator.qml</file>
         <file>content/background.png</file>
