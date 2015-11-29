@@ -59,6 +59,13 @@ Window {
             mainWindow.sensors[20]=!temp;
 
             alertLamp.alert=!alertLamp.alert;
+
+            textAccelX.setValue(angle);
+            textAccelY.setValue(angle);
+            textAccelZ.setValue(angle);
+            textGyroX.setValue(angle);
+            textGyroY.setValue(angle);
+            textGyroZ.setValue(angle);
         }
 
         if(mainWindow.angle>360){
@@ -71,6 +78,12 @@ Window {
                 testTimer.running=false;
                 lineSens.setValues(mainWindow.sensorsInit);
                 alertLamp.alert=false;
+                textAccelX.setValue("UNKNOWN");
+                textAccelY.setValue("UNKNOWN");
+                textAccelZ.setValue("UNKNOWN");
+                textGyroX.setValue("UNKNOWN");
+                textGyroY.setValue("UNKNOWN");
+                textGyroZ.setValue("UNKNOWN");
             }
         }
     }
@@ -193,13 +206,13 @@ Window {
 
                     columns: 5;
 
-                    Text{
-                        text: "Acceleration X:";
-                    }
-                    Text{
+                    KeyValuePair{
                         id: textAccelX;
-                        text: "UNKNOWN";
-                        color: "gray";
+                        key: "Acceleration X:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
                     Item{
@@ -207,22 +220,22 @@ Window {
                         implicitHeight: mainWindow.tableHeight;
                     }
 
-                    Text{
-                        text: "Current status:";
-                    }
-                    Text{
-                        id: textCurStatus;
-                        text: "UNKNOWN";
-                        color: "gray";
+                    KeyValuePair{
+                        id: texCurStatus;
+                        key: "Current status:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
-                    Text{
-                        text: "Acceleration Y:";
-                    }
-                    Text{
+                    KeyValuePair{
                         id: textAccelY;
-                        text: "UNKNOWN";
-                        color: "gray";
+                        key: "Acceleration Y:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
                     Item{
@@ -232,19 +245,21 @@ Window {
 
                     Text{
                         text: "Set status:";
+                        Layout.alignment: Qt.AlignTop;
                     }
                     ComboBox{
                         id: comboSetStatus;
+                        Layout.alignment: Qt.AlignRight;
                         model: ["Run", "Stop"];
                     }
 
-                    Text{
-                        text: "Acceleration Z:";
-                    }
-                    Text{
+                    KeyValuePair{
                         id: textAccelZ;
-                        text: "UNKNOWN";
-                        color: "gray";
+                        key: "Acceleration Z:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
                     Item{
@@ -259,13 +274,13 @@ Window {
                         anchors.right: parent.right;
                     }
 
-                    Text{
-                        text: "Gyroscope X:";
-                    }
-                    Text{
+                    KeyValuePair{
                         id: textGyroX;
-                        text: "UNKNOWN";
-                        color: "gray";
+                        key: "Gyroscope X:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
                     Item{
@@ -273,22 +288,22 @@ Window {
                         implicitHeight: mainWindow.tableHeight;
                     }
 
-                    Text{
-                        text: "Current speed:";
-                    }
-                    Text{
+                    KeyValuePair{
                         id: textCurSpeed;
-                        text: "UNKNOWN";
-                        color: "gray";
+                        key: "Current speed:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
-                    Text{
-                        text: "Gyroscope Y:";
-                    }
-                    Text{
+                    KeyValuePair{
                         id: textGyroY;
-                        text: "UNKNOWN";
-                        color: "gray";
+                        key: "Gyroscope Y:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
                     Item{
@@ -298,20 +313,22 @@ Window {
 
                     Text{
                         text: "Set speed:";
+                        Layout.alignment: Qt.AlignTop;
                     }
                     TextField{
                         id: editSetSpeed;
+                        Layout.alignment: Qt.AlignRight;
                         text: "0,4";
                         implicitWidth: comboSetStatus.width;
                     }
 
-                    Text{
-                        text: "Gyroscope Z:";
-                    }
-                    Text{
+                    KeyValuePair{
                         id: textGyroZ;
-                        text: "UNKNOWN";
-                        color: "gray";
+                        key: "Gyroscope Z:"
+                        value: "UNKNOWN";
+                        height: mainWindow.tableHeight;
+
+                        Layout.columnSpan: 2;
                     }
 
                     Item{

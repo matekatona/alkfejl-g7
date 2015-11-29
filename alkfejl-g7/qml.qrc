@@ -12,6 +12,7 @@
         <file>content/AlertLamp.qml</file>
         <file>content/alert_off.png</file>
         <file>content/alert_on.png</file>
+        <file>content/KeyValuePair.qml</file>
         <file>shaders/noisy.vsh</file>
         <file>shaders/noisy.fsh</file>
         <file>shaders/line.vsh</file>
