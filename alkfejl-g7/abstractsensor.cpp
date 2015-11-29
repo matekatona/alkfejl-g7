@@ -1,6 +1,9 @@
 #include "abstractsensor.h"
 
-
+/*!
+ * \brief AbstractSensor::AbstractSensor
+ * \param port
+ */
 AbstractSensor::AbstractSensor(int port) :
     socket(new QTcpSocket())
 {
@@ -9,6 +12,9 @@ AbstractSensor::AbstractSensor(int port) :
     this->connect();
 }
 
+/*!
+ * \brief AbstractSensor::connect
+ */
 void
 AbstractSensor::connect()
 {
@@ -19,6 +25,9 @@ AbstractSensor::connect()
     }
 }
 
+/*!
+ * \brief AbstractSensor::disconnect
+ */
 void
 AbstractSensor::disconnect()
 {

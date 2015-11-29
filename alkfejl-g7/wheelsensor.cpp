@@ -1,6 +1,8 @@
 #include "wheelsensor.h"
 
-
+/*!
+ * \brief WheelSensor::WheelSensor
+ */
 WheelSensor::WheelSensor()
     : AbstractSensor(30568)  // call superclass constructor with correct port number
 {

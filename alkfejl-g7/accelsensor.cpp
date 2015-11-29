@@ -1,6 +1,8 @@
 #include "accelsensor.h"
 
-
+/*!
+ * \brief AccelSensor::AccelSensor
+ */
 AccelSensor::AccelSensor()
     : AbstractSensor(24931)  // call superclass constructor with correct port number
 {

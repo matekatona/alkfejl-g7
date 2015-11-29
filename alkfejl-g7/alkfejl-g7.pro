@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     gyrosensor.cpp \
     accelsensor.cpp \
     abstractsensor.cpp \
-    wheelsensor.cpp
+    wheelsensor.cpp \
+    commandsocket.cpp
 
 HEADERS  += diagclient.h \
     robot.h \
@@ -29,7 +30,8 @@ HEADERS  += diagclient.h \
     gyrosensor.h \
     accelsensor.h \
     abstractsensor.h \
-    wheelsensor.h
+    wheelsensor.h \
+    commandsocket.h
 
 FORMS    += diagclient.ui
 

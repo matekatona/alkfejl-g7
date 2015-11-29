@@ -1,6 +1,8 @@
 #include "gyrosensor.h"
 
-
+/*!
+ * \brief GyroSensor::GyroSensor
+ */
 GyroSensor::GyroSensor()
     : AbstractSensor(26489)  // call superclass constructor with correct port number
 {
