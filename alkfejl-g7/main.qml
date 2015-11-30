@@ -103,52 +103,51 @@ Window {
 
         GyroIndicator{
             id: gyroX;
-            objectName: "gyroX";
+            objectName: "carGyroX";
             anchors.bottom: gyroY.top;
             anchors.right: parent.right;
             view: "front";
-            angle: 45;
             title: "Front view";
         }
 
         GyroIndicator{
             id: gyroY;
+            objectName: "carGyroY";
             anchors.bottom: gyroZ.top;
             anchors.right: parent.right;
             view: "right";
-            angle: -45;
             title: "Right view";
         }
 
         GyroIndicator{
             id: gyroZ;
+            objectName: "carGyroZ";
             anchors.bottom: parent.bottom;
             anchors.right: parent.right;
             view: "top";
-            angle: -45;
             title: "Top view";
         }
 
         GyroIndicator{
             id: wheels;
+            objectName: "wheels";
             anchors.left: parent.left;
             anchors.bottom: accelY.top;
             view: "top";
-            angle: 15;
             title: "Wheels";
         }
 
         GyroIndicator{
             id: accelY;
+            objectName: "carAccelY"
             anchors.left: parent.left;
             anchors.bottom: parent.bottom;
             view: "top";
-            angle: -20;
             title: "AccelY";
         }
 
         ColumnLayout{
-            id: controlContainer;
+            id: leftControlContainer;
 
             anchors.top: parent.top;
             anchors.left: parent.left;
@@ -167,6 +166,21 @@ Window {
                 }
             }
 
+            Button{
+                id: buttonCarSelfTest;
+                objectName: "buttonCarSelfTest";
+                implicitWidth: 150;
+                implicitHeight: 50;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                text: qsTr("Car Self Test");
+
+                signal carTestClicked();
+
+                onClicked: {
+                    carTestClicked();
+                }
+            }
+
             AlertLamp{
                 id: alertLamp;
                 objectName: "alertLamp";
@@ -174,6 +188,15 @@ Window {
                 alertLabel: "Line lost";
                 alert: true;
             }
+        }
+
+        ColumnLayout{
+            id: rightControlContainer;
+
+            anchors.top: parent.top;
+            anchors.left: graphContainer.left;
+            anchors.margins: mainWindow.buttonMargin;
+
         }
 
         ColumnLayout{
@@ -186,6 +209,7 @@ Window {
 
             LedStrip{
                 id: lineSens;
+                objectName: "lineSens";
                 x:300;
                 y:400;
                 anchors.top: parent.top;
@@ -208,6 +232,7 @@ Window {
 
                     KeyValuePair{
                         id: textAccelX;
+                        objectName: "textAccelX";
                         key: "Acceleration X:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -221,7 +246,8 @@ Window {
                     }
 
                     KeyValuePair{
-                        id: texCurStatus;
+                        id: textCurStatus;
+                        objectName: "textCurStatus"
                         key: "Current status:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -231,6 +257,7 @@ Window {
 
                     KeyValuePair{
                         id: textAccelY;
+                        objectName: "textAccelY";
                         key: "Acceleration Y:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -255,6 +282,7 @@ Window {
 
                     KeyValuePair{
                         id: textAccelZ;
+                        objectName: "textAccelZ";
                         key: "Acceleration Z:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -268,7 +296,8 @@ Window {
                     }
 
                     Button{
-                        id: buttonStatusSend;
+                        id: buttonSendStatus;
+                        objectName: "buttonSendStatus";
                         text: "Send";
                         Layout.columnSpan: 2;
                         Layout.alignment: Qt.AlignLeft;
@@ -276,6 +305,7 @@ Window {
 
                     KeyValuePair{
                         id: textGyroX;
+                        objectName: "textGyroX";
                         key: "Gyroscope X:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -300,6 +330,7 @@ Window {
 
                     KeyValuePair{
                         id: textGyroY;
+                        objectName: "textGyroY";
                         key: "Gyroscope Y:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -325,6 +356,7 @@ Window {
 
                     KeyValuePair{
                         id: textGyroZ;
+                        objectName: "textGyroZ";
                         key: "Gyroscope Z:"
                         value: "UNKNOWN";
                         height: mainWindow.tableHeight;
@@ -338,7 +370,8 @@ Window {
                     }
 
                     Button{
-                        id: buttonSpeedSend;
+                        id: buttonSendSpeed;
+                        objectName: "buttonSendSpeed";
                         text: "Send";
                         Layout.columnSpan: 2;
                         Layout.alignment: Qt.AlignLeft;

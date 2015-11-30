@@ -121,23 +121,23 @@ void RobotHistory::addNewWheelData(QVarLengthArray<float> data){
         this->state[3]=true;
 }
 void RobotHistory::insertNewLineData(QVarLengthArray<bool> data){
-    if(this->historyLine.length()==this->maxLength)
+    if(this->historyLine.length()==this->maxLength && this->maxLength!=0)
         this->historyLine.takeFirst();
     this->historyLine.append(data);
 }
 
 void RobotHistory::insertNewAccelData(QVarLengthArray<float> data){
-    if(this->historyAccel.length()==this->maxLength)
+    if(this->historyAccel.length()==this->maxLength && this->maxLength!=0)
         this->historyAccel.takeFirst();
     this->historyAccel.append(data);
 }
 void RobotHistory::insertNewGyroData(QVarLengthArray<float> data){
-    if(this->historyGyro.length()==this->maxLength)
+    if(this->historyGyro.length()==this->maxLength && this->maxLength!=0)
         this->historyGyro.takeFirst();
     this->historyGyro.append(data);
 }
 void RobotHistory::insertNewWheelData(QVarLengthArray<float> data){
-    if(this->historyWheel.length()==this->maxLength)
+    if(this->historyWheel.length()==this->maxLength && this->maxLength!=0)
         this->historyWheel.takeFirst();
     this->historyWheel.append(data);
 }

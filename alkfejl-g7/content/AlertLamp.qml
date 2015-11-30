@@ -2,8 +2,8 @@ import QtQuick 2.0
 
 Item {
     id: alertLamp;
-    width: 100;
-    height: 150;
+    width: 70;
+    height: 100;
 
     property bool alert: false;
     property alias alertLabel: label.text;
@@ -14,8 +14,8 @@ Item {
 
     Item{
         id: alertImage;
-        width: 100;
-        height: 100;
+        width: 70;
+        height: 70;
         anchors.bottom: parent.bottom;
 
         Image {
@@ -34,7 +34,7 @@ Item {
         y: 10;
         anchors.horizontalCenter: alertImage.horizontalCenter;
         color:"black";
-        font.pixelSize: 24;
+        font.pixelSize: 16;
         style: Text.Raised;
         styleColor: "black";
     }
