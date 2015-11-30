@@ -9,9 +9,9 @@ QMLHandlerCppSide::QMLHandlerCppSide(QObject *rootObject, const QString& name)
         qDebug() << "Nem találom a rootObject-et.";
     }
 
-    mainWindowObject = findItemByName(rootObject, name);
+    object = findItemByName(rootObject, name);
 
-    if (!mainWindowObject)
+    if (!object)
     {
         qDebug() << "Nem találom a(z) " + name + " objektumot.";
     }
@@ -21,12 +21,12 @@ QMLHandlerCppSide::QMLHandlerCppSide(QObject *rootObject, const QString& name)
 
 QQuickItem* QMLHandlerCppSide::findItemByName(const QString& name)
 {
-    Q_ASSERT(mainWindowObject != nullptr);
-    if (mainWindowObject->objectName() == name)
+    Q_ASSERT(object != nullptr);
+    if (object->objectName() == name)
     {
-        return mainWindowObject;
+        return object;
     }
-    return findItemByName(mainWindowObject->children(), name);
+    return findItemByName(object->children(), name);
 }
 
 QQuickItem* QMLHandlerCppSide::findItemByName(QObject *rootObject, const QString& name)

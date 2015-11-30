@@ -38,7 +38,9 @@ int main(int argc, char *argv[])
     QMLHandlerCppSide textGyroY(engine.rootObjects()[0], "textGyroY");
     QMLHandlerCppSide textGyroZ(engine.rootObjects()[0], "textGyroZ");
     QMLHandlerCppSide textCurStatus(engine.rootObjects()[0], "textCurStatus");
+    QMLHandlerCppSide comboSetStatus(engine.rootObjects()[0], "comboSetStatus");
     QMLHandlerCppSide textCurSpeed(engine.rootObjects()[0], "textCurSpeed");
+    QMLHandlerCppSide editSetSpeed(engine.rootObjects()[0], "editSetSpeed");
     QMLHandlerCppSide wheels(engine.rootObjects()[0], "wheels");
     QMLHandlerCppSide carAccelY(engine.rootObjects()[0], "carAccelY");
     QMLHandlerCppSide carGyroX(engine.rootObjects()[0], "carGyroX");
@@ -49,11 +51,11 @@ int main(int argc, char *argv[])
     QMLHandlerCppSide buttonSendSpeed(engine.rootObjects()[0], "buttonSendSpeed");
     QMLHandlerCppSide buttonCarSelfTest(engine.rootObjects()[0], "buttonCarSelfTest");
 
-    GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &textCurSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
+    GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
 
 //    for(int i=0;i<20;i++){
-//        QMetaObject::invokeMethod(speedGraph.mainWindowObject, "removeFirstSample", Qt::DirectConnection);
-//        QMetaObject::invokeMethod(speedGraph.mainWindowObject, "appendSample", Qt::DirectConnection, Q_ARG(double, i/40.0+0.5));
+//        QMetaObject::invokeMethod(speedGraph.object, "removeFirstSample", Qt::DirectConnection);
+//        QMetaObject::invokeMethod(speedGraph.object, "appendSample", Qt::DirectConnection, Q_ARG(double, i/40.0+0.5));
 //    }
 
 
@@ -71,7 +73,7 @@ int main(int argc, char *argv[])
 //    for(int i=0; i<21; i++)
 //        testVar << testStrip.at(i);
 
-//    QMetaObject::invokeMethod(lineSens.mainWindowObject, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(testVar)));
+//    QMetaObject::invokeMethod(lineSens.object, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(testVar)));
 
 //    /**
 //     * @brief testStrip to QML
@@ -80,13 +82,13 @@ int main(int argc, char *argv[])
 //    float speed = 0.5;
 //    QString status = "Run";
 
-//    //QMetaObject::invokeMethod(mainWindow.mainWindowObject, "test", Qt::DirectConnection);
-//    QMetaObject::invokeMethod(textCurSpeed.mainWindowObject, "setValue", Qt::DirectConnection, Q_ARG(QVariant, speed));
-//    QMetaObject::invokeMethod(textCurStatus.mainWindowObject, "setValue", Qt::DirectConnection, Q_ARG(QVariant, status));
-//    /** TODO: QMLHandlerCppSide mainWindowObject tagváltozója legyen private (mint eredetileg) és a nevét is írjuk át valami logikusabbra.
+//    //QMetaObject::invokeMethod(mainWindow.object, "test", Qt::DirectConnection);
+//    QMetaObject::invokeMethod(textCurSpeed.object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, speed));
+//    QMetaObject::invokeMethod(textCurStatus.object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, status));
+//    /** TODO: QMLHandlerCppSide object tagváltozója legyen private (mint eredetileg) és a nevét is írjuk át valami logikusabbra.
 //     *  Legyen callFunc() tagfüggvény, mely implementálva van pár esetre (van/nincs visszatérési érték, nincs/van/több argumentuma is van).
 //     */
-//    QMetaObject::invokeMethod(gyroX.mainWindowObject, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, 0));
+//    QMetaObject::invokeMethod(gyroX.object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, 0));
 
 //    RobotHistory testHistory(0);
 

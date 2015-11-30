@@ -47,9 +47,9 @@ Window {
         }
 
         if(mainWindow.angle>260)
-            speedGraph.newSample(0.5-10/480);
+            speedGraph.newSample(0.5);
         else
-            speedGraph.newSample(0.5-10/480+Math.sin(mainWindow.angle/22.5 * Math.PI * 2)*0.5);
+            speedGraph.newSample(0.5+Math.sin(mainWindow.angle/22.5 * Math.PI * 2)*0.5);
 
         angle++;
         if(angle%10==0){
@@ -173,12 +173,6 @@ Window {
                 implicitHeight: 50;
                 anchors.horizontalCenter: parent.horizontalCenter;
                 text: qsTr("Car Self Test");
-
-                signal carTestClicked();
-
-                onClicked: {
-                    carTestClicked();
-                }
             }
 
             AlertLamp{
@@ -186,7 +180,7 @@ Window {
                 objectName: "alertLamp";
                 anchors.horizontalCenter: parent.horizontalCenter;
                 alertLabel: "Line lost";
-                alert: true;
+                alert: false;
             }
         }
 
@@ -276,6 +270,7 @@ Window {
                     }
                     ComboBox{
                         id: comboSetStatus;
+                        objectName: "comboSetStatus";
                         Layout.alignment: Qt.AlignRight;
                         model: ["Run", "Stop"];
                     }
@@ -349,6 +344,7 @@ Window {
                     }
                     TextField{
                         id: editSetSpeed;
+                        objectName: "editSetSpeed";
                         Layout.alignment: Qt.AlignRight;
                         text: "0,4";
                         implicitWidth: comboSetStatus.width;
@@ -402,12 +398,12 @@ Window {
 
                 function newSample(i) {
                     speedGraph.removeFirstSample();
-                    speedGraph.appendSample(i);
+                    speedGraph.appendSample(i-10/480);
                 }
 
                 Component.onCompleted: {
                     for (var i=0; i<100; ++i)
-                        appendSample(0);
+                        appendSample(0.5-10/480);
                 }
 
                 property int offset: 100;
@@ -416,7 +412,7 @@ Window {
             Text{
                 anchors.bottom: graphBorder.top;
                 anchors.margins: mainWindow.graphMargin;
-                text: "Speed [1m/s/div]";
+                text: "Speed [0.3m/s/div]";
             }
         }
     }

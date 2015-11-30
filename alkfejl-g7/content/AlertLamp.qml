@@ -8,7 +8,7 @@ Item {
     property bool alert: false;
     property alias alertLabel: label.text;
 
-    function setValue(values){
+    function setAlert(values){
         alertLamp.alert=values;
     }
 

@@ -18,7 +18,7 @@ private:
     QQuickItem* findItemByName(QObject *rootObject, const QString& name);
     QQuickItem* findItemByName(QList<QObject*> nodes, const QString& name);
 public:
-    QQuickItem* mainWindowObject;
+    QQuickItem* object;
 };
 #endif // QMLHANDLERCPPSIDE_H
 

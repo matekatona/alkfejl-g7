@@ -2,6 +2,7 @@
 #define GUIHANDLER_H
 
 #include <QObject>
+#include <QVarLengthArray>
 #include "qmlhandlercppside.h"
 
 class GuiHandler : public QObject
@@ -19,7 +20,9 @@ public:
             QMLHandlerCppSide *textGyroY, \
             QMLHandlerCppSide *textGyroZ, \
             QMLHandlerCppSide *textCurStatus, \
+            QMLHandlerCppSide *comboSetStatus, \
             QMLHandlerCppSide *textCurSpeed, \
+            QMLHandlerCppSide *editSetSpeed, \
             QMLHandlerCppSide *wheels, \
             QMLHandlerCppSide *carAccelY, \
             QMLHandlerCppSide *carGyroX, \
@@ -40,7 +43,9 @@ private:
     QMLHandlerCppSide *textGyroY;
     QMLHandlerCppSide *textGyroZ;
     QMLHandlerCppSide *textCurStatus;
+    QMLHandlerCppSide *comboSetStatus;
     QMLHandlerCppSide *textCurSpeed;
+    QMLHandlerCppSide *editSetSpeed;
     QMLHandlerCppSide *wheels;
     QMLHandlerCppSide *carAccelY;
     QMLHandlerCppSide *carGyroX;
@@ -71,8 +76,8 @@ public slots:
     void setTextGyroZ(float gyroZ);
     void setTextStatus(QString status);
     void setTextSpeed(float speed);
-    void setWheels(QVarLengthArray<float> wheels);
-    void setCarAccelY(float accelY);
+    void setWheels(QVarLengthArray<float> wheels, const float D);
+    void setCarAccelY(QVarLengthArray<float> wheels, float accelY);
     void setCarGyroX(float gyroX);
     void setCarGyroY(float gyroY);
     void setCarGyroZ(float gyroZ);

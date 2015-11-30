@@ -5,7 +5,7 @@ Item {
     width: 200;
     height: 230;
 
-    property int angle: 0;
+    property real angle: 0;
     property alias title: titleLabel.text;
     property string view: "top";
 

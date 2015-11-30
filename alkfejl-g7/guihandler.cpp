@@ -10,7 +10,9 @@ GuiHandler::GuiHandler( \
         QMLHandlerCppSide *textGyroY, \
         QMLHandlerCppSide *textGyroZ, \
         QMLHandlerCppSide *textCurStatus, \
+        QMLHandlerCppSide *comboSetStatus, \
         QMLHandlerCppSide *textCurSpeed, \
+        QMLHandlerCppSide *editSetSpeed, \
         QMLHandlerCppSide *wheels, \
         QMLHandlerCppSide *carAccelY, \
         QMLHandlerCppSide *carGyroX, \
@@ -30,7 +32,9 @@ GuiHandler::GuiHandler( \
     this->textGyroY=textGyroY;
     this->textGyroZ=textGyroZ;
     this->textCurStatus=textCurStatus;
+    this->comboSetStatus=comboSetStatus;
     this->textCurSpeed=textCurSpeed;
+    this->editSetSpeed=editSetSpeed;
     this->wheels=wheels;
     this->carAccelY=carAccelY;
     this->carGyroX=carGyroX;
@@ -41,30 +45,124 @@ GuiHandler::GuiHandler( \
     this->buttonSendSpeed=buttonSendSpeed;
     this->buttonCarSelfTest=buttonCarSelfTest;
 
-    QObject::connect(this->buttonCarSelfTest->mainWindowObject, SIGNAL(clicked()), this, SLOT(qmlbuttonCarSelfTestClicked()));
+    QObject::connect(this->buttonCarSelfTest->object, SIGNAL(clicked()), this, SLOT(qmlbuttonCarSelfTestClicked()));
+    QObject::connect(this->buttonSendStatus->object, SIGNAL(clicked()), this, SLOT(qmlbuttonSendStatusClicked()));
+    QObject::connect(this->buttonSendSpeed->object, SIGNAL(clicked()), this, SLOT(qmlbuttonSendSpeedClicked()));
 
 }
 
-void GuiHandler::qmlbuttonSendStatusClicked(){}
-void GuiHandler::qmlbuttonSendSpeedClicked(){}
+void GuiHandler::qmlbuttonSendStatusClicked()
+{
+    qDebug() << "Send status clicked! Current status: " << this->comboSetStatus->object->property("currentText").toString();
+    emit this->buttonSendStatusClicked(this->comboSetStatus->object->property("currentText").toString());
+}
+
+void GuiHandler::qmlbuttonSendSpeedClicked()
+{
+    qDebug() << "Send speed clicked! Current speed: " << this->editSetSpeed->object->property("text").toString();
+    emit this->buttonSendSpeedClicked(this->editSetSpeed->object->property("text").toString());
+}
+
 void GuiHandler::qmlbuttonCarSelfTestClicked()
 {
     qDebug() << "Car self test clicked!";
 }
 
-void GuiHandler::setAlert(bool alert){}
-void GuiHandler::setLedStrip(QVarLengthArray<bool> leds){}
-void GuiHandler::setTextAccelX(float accelX){}
-void GuiHandler::setTextAccelY(float accelY){}
-void GuiHandler::setTextAccelZ(float accelZ){}
-void GuiHandler::setTextGyroX(float gyroX){}
-void GuiHandler::setTextGyroY(float gyroY){}
-void GuiHandler::setTextGyroZ(float gyroZ){}
-void GuiHandler::setTextStatus(QString status){}
-void GuiHandler::setTextSpeed(float speed){}
-void GuiHandler::setWheels(QVarLengthArray<float> wheels){}
-void GuiHandler::setCarAccelY(float accelY){}
-void GuiHandler::setCarGyroX(float gyroX){}
-void GuiHandler::setCarGyroY(float gyroY){}
-void GuiHandler::setCarGyroZ(float gyroZ){}
-void GuiHandler::drawSpeedGraph(float speed){}
+void GuiHandler::setAlert(bool alert)
+{
+    QMetaObject::invokeMethod(this->alertLamp->object, "setAlert", Qt::DirectConnection, Q_ARG(QVariant, alert));
+}
+
+void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
+{
+    QVariantList values;
+
+    for(int i=0; i<21; i++)
+        values << leds.at(i);
+
+    QMetaObject::invokeMethod(this->lineSens->object, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(values)));
+}
+
+void GuiHandler::setTextAccelX(float accelX)
+{
+    QMetaObject::invokeMethod(this->textAccelX->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(accelX)));
+}
+
+void GuiHandler::setTextAccelY(float accelY)
+{
+    QMetaObject::invokeMethod(this->textAccelY->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(accelY)));
+}
+
+void GuiHandler::setTextAccelZ(float accelZ)
+{
+    QMetaObject::invokeMethod(this->textAccelZ->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(accelZ)));
+}
+
+void GuiHandler::setTextGyroX(float gyroX)
+{
+    QMetaObject::invokeMethod(this->textGyroX->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroX)));
+}
+
+void GuiHandler::setTextGyroY(float gyroY)
+{
+    QMetaObject::invokeMethod(this->textGyroY->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroY)));
+}
+
+void GuiHandler::setTextGyroZ(float gyroZ)
+{
+    QMetaObject::invokeMethod(this->textGyroZ->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroZ)));
+}
+
+void GuiHandler::setTextStatus(QString status)
+{
+    QMetaObject::invokeMethod(this->textCurStatus->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, status));
+}
+
+void GuiHandler::setTextSpeed(float speed)
+{
+    QMetaObject::invokeMethod(this->textCurSpeed->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(speed)));
+}
+
+void GuiHandler::setWheels(QVarLengthArray<float> wheels, float D)
+{
+    float v, R, angle;
+    float dt=10;
+
+    v=(wheels.at(0)+wheels.at(1))/2.0;
+    R=v*D/(wheels.at(1)-wheels.at(0));
+    angle=v*dt/R;
+
+    QMetaObject::invokeMethod(this->wheels->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(angle)));
+}
+
+void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
+{
+    float v, R, angle;
+    float dt=10;
+
+    v=(wheels.at(0)+wheels.at(1))/2.0;
+    R=(2*v*v)/(accelY);
+    angle=v*dt/R;
+
+    QMetaObject::invokeMethod(this->carAccelY->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(angle)));
+}
+
+void GuiHandler::setCarGyroX(float gyroX)
+{
+    QMetaObject::invokeMethod(this->carGyroX->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroX)));
+}
+
+void GuiHandler::setCarGyroY(float gyroY)
+{
+    QMetaObject::invokeMethod(this->carGyroY->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroY)));
+}
+
+void GuiHandler::setCarGyroZ(float gyroZ)
+{
+    QMetaObject::invokeMethod(this->carGyroZ->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroZ)));
+}
+
+void GuiHandler::drawSpeedGraph(float speed)
+{
+    QMetaObject::invokeMethod(this->speedGraph->object, "newSample", Qt::DirectConnection, Q_ARG(QVariant, QString::number((-speed/3.0)+0.5)));
+}
