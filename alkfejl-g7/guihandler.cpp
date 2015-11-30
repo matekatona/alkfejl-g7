@@ -61,6 +61,7 @@ void GuiHandler::qmlbuttonSendSpeedClicked()
 {
     qDebug() << "Send speed clicked! Current speed: " << this->editSetSpeed->object->property("text").toString();
     emit this->buttonSendSpeedClicked(this->editSetSpeed->object->property("text").toString());
+    setCarGyroX(-5.7);
 }
 
 void GuiHandler::qmlbuttonCarSelfTestClicked()
@@ -132,7 +133,7 @@ void GuiHandler::setWheels(QVarLengthArray<float> wheels, float D)
     R=v*D/(wheels.at(1)-wheels.at(0));
     angle=v*dt/R;
 
-    QMetaObject::invokeMethod(this->wheels->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(angle)));
+    QMetaObject::invokeMethod(this->wheels->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }
 
 void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
@@ -144,25 +145,25 @@ void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
     R=(2*v*v)/(accelY);
     angle=v*dt/R;
 
-    QMetaObject::invokeMethod(this->carAccelY->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(angle)));
+    QMetaObject::invokeMethod(this->carAccelY->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }
 
 void GuiHandler::setCarGyroX(float gyroX)
 {
-    QMetaObject::invokeMethod(this->carGyroX->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroX)));
+    QMetaObject::invokeMethod(this->carGyroX->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroX));
 }
 
 void GuiHandler::setCarGyroY(float gyroY)
 {
-    QMetaObject::invokeMethod(this->carGyroY->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroY)));
+    QMetaObject::invokeMethod(this->carGyroY->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroY));
 }
 
 void GuiHandler::setCarGyroZ(float gyroZ)
 {
-    QMetaObject::invokeMethod(this->carGyroZ->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroZ)));
+    QMetaObject::invokeMethod(this->carGyroZ->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroZ));
 }
 
 void GuiHandler::drawSpeedGraph(float speed)
 {
-    QMetaObject::invokeMethod(this->speedGraph->object, "newSample", Qt::DirectConnection, Q_ARG(QVariant, QString::number((-speed/3.0)+0.5)));
+    QMetaObject::invokeMethod(this->speedGraph->object, "newSample", Qt::DirectConnection, Q_ARG(QVariant, (-speed/3.0)+0.5));
 }
