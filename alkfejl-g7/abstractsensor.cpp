@@ -1,61 +1,59 @@
 #include "abstractsensor.h"
 
-AbstractSensor::AbstractSensor(QObject *parent) : QObject(parent)
+/*!
+ * \brief AbstractSensor::AbstractSensor
+ * \param port
+ */
+AbstractSensor::AbstractSensor(int port) :
+    socket(new QTcpSocket()),
+    isConnected(false),
+    port(port)
 {
-    socket = new QTcpSocket(this);
-    QObject::connect(socket, SIGNAL(readyRead()), this, SIGNAL(readyRead()));
+    // TODO build error
+    // QObject::connect(this->socket, &QAbstractSocket::connected, this, &AbstractSensor::connected);
+    // QObject::connect(this->socket, &QAbstractSocket::disconnected, this, &AbstractSensor::disconnected);
+    this->connect();
 }
 
-bool
-AbstractSensor::isReadyRead()
-{
-    return socket->isReadable();
-}
-
+/*!
+ * \brief AbstractSensor::connected
+ */
 void
-AbstractSensor::connect(int port)
+AbstractSensor::connected()
 {
-    socket->connectToHost("127.0.0.1", this->port=port);
-    if(!socket->waitForConnected(100)) //should replace this with signals
-    {
-        throw std::runtime_error("Could not connect to socket!");
-    }
-
+    this->isConnected = true;
 }
 
+/*!
+ * \brief AbstractSensor::disconnected
+ */
 void
-AbstractSensor::send(QString data)
+AbstractSensor::disconnected()
 {
-    socket->write(data.toStdString().c_str(), data.length());
+    this->isConnected = false;
 }
 
-//untested
-//reads one line (ending with '\n' from the socket)
-// see QIODevice::readLine()
-QString
-AbstractSensor::recvUntilNewline()
+/*!
+ * \brief AbstractSensor::connect
+ */
+void
+AbstractSensor::connect()
 {
-    if(!allDataReceived.contains("\n"))
-        allDataReceived+=socket->readAll();
-    if(allDataReceived.contains("\n"))
-    {
-        int chopUntil = allDataReceived.indexOf("\n");
-        QString toReturn = allDataReceived.left(chopUntil);
-        allDataReceived=allDataReceived.mid(chopUntil);
-        return allDataReceived;
-    }
-    else return "";
+    this->socket->connectToHost("127.0.0.1", this->port);
+    // handling this with signals (or something likw this)
+    // if(!this->socket->waitForConnected(1000))
+        // throw std::runtime_error("Could not connect to socket!");
 }
 
-QString
-AbstractSensor::recvAll()
+/*!
+ * \brief AbstractSensor::disconnect
+ */
+void
+AbstractSensor::disconnect()
 {
-    QString toReturn = allDataReceived + socket->readAll();
-    allDataReceived = "";
-    return toReturn;
+    this->socket.release();
+    // this->isConnected = false;  // will be set in disconnected() slot
 }
-
-// -----------------------------------------------------------------------
 
 /*!
  * \brief AbstractSensor::readSensor reads sensor data
@@ -64,9 +62,9 @@ AbstractSensor::recvAll()
 QString
 AbstractSensor::readSensor(){
     QString rawString;
-    if(socket->state() == QAbstractSocket::ConnectedState)
+    if(this->isConnected && this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        socket->write("GET");  // send get command
+        this->socket->write("GET");  // send get command
 
         QByteArray rawData = socket->readLine(100);  // read answer
         rawString.fromStdString(rawData.toStdString());
@@ -76,4 +74,3 @@ AbstractSensor::readSensor(){
 
     return rawString;
 }
-

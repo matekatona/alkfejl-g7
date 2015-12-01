@@ -1,21 +1,42 @@
 #include "linesensor.h"
 
+/*!
+ * \brief LineSensor::LineSensor
+ */
 LineSensor::LineSensor()
+    : AbstractSensor(27753)  // call superclass constructor with correct port number
 {
-    // connect?
+    this->currentValues.clear();
 }
 
-bool
-LineSensor::isOk()
+
+/*!
+ * \brief LineSensor::isOk
+ * \return
+ */
+QVarLengthArray<bool>
+LineSensor::getBools()
 {
-    return currentValue < 0.5f;
+    QVarLengthArray<bool> vals;
+    for(uint i=0;i<21;i++)
+        vals.insert(i, this->currentValues.at(i) < LINE_THRESHOLD);
+    return vals;
 }
 
-float
-LineSensor::getValue()
+/*!
+ * \brief LineSensor::getValues
+ * \return
+ */
+QVarLengthArray<float>
+LineSensor::getValues()
 {
     QString raw = this->readSensor();
-    // TODO check for error
-    currentValue = raw.toFloat();
-    return currentValue;
+    if(raw == "ERROR")
+    {
+        throw std::runtime_error("this is not really a runtime error");
+    }
+    QStringList rawValues = raw.split(QRegExp("\\s"));
+    for(uint i=0;i<21;i++)
+        this->currentValues.insert(i, rawValues[i].toFloat());
+    return this->currentValues;
 }

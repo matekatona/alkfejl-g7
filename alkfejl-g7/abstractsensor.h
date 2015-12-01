@@ -4,27 +4,29 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <stdexcept>
+#include <memory>
+
+
+using namespace std;
+
 
 class AbstractSensor : public QObject
 {
     Q_OBJECT
 public:
-    explicit AbstractSensor(QObject *parent = 0);
-    int getPort();
-    void connect(int port);
-    QString recvUntilNewline();
-    QString recvAll();
-    void send(QString data);
-    bool isReadyRead();
+    explicit AbstractSensor(int port = 0);
+    void connect();
+    void disconnect();
 
 signals:
-    void readyRead();
 
 public slots:
+    void connected();
+    void disconnected();
 
 private:
-    QTcpSocket *socket;
-    QString allDataReceived;
+    std::unique_ptr<QTcpSocket> socket;
+    bool isConnected;
 
 protected:
     int port = 0;
