@@ -9,12 +9,6 @@
 using namespace std;
 
 
-typedef enum{
-    STATUS_RUN,
-    STATUS_STOP,
-    STATUS_UNKNOWN
-}robot_status_t;
-
 class CommandSocket : public QObject
 {
     Q_OBJECT
@@ -22,7 +16,7 @@ public:
     explicit CommandSocket(int port = 0);
     void connect();
     void disconnect();
-    robot_status_t getStatus();
+    QString getStatus();
     void run();
     void stop();
     float getSpeed();

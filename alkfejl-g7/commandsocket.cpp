@@ -38,24 +38,18 @@ CommandSocket::disconnect()
  * \brief CommandSocket::getStatus
  * \return
  */
-robot_status_t CommandSocket::getStatus()
+QString CommandSocket::getStatus()
 {
-    QString rawString;
-    robot_status_t status = STATUS_UNKNOWN;
+    QString status;
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("getStatus");  // send get command
 
         QByteArray rawData = socket->readLine(100);  // read answer
-        rawString.fromStdString(rawData.toStdString());
+        status.fromStdString(rawData.toStdString());
     }
     else
-        rawString = "ERROR";
-
-    if(rawString.compare("Run"))
-        status = STATUS_RUN;
-    if(rawString.compare("Stop"))
-        status = STATUS_STOP;
+        status = "UNKNOWN";
 
     return status;
 }

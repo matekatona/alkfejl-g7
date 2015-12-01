@@ -1,20 +1,7 @@
-#include "diagclient.h"
-#include <QApplication>
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include "robot.h"
 
-int main(int argc, char *argv[])
+
+int main()
 {
-    QApplication a(argc, argv);
-    DiagClient w;
-    w.show();
-
-    return a.exec();
-
-//    QGuiApplication app(argc, argv);
-
-//    QQmlApplicationEngine engine;
-//    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-//    return app.exec();
+    return 0;
 }

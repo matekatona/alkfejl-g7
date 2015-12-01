@@ -14,17 +14,17 @@ TARGET = alkfejl-g7
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        diagclient.cpp \
+SOURCES +=\
     robot.cpp \
     linesensor.cpp \
     gyrosensor.cpp \
     accelsensor.cpp \
     abstractsensor.cpp \
     wheelsensor.cpp \
-    commandsocket.cpp
+    commandsocket.cpp \
+    main.cpp
 
-HEADERS  += diagclient.h \
+HEADERS  += \
     robot.h \
     linesensor.h \
     gyrosensor.h \
@@ -33,7 +33,7 @@ HEADERS  += diagclient.h \
     wheelsensor.h \
     commandsocket.h
 
-FORMS    += diagclient.ui
+FORMS    +=
 
 CONFIG += c++11
 

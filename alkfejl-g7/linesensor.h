@@ -4,16 +4,18 @@
 
 #include "abstractsensor.h"
 
+#define LINE_THRESHOLD 0.5f
+
 
 class LineSensor : public AbstractSensor
 {
 public:
     LineSensor();
-    bool isOk();
-    float getValue();
+    QVarLengthArray<bool> getBools();
+    QVarLengthArray<float> getValues();
 
 private:
-    float currentValue;
+    QVarLengthArray<float> currentValues;
 };
 
 #endif // LINESENSOR_H

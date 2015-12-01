@@ -14,29 +14,33 @@ public:
     explicit Robot();
 
 signals:
-    void status(robot_status_t status);
-    void speed(float speed);
-    void gyrodata(float x, float y, float z);
-    void acceldata(float x, float y, float z);
-    void linedata(std::vector<float> line);
-    void wheeldata(float left, float right);
+    void setAlert(bool alert);
+    void setLedStrip(QVarLengthArray<bool> leds);
+    void setTextAccelX(float accelX);
+    void setTextAccelY(float accelY);
+    void setTextAccelZ(float accelZ);
+    void setTextGyroX(float gyroX);
+    void setTextGyroY(float gyroY);
+    void setTextGyroZ(float gyroZ);
+    void setTextStatus(QString status);
+    void setTextSpeed(float speed);
+    void setWheels(QVarLengthArray<float> wheels, const float D);
+    void setCarAccelY(QVarLengthArray<float> wheels, float accelY);
+    void setCarGyroX(float gyroX);
+    void setCarGyroY(float gyroY);
+    void setCarGyroZ(float gyroZ);
+    void drawSpeedGraph(float speed);
 
 public slots:
-    void setStatus(QString status);
-    void getSpeed();
-    void getStatus();
-    void setSpeed(float speed);
-    void getGyroData();
-    void getAccelData();
-    void getLineData();
-    void getWheelData();
+    void update();
 
 private:
-    std::unique_ptr<GyroSensor> gyro;
-    std::unique_ptr<AccelSensor> accel;
-    std::unique_ptr<LineSensor> line;
-    std::unique_ptr<WheelSensor> wheel;
     std::unique_ptr<CommandSocket> cmd;
+    std::unique_ptr<LineSensor> line;
+    std::unique_ptr<AccelSensor> accel;
+    std::unique_ptr<GyroSensor> gyro;
+    std::unique_ptr<WheelSensor> wheel;
+    const float D = 0.12;
 };
 
 #endif // ROBOT_H

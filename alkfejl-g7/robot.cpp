@@ -5,11 +5,11 @@
  * \brief Robot::Robot
  */
 Robot::Robot()
-    : gyro(new GyroSensor()),
-      accel(new AccelSensor()),
+    : cmd(new CommandSocket(25455)),
       line(new LineSensor()),
-      wheel(new WheelSensor()),
-      cmd(new CommandSocket(25455))
+      accel(new AccelSensor()),
+      gyro(new GyroSensor()),
+      wheel(new WheelSensor())
 {
     // etwas
 }
@@ -19,85 +19,32 @@ Robot::Robot()
 // ---------------------------------------------------------
 
 /*!
- * \brief Robot::setStatus
+ * \brief Robot::update
  */
 void
-Robot::setStatus(QString status)
-{
-    if(status == "Run")
-        this->cmd->run();
-    if(status == "Stop")
-        this->cmd->stop();
-    emit this->getStatus();
-}
-
-/*!
- * \brief getSpeed
- */
-void
-Robot::getSpeed(){
-    float speed = this->cmd->getSpeed();
-    emit this->speed(speed);
-}
-
-void
-Robot::getStatus()
-{
-    robot_status_t status = this->cmd->getStatus();
-    emit this->status(status);
-}
-
-/*!
- * \brief setSpeed
- */
-void
-Robot::setSpeed(float speed)
-{
-    this->cmd->setSpeed(speed);
-}
-
-/*!
- * \brief getGyroData
- */
-void
-Robot::getGyroData()
-{
+Robot::update(){
+    // emit this->setAlert(alert);
+    emit this->setLedStrip(this->line->getBools());
+    float ay = this->accel->getY();
+    emit this->setTextAccelX(this->accel->getX());
+    emit this->setTextAccelY(ay);
+    emit this->setTextAccelZ(this->accel->getZ());
     float gx = this->gyro->getX();
     float gy = this->gyro->getY();
     float gz = this->gyro->getZ();
-    emit this->gyrodata(gx, gy, gz);
-}
-
-/*!
- * \brief getAccelData
- */
-void
-Robot::getAccelData()
-{
-    float ax = this->accel->getX();
-    float ay = this->accel->getY();
-    float az = this->accel->getZ();
-    emit this->acceldata(ax, ay, az);
-}
-
-/*!
- * \brief getLineData
- */
-void
-Robot::getLineData()
-{   // TODO this is not serious, but better than an empty function
-    float value = this->line->getValue();
-    std::vector<float> valvec = {value};
-    emit this->linedata(valvec);
-}
-
-/*!
- * \brief getWheelData
- */
-void
-Robot::getWheelData()
-{
-    float left = this->wheel->getLeft();
-    float right = this->wheel->getRight();
-    emit this->wheeldata(left, right);
+    emit this->setTextGyroX(gx);
+    emit this->setTextGyroY(gy);
+    emit this->setTextGyroZ(gz);
+    emit this->setTextStatus(this->cmd->getStatus());
+    float speed = this->cmd->getSpeed();
+    emit this->setTextSpeed(speed);
+    QVarLengthArray<float> wheels;
+    wheels.insert(0,this->wheel->getLeft());
+    wheels.insert(1,this->wheel->getRight());
+    emit this->setWheels(wheels, this->D);
+    emit this->setCarAccelY(wheels, ay);
+    emit this->setCarGyroX(gx);
+    emit this->setCarGyroY(gy);
+    emit this->setCarGyroZ(gz);
+    emit this->drawSpeedGraph(speed);
 }
