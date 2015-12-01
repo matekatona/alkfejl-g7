@@ -1,15 +1,15 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include "abstractsensor.h"
 #include "linesensor.h"
 #include "accelsensor.h"
 #include "gyrosensor.h"
 #include "wheelsensor.h"
 #include "commandsocket.h"
 
-class Robot : public AbstractSensor
+class Robot : public QObject
 {
+    Q_OBJECT
 public:
     explicit Robot();
 
@@ -22,8 +22,7 @@ signals:
     void wheeldata(float left, float right);
 
 public slots:
-    void run();
-    void stop();
+    void setStatus(QString status);
     void getSpeed();
     void getStatus();
     void setSpeed(float speed);

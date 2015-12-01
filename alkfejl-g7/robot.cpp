@@ -14,26 +14,21 @@ Robot::Robot()
     // etwas
 }
 
-// -------------------------------------------------
-// ---------------------- SLOTS --------------------
-// -------------------------------------------------
+// ---------------------------------------------------------
+// -------------------------- SLOTS ------------------------
+// ---------------------------------------------------------
 
 /*!
- * \brief run
+ * \brief Robot::setStatus
  */
 void
-Robot::run()
+Robot::setStatus(QString status)
 {
-    this->cmd->run();
-}
-
-/*!
- * \brief stop
- */
-void
-Robot::stop()
-{
-    this->cmd->stop();
+    if(status == "Run")
+        this->cmd->run();
+    if(status == "Stop")
+        this->cmd->stop();
+    emit this->getStatus();
 }
 
 /*!
@@ -42,14 +37,14 @@ Robot::stop()
 void
 Robot::getSpeed(){
     float speed = this->cmd->getSpeed();
-    // emit this->speed(speed);
+    emit this->speed(speed);
 }
 
 void
 Robot::getStatus()
 {
     robot_status_t status = this->cmd->getStatus();
-    // emit this->status(status);
+    emit this->status(status);
 }
 
 /*!
@@ -70,7 +65,7 @@ Robot::getGyroData()
     float gx = this->gyro->getX();
     float gy = this->gyro->getY();
     float gz = this->gyro->getZ();
-    // emit this->gyrodata(gx, gy, gz);
+    emit this->gyrodata(gx, gy, gz);
 }
 
 /*!
@@ -82,7 +77,7 @@ Robot::getAccelData()
     float ax = this->accel->getX();
     float ay = this->accel->getY();
     float az = this->accel->getZ();
-    // emit this->acceldata(ax, ay, az);
+    emit this->acceldata(ax, ay, az);
 }
 
 /*!
@@ -93,7 +88,7 @@ Robot::getLineData()
 {   // TODO this is not serious, but better than an empty function
     float value = this->line->getValue();
     std::vector<float> valvec = {value};
-    // emit this->linedata(valvec);
+    emit this->linedata(valvec);
 }
 
 /*!
@@ -104,5 +99,5 @@ Robot::getWheelData()
 {
     float left = this->wheel->getLeft();
     float right = this->wheel->getRight();
-    // emit this->wheeldata(left, right);
+    emit this->wheeldata(left, right);
 }
