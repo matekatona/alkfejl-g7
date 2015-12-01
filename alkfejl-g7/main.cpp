@@ -1,6 +1,6 @@
-#include "diagclient.h"
 #include <QApplication>
 #include <QGuiApplication>
+#include <QtWidgets>
 #include <QQmlApplicationEngine>
 #include <QVarLengthArray>
 #include "qmlhandlercppside.h"
@@ -9,16 +9,8 @@
 #include "guihandler.h"
 #include <QtQml/QQmlContext>
 
-#include "robothistory.h"
-
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    DiagClient w;
-//    w.show();
-
-//    return a.exec();
-
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<Graph>("Graph", 1, 0, "Graph");
