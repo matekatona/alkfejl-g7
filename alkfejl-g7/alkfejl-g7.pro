@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     gridnode.cpp \
     linenode.cpp \
     noisynode.cpp \
-    robothistory.cpp \
     guihandler.cpp
 
 HEADERS  += diagclient.h \
@@ -41,7 +40,6 @@ HEADERS  += diagclient.h \
     gridnode.h \
     linenode.h \
     noisynode.h \
-    robothistory.h \
     guihandler.h
 
 FORMS    += diagclient.ui

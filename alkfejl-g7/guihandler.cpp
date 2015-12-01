@@ -61,7 +61,6 @@ void GuiHandler::qmlbuttonSendSpeedClicked()
 {
     qDebug() << "Send speed clicked! Current speed: " << this->editSetSpeed->object->property("text").toString();
     emit this->buttonSendSpeedClicked(this->editSetSpeed->object->property("text").toString());
-    setCarGyroX(-5.7);
 }
 
 void GuiHandler::qmlbuttonCarSelfTestClicked()
@@ -131,7 +130,7 @@ void GuiHandler::setWheels(QVarLengthArray<float> wheels, float D)
 
     v=(wheels.at(0)+wheels.at(1))/2.0;
     R=v*D/(wheels.at(1)-wheels.at(0));
-    angle=v*dt/R;
+    angle=-v*dt/R;
 
     QMetaObject::invokeMethod(this->wheels->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }
@@ -142,8 +141,8 @@ void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
     float dt=10;
 
     v=(wheels.at(0)+wheels.at(1))/2.0;
-    R=(2*v*v)/(accelY);
-    angle=v*dt/R;
+    R=(v*v)/(accelY);
+    angle=-v*dt/R;
 
     QMetaObject::invokeMethod(this->carAccelY->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }
