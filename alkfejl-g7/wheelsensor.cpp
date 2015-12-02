@@ -8,8 +8,24 @@ WheelSensor::WheelSensor()
 {
     this->cacheleft = this->pleft;
     this->cacheright = this->pright;
-    this->pleft.reset();
-    this->pright.reset();
+    this->pleft=std::make_shared<float>(0.0);
+    this->pright=std::make_shared<float>(0.0);
+}
+
+void
+WheelSensor::readSensor()
+{
+    QByteArray rawData = this->socket.readAll();
+    QString rawString(rawData);
+
+    QStringList rawValues = rawString.split(" ");
+    float left, right;
+    left=rawValues[0].toFloat();
+    right=rawValues[1].toFloat();
+    this->pleft = std::make_shared<float>(left);
+    this->pright = std::make_shared<float>(right);
+
+    emit this->dataReady();
 }
 
 
@@ -20,26 +36,7 @@ WheelSensor::WheelSensor()
 float
 WheelSensor::getLeft()
 {
-    float left;
-    // check for value in cache
-    std::shared_ptr<float> cleft = this->cacheleft.lock();
-    if(cleft)
-    {
-        // use cached value
-        left = *cleft;
-        this->pleft.reset();
-    }
-    else
-    {
-        // read new values
-        QString raw = this->readSensor();
-        QStringList values = raw.split(QRegExp("\\s"));
-        left = values[0].toFloat();
-        float right = values[1].toFloat();
-        // cache the other value
-        this->pright = std::make_shared<float>(right);
-    }
-    return left;
+    return *this->pleft.get();
 }
 
 
@@ -50,24 +47,5 @@ WheelSensor::getLeft()
 float
 WheelSensor::getRight()
 {
-    float right;
-    // check for value in cache
-    std::shared_ptr<float> cright = this->cacheright.lock();
-    if(cright)
-    {
-        // use cached value
-        right = *cright;
-        this->pright.reset();
-    }
-    else
-    {
-        // read new values
-        QString raw = this->readSensor();
-        QStringList values = raw.split(QRegExp("\\s"));
-        float left = values[0].toFloat();
-        right = values[1].toFloat();
-        // cache the other value
-        this->pleft = std::make_shared<float>(left);
-    }
-    return right;
+    return *this->pright.get();
 }

@@ -66,6 +66,7 @@ void GuiHandler::qmlbuttonSendSpeedClicked()
 void GuiHandler::qmlbuttonCarSelfTestClicked()
 {
     qDebug() << "Car self test clicked!";
+    emit this->buttonCarSelfTestClicked();
 }
 
 void GuiHandler::setAlert(bool alert)
@@ -130,7 +131,10 @@ void GuiHandler::setWheels(QVarLengthArray<float> wheels, float D)
 
     v=(wheels.at(0)+wheels.at(1))/2.0;
     R=v*D/(wheels.at(1)-wheels.at(0));
-    angle=-v*dt/R;
+    if(R==0 || R!=R)
+        angle=0;
+    else
+        angle=-v*dt/R;
 
     QMetaObject::invokeMethod(this->wheels->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }
@@ -142,7 +146,10 @@ void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
 
     v=(wheels.at(0)+wheels.at(1))/2.0;
     R=(v*v)/(accelY);
-    angle=-v*dt/R;
+    if(R==0 || R!=R)
+        angle=0;
+    else
+        angle=-v*dt/R;
 
     QMetaObject::invokeMethod(this->carAccelY->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }

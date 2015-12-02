@@ -27,7 +27,7 @@ signals:
 public slots:
 
 private:
-    std::unique_ptr<QTcpSocket> socket;
+    QTcpSocket socket;
     int port = 0;
 };
 #endif // COMMANDSOCKET_H

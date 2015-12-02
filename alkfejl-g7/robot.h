@@ -1,6 +1,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include <QObject>
 #include "linesensor.h"
 #include "accelsensor.h"
 #include "gyrosensor.h"
@@ -33,6 +34,12 @@ signals:
 
 public slots:
     void update();
+
+private slots:
+    void lineSensDataReceived();
+    void accelDataReceived();
+    void gyroDataReceived();
+    void wheelDataReceived();
 
 private:
     std::unique_ptr<CommandSocket> cmd;

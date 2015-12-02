@@ -5,7 +5,6 @@
  * \param port
  */
 CommandSocket::CommandSocket(int port)
-    : socket(new QTcpSocket())
 {
     // socket = std::make_unique<QTcpSocket>(new QTcpSocket());
     this->port = port;
@@ -18,8 +17,8 @@ CommandSocket::CommandSocket(int port)
 void
 CommandSocket::connect()
 {
-    this->socket->connectToHost("127.0.0.1", this->port);
-    if(!this->socket->waitForConnected(1000))
+    this->socket.connectToHost("127.0.0.1", this->port, QIODevice::ReadWrite);
+    if(!this->socket.waitForConnected(1000))
     {
         throw std::runtime_error("Could not connect to socket!");
     }
@@ -31,7 +30,7 @@ CommandSocket::connect()
 void
 CommandSocket::disconnect()
 {
-    this->socket.release();
+    this->socket.disconnectFromHost();
 }
 
 /*!
@@ -41,11 +40,11 @@ CommandSocket::disconnect()
 QString CommandSocket::getStatus()
 {
     QString status;
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    if(this->socket.state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("getStatus");  // send get command
+        this->socket.write("getStatus");  // send get command
 
-        QByteArray rawData = socket->readLine(100);  // read answer
+        QByteArray rawData = this->socket.readLine(100);  // read answer
         status.fromStdString(rawData.toStdString());
     }
     else
@@ -60,9 +59,9 @@ QString CommandSocket::getStatus()
 void
 CommandSocket::run()
 {
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    if(this->socket.state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("setStatus:Run");  // send run command
+        this->socket.write("setStatus:Run");  // send run command
     }
 }
 
@@ -72,9 +71,9 @@ CommandSocket::run()
 void
 CommandSocket::stop()
 {
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    if(this->socket.state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("setStatus:Stop");  // send stop command
+        this->socket.write("setStatus:Stop");  // send stop command
     }
 }
 
@@ -86,11 +85,11 @@ float
 CommandSocket::getSpeed()
 {
     QString rawString;
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    if(this->socket.state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("getSpeed");  // send get command
+        this->socket.write("getSpeed");  // send get command
 
-        QByteArray rawData = socket->readLine(100);  // read answer
+        QByteArray rawData = this->socket.readLine(100);  // read answer
         rawString.fromStdString(rawData.toStdString());
     }
     else
@@ -106,12 +105,12 @@ CommandSocket::getSpeed()
 void
 CommandSocket::setSpeed(float newspeed)
 {
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    if(this->socket.state() == QAbstractSocket::ConnectedState)
     {
         // TODO real solution
         char command[20];
         sprintf(command, "setSpeed:%.1f", newspeed);
-        this->socket->write(command);  // send setspeed command
+        this->socket.write(command);  // send setspeed command
     }
 }
 

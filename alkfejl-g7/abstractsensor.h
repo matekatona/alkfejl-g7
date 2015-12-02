@@ -17,19 +17,16 @@ public:
     explicit AbstractSensor(int port = 0);
     void connect();
     void disconnect();
+    int sendGet();
+
+protected slots:
+    virtual void readSensor();
 
 signals:
-
-public slots:
-    void connected();
-    void disconnected();
-
-private:
-    std::unique_ptr<QTcpSocket> socket;
-    bool isConnected;
+    void dataReady();
 
 protected:
     int port = 0;
-    QString readSensor();
+    QTcpSocket socket;
 };
 #endif // ABSTRACTSENSOR_H

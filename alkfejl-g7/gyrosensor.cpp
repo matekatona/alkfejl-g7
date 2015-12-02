@@ -14,6 +14,24 @@ GyroSensor::GyroSensor()
     this->pz.reset();
 }
 
+void
+GyroSensor::readSensor()
+{
+    QByteArray rawData = this->socket.readAll();
+    QString rawString(rawData);
+
+    QStringList rawValues = rawString.split(" ");
+    float x, y, z;
+    x=rawValues[0].toFloat();
+    y=rawValues[1].toFloat();
+    z=rawValues[2].toFloat();
+    this->px = std::make_shared<float>(x);
+    this->py = std::make_shared<float>(y);
+    this->pz = std::make_shared<float>(z);
+
+    emit this->dataReady();
+}
+
 /*!
  * \brief GyroSensor::GetX returns what?
  * \return -||-
@@ -21,28 +39,7 @@ GyroSensor::GyroSensor()
 float
 GyroSensor::getX()
 {
-    float x;
-    // check for value in cache
-    std::shared_ptr<float> cx = this->cachex.lock();
-    if(cx)
-    {
-        // use cached value
-        x = *cx;
-        this->px.reset();
-    }
-    else
-    {
-        // read new values
-        QString raw = this->readSensor();
-        QStringList values = raw.split(QRegExp("\\s"));
-        x = values[0].toFloat();
-        float y = values[1].toFloat();
-        float z = values[2].toFloat();
-        // cache the other values
-        this->py = std::make_shared<float>(y);
-        this->pz = std::make_shared<float>(z);
-    }
-    return x;
+    return *this->px.get();
 }
 
 /*!
@@ -52,28 +49,7 @@ GyroSensor::getX()
 float
 GyroSensor::getY()
 {
-    float y;
-    // check for value in cache
-    std::shared_ptr<float> cy = this->cachey.lock();
-    if(cy)
-    {
-        // use cached value
-        y = *cy;
-        this->py.reset();
-    }
-    else
-    {
-        // read new values
-        QString raw = this->readSensor();
-        QStringList values = raw.split(QRegExp("\\s"));
-        float x = values[0].toFloat();
-        y = values[1].toFloat();
-        float z = values[2].toFloat();
-        // cache the other values
-        this->px = std::make_shared<float>(x);
-        this->pz = std::make_shared<float>(z);
-    }
-    return y;
+    return *this->py.get();
 }
 
 /*!
@@ -83,28 +59,7 @@ GyroSensor::getY()
 float
 GyroSensor::getZ()
 {
-    float z;
-    // check for value in cache
-    std::shared_ptr<float> cz = this->cachez.lock();
-    if(cz)
-    {
-        // use cached value
-        z = *cz;
-        this->pz.reset();
-    }
-    else
-    {
-        // read new values
-        QString raw = this->readSensor();
-        QStringList values = raw.split(QRegExp("\\s"));
-        float x = values[0].toFloat();
-        float y = values[1].toFloat();
-        z = values[2].toFloat();
-        // cache the other values
-        this->px = std::make_shared<float>(x);
-        this->py = std::make_shared<float>(y);
-    }
-    return z;
+    return *this->pz.get();
 }
 
 

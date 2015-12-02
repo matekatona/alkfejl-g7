@@ -7,6 +7,7 @@
 
 #include "graph.h"
 #include "guihandler.h"
+#include "robot.h"
 #include <QtQml/QQmlContext>
 
 int main(int argc, char *argv[])
@@ -44,6 +45,25 @@ int main(int argc, char *argv[])
     QMLHandlerCppSide buttonCarSelfTest(engine.rootObjects()[0], "buttonCarSelfTest");
 
     GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
+
+    Robot testRobi;
+
+    QObject::connect(&guihandle, SIGNAL(buttonCarSelfTestClicked()), &testRobi, SLOT(update()));
+    QObject::connect(&testRobi, SIGNAL(setLedStrip(QVarLengthArray<bool>)), &guihandle, SLOT(setLedStrip(QVarLengthArray<bool>)));
+    QObject::connect(&testRobi, SIGNAL(setTextAccelX(float)), &guihandle, SLOT(setTextAccelX(float)));
+    QObject::connect(&testRobi, SIGNAL(setTextAccelY(float)), &guihandle, SLOT(setTextAccelY(float)));
+    QObject::connect(&testRobi, SIGNAL(setTextAccelZ(float)), &guihandle, SLOT(setTextAccelZ(float)));
+    QObject::connect(&testRobi, SIGNAL(setTextGyroX(float)), &guihandle, SLOT(setTextGyroX(float)));
+    QObject::connect(&testRobi, SIGNAL(setTextGyroY(float)), &guihandle, SLOT(setTextGyroY(float)));
+    QObject::connect(&testRobi, SIGNAL(setTextGyroZ(float)), &guihandle, SLOT(setTextGyroZ(float)));
+    QObject::connect(&testRobi, SIGNAL(setTextStatus(QString)), &guihandle, SLOT(setTextStatus(QString)));
+    QObject::connect(&testRobi, SIGNAL(setTextSpeed(float)), &guihandle, SLOT(setTextSpeed(float)));
+    QObject::connect(&testRobi, SIGNAL(setWheels(QVarLengthArray<float>, const float)), &guihandle, SLOT(setWheels(QVarLengthArray<float>, const float)));
+    QObject::connect(&testRobi, SIGNAL(setCarAccelY(QVarLengthArray<float>, float)), &guihandle, SLOT(setCarAccelY(QVarLengthArray<float>, float)));
+    QObject::connect(&testRobi, SIGNAL(setCarGyroX(float)), &guihandle, SLOT(setCarGyroX(float)));
+    QObject::connect(&testRobi, SIGNAL(setCarGyroY(float)), &guihandle, SLOT(setCarGyroY(float)));
+    QObject::connect(&testRobi, SIGNAL(setCarGyroZ(float)), &guihandle, SLOT(setCarGyroZ(float)));
+    QObject::connect(&testRobi, SIGNAL(drawSpeedGraph(float)), &guihandle, SLOT(drawSpeedGraph(float)));
 
 //    for(int i=0;i<20;i++){
 //        QMetaObject::invokeMethod(speedGraph.object, "removeFirstSample", Qt::DirectConnection);
