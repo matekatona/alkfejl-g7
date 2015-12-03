@@ -115,7 +115,7 @@ CommandSocket::setStatus(QString newstatus)
     {
         // TODO real solution
         QString command;
-        command="setStatus:" + newstatus;
+        command="setStatus:" + newstatus + "\n";
         this->socket.write(command.toUtf8());  // send setstatus command
     }
 }
@@ -131,7 +131,7 @@ CommandSocket::setSpeed(float newspeed)
     {
         // TODO real solution
         QString command;
-        command="setSpeed:" + QString::number(newspeed);
+        command="setSpeed:" + QString::number(newspeed) + "\n";
         this->socket.write(command.toUtf8());  // send setspeed command
     }
 }

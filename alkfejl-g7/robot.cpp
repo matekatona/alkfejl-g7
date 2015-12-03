@@ -66,6 +66,19 @@ Robot::update(){
 }
 
 void
+Robot::setStatus(QString status)
+{
+    this->cmd->setStatus(status);
+}
+
+void
+Robot::setSpeed(QString speed)
+{
+    speed.replace(',','.');
+    this->cmd->setSpeed(speed.toFloat());
+}
+
+void
 Robot::statusDataReceived()
 {
     float speed=this->cmd->getCurrentSpeed();

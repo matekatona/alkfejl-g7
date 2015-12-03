@@ -22,6 +22,7 @@ LineSensor::readSensor()
     QString rawString(rawData);
 
     QStringList rawValues = rawString.split(" ");
+    this->currentValues.clear();
     for(uint i=0;i<21;i++)
         this->currentValues.append(rawValues[i].toFloat() < LINE_THRESHOLD);
 

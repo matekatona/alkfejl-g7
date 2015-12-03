@@ -13,6 +13,10 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    QTimer timer;
+
+    timer.setSingleShot(false);
+    timer.setInterval(100);
 
     qmlRegisterType<Graph>("Graph", 1, 0, "Graph");
 
@@ -21,7 +25,6 @@ int main(int argc, char *argv[])
 
     app.setWindowIcon(QIcon(":/content/icon.png"));
 
-    QMLHandlerCppSide mainWindow(engine.rootObjects()[0], "mainWindow");
     QMLHandlerCppSide alertLamp(engine.rootObjects()[0], "alertLamp");
     QMLHandlerCppSide lineSens(engine.rootObjects()[0], "lineSens");
     QMLHandlerCppSide textAccelX(engine.rootObjects()[0], "textAccelX");
@@ -48,7 +51,9 @@ int main(int argc, char *argv[])
 
     Robot testRobi;
 
-    QObject::connect(&guihandle, SIGNAL(buttonCarSelfTestClicked()), &testRobi, SLOT(update()));
+    QObject::connect(&timer, SIGNAL(timeout()), &testRobi, SLOT(update()));
+    QObject::connect(&guihandle, SIGNAL(buttonSendStatusClicked(QString)), &testRobi, SLOT(setStatus(QString)));
+    QObject::connect(&guihandle, SIGNAL(buttonSendSpeedClicked(QString)), &testRobi, SLOT(setSpeed(QString)));
     QObject::connect(&testRobi, SIGNAL(setLedStrip(QVarLengthArray<bool>)), &guihandle, SLOT(setLedStrip(QVarLengthArray<bool>)));
     QObject::connect(&testRobi, SIGNAL(setTextAccelX(float)), &guihandle, SLOT(setTextAccelX(float)));
     QObject::connect(&testRobi, SIGNAL(setTextAccelY(float)), &guihandle, SLOT(setTextAccelY(float)));
@@ -64,6 +69,8 @@ int main(int argc, char *argv[])
     QObject::connect(&testRobi, SIGNAL(setCarGyroY(float)), &guihandle, SLOT(setCarGyroY(float)));
     QObject::connect(&testRobi, SIGNAL(setCarGyroZ(float)), &guihandle, SLOT(setCarGyroZ(float)));
     QObject::connect(&testRobi, SIGNAL(drawSpeedGraph(float)), &guihandle, SLOT(drawSpeedGraph(float)));
+
+    timer.start();
 
 //    for(int i=0;i<20;i++){
 //        QMetaObject::invokeMethod(speedGraph.object, "removeFirstSample", Qt::DirectConnection);

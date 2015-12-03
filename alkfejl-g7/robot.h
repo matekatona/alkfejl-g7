@@ -34,6 +34,8 @@ signals:
 
 public slots:
     void update();
+    void setStatus(QString status);
+    void setSpeed(QString speed);
 
 private slots:
     void statusDataReceived();
