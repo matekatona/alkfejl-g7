@@ -16,6 +16,8 @@ LineSensor::LineSensor()
 void
 LineSensor::readSensor()
 {
+    while(!this->socket.canReadLine()){}
+
     QByteArray rawData = this->socket.readAll();
     QString rawString(rawData);
 

@@ -15,6 +15,8 @@ WheelSensor::WheelSensor()
 void
 WheelSensor::readSensor()
 {
+    while(!this->socket.canReadLine()){}
+
     QByteArray rawData = this->socket.readAll();
     QString rawString(rawData);
 

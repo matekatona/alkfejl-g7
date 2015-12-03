@@ -17,6 +17,8 @@ AccelSensor::AccelSensor()
 void
 AccelSensor::readSensor()
 {
+    while(!this->socket.canReadLine()){}
+
     QByteArray rawData = this->socket.readAll();
     QString rawString(rawData);
 

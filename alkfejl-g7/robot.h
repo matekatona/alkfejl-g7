@@ -36,6 +36,7 @@ public slots:
     void update();
 
 private slots:
+    void statusDataReceived();
     void lineSensDataReceived();
     void accelDataReceived();
     void gyroDataReceived();

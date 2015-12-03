@@ -17,6 +17,8 @@ GyroSensor::GyroSensor()
 void
 GyroSensor::readSensor()
 {
+    while(!this->socket.canReadLine()){}
+
     QByteArray rawData = this->socket.readAll();
     QString rawString(rawData);
 

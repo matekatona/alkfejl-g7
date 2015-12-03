@@ -12,11 +12,12 @@ Robot::Robot()
       wheel(new WheelSensor())
 {
     // etwas
-   QObject::connect(this->line.get(), SIGNAL(dataReady()), this, SLOT(lineSensDataReceived()));
-   QObject::connect(this->accel.get(), SIGNAL(dataReady()), this, SLOT(accelDataReceived()));
-   QObject::connect(this->gyro.get(), SIGNAL(dataReady()), this, SLOT(gyroDataReceived()));
-   QObject::connect(this->wheel.get(), SIGNAL(dataReady()), this, SLOT(wheelDataReceived()));
-   qDebug() << "Robot initialized";
+    QObject::connect(this->cmd.get(), SIGNAL(dataReady()), this, SLOT(statusDataReceived()));
+    QObject::connect(this->line.get(), SIGNAL(dataReady()), this, SLOT(lineSensDataReceived()));
+    QObject::connect(this->accel.get(), SIGNAL(dataReady()), this, SLOT(accelDataReceived()));
+    QObject::connect(this->gyro.get(), SIGNAL(dataReady()), this, SLOT(gyroDataReceived()));
+    QObject::connect(this->wheel.get(), SIGNAL(dataReady()), this, SLOT(wheelDataReceived()));
+    qDebug() << "Robot initialized";
 }
 
 // ---------------------------------------------------------
@@ -52,6 +53,8 @@ Robot::update(){
 //    emit this->setCarGyroY(gy);
 //    emit this->setCarGyroZ(gz);
 //    emit this->drawSpeedGraph(speed);
+    if(this->cmd->getStatus())
+        qDebug() << "Command socket is not connected!";
     if(this->line->sendGet())
         qDebug() << "LineSensor is not connected!";
     if(this->accel->sendGet())
@@ -60,6 +63,16 @@ Robot::update(){
         qDebug() << "GyroSensor is not connected!";
     if(this->wheel->sendGet())
         qDebug() << "WheelSensor is not connected!";
+}
+
+void
+Robot::statusDataReceived()
+{
+    float speed=this->cmd->getCurrentSpeed();
+
+    emit this->setTextStatus(this->cmd->getCurrentStatus());
+    emit this->setTextSpeed(speed);
+    emit this->drawSpeedGraph(speed);
 }
 
 void
