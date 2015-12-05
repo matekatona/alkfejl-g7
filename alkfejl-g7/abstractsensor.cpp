@@ -1,4 +1,6 @@
 #include "abstractsensor.h"
+#include <thread>
+
 
 /*!
  * \brief AbstractSensor::AbstractSensor
@@ -39,10 +41,16 @@ AbstractSensor::disconnected()
 void
 AbstractSensor::connect()
 {
+    qDebug() << "trying to connect...";
     this->socket->connectToHost("127.0.0.1", this->port);
-    // handling this with signals (or something likw this)
-    // if(!this->socket->waitForConnected(1000))
-        // throw std::runtime_error("Could not connect to socket!");
+    if(!this->socket->waitForConnected(1000))
+    {
+        qDebug() << "could not connect to port " << this->port;
+    }
+    else
+    {
+        qDebug() << "connected to port " << this->port;
+    }
 }
 
 /*!
@@ -65,6 +73,8 @@ AbstractSensor::readSensor(){
     if(this->isConnected && this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("GET");  // send get command
+
+        std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(1));
 
         QByteArray rawData = socket->readLine(100);  // read answer
         rawString.fromStdString(rawData.toStdString());

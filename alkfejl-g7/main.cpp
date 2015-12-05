@@ -7,6 +7,7 @@
 
 #include "graph.h"
 #include "guihandler.h"
+#include "robot.h"
 #include <QtQml/QQmlContext>
 
 int main(int argc, char *argv[])
@@ -44,6 +45,7 @@ int main(int argc, char *argv[])
     QMLHandlerCppSide buttonCarSelfTest(engine.rootObjects()[0], "buttonCarSelfTest");
 
     GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
+    Robot mikrobi;
 
 //    for(int i=0;i<20;i++){
 //        QMetaObject::invokeMethod(speedGraph.object, "removeFirstSample", Qt::DirectConnection);
