@@ -48,10 +48,11 @@ QString CommandSocket::getStatus()
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("getStatus\n");  // send get command
-
+        qDebug() << "getstatus sent";
         QByteArray rawData = socket->readLine(100);  // read answer
         QString temp(rawData);
         status = temp;
+        qDebug() << "status read from port: " << rawData << status;
     }
     else
         status = "UNKNOWN";
@@ -94,7 +95,7 @@ CommandSocket::getSpeed()
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("getSpeed\n");  // send get command
-
+        qDebug() << "getspeed sent";
         QByteArray rawData = socket->readLine(100);  // read answer
         QString temp(rawData);
         rawString = temp;
