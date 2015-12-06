@@ -13,6 +13,10 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    QTimer timer;
+
+    timer.setSingleShot(false);
+    timer.setInterval(100);
 
     qmlRegisterType<Graph>("Graph", 1, 0, "Graph");
 
@@ -47,7 +51,7 @@ int main(int argc, char *argv[])
     GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
     Robot mikrobi;
 
-    QObject::connect(&guihandle, SIGNAL(buttonCarSelfTestClicked()), &mikrobi, SLOT(update()));
+    QObject::connect(&timer, SIGNAL(timeout()), &mikrobi, SLOT(update()));
     QObject::connect(&guihandle, SIGNAL(buttonSendStatusClicked(QString)), &mikrobi, SLOT(status(QString)));
     QObject::connect(&guihandle, SIGNAL(buttonSendSpeedClicked(float)), &mikrobi, SLOT(speed(float)));
 

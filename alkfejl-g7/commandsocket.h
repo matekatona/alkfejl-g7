@@ -16,18 +16,29 @@ public:
     explicit CommandSocket(int port = 0);
     void connect();
     void disconnect();
-    QString getStatus();
+    int getStatus();
     void run();
     void stop();
-    float getSpeed();
-    void setSpeed(float newspeed);
+    QString getCurrentStatus();
+    float getCurrentSpeed();
 
 signals:
+    void dataReady();
 
 public slots:
+    void setStatus(QString newstatus);
+    void setSpeed(float newspeed);
+
+private slots:
+    virtual void readStatus();
 
 private:
-    std::unique_ptr<QTcpSocket> socket;
+    QTcpSocket socket;
+    std::shared_ptr<QString> pstatus;
+    std::shared_ptr<float> pspeed;
+
+    std::weak_ptr<QString> cachestatus;
+    std::weak_ptr<float> cachespeed;
     int port = 0;
 };
 #endif // COMMANDSOCKET_H
