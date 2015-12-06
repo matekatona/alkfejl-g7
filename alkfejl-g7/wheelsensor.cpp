@@ -33,11 +33,14 @@ WheelSensor::getLeft()
     {
         // read new values
         QString raw = this->readSensor();
+        if(raw.length() < 1)
+            return 0.0;
         QStringList values = raw.split(QRegExp("\\s"));
         left = values[0].toFloat();
         float right = values[1].toFloat();
         // cache the other value
         this->pright = std::make_shared<float>(right);
+        this->cacheright = this->pright;
     }
     return left;
 }
@@ -63,11 +66,14 @@ WheelSensor::getRight()
     {
         // read new values
         QString raw = this->readSensor();
+        if(raw.length() < 1)
+            return 0.0;
         QStringList values = raw.split(QRegExp("\\s"));
         float left = values[0].toFloat();
         right = values[1].toFloat();
         // cache the other value
         this->pleft = std::make_shared<float>(left);
+        this->cacheleft = this->pleft;
     }
     return right;
 }

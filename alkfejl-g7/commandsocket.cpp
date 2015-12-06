@@ -47,10 +47,11 @@ QString CommandSocket::getStatus()
     QString status;
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("getStatus");  // send get command
+        this->socket->write("getStatus\n");  // send get command
 
         QByteArray rawData = socket->readLine(100);  // read answer
-        status.fromStdString(rawData.toStdString());
+        QString temp(rawData);
+        status = temp;
     }
     else
         status = "UNKNOWN";
@@ -64,12 +65,9 @@ QString CommandSocket::getStatus()
 void
 CommandSocket::run()
 {
-    qDebug() << "inside run...";
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        qDebug() << "sending run now...";
-        quint64 n = this->socket->write("setStatus:Run");  // send run command
-        qDebug() << "run has been sent, sent bytes (should be 13): " << n;
+        this->socket->write("setStatus:Run\n");  // send run command
     }
 }
 
@@ -81,7 +79,7 @@ CommandSocket::stop()
 {
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("setStatus:Stop");  // send stop command
+        this->socket->write("setStatus:Stop\n");  // send stop command
     }
 }
 
@@ -95,10 +93,12 @@ CommandSocket::getSpeed()
     QString rawString;
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("getSpeed");  // send get command
+        this->socket->write("getSpeed\n");  // send get command
 
         QByteArray rawData = socket->readLine(100);  // read answer
-        rawString.fromStdString(rawData.toStdString());
+        QString temp(rawData);
+        rawString = temp;
+        qDebug() << "speed read from port: " << rawData << rawString;
     }
     else
         return 0.0f / 0.0f;
@@ -117,7 +117,7 @@ CommandSocket::setSpeed(float newspeed)
     {
         // TODO real solution
         char command[20];
-        sprintf(command, "setSpeed:%.1f", newspeed);
+        sprintf(command, "setSpeed:%.1f\n", newspeed);
         this->socket->write(command);  // send setspeed command
     }
 }

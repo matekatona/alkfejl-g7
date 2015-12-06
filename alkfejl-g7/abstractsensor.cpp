@@ -71,17 +71,14 @@ AbstractSensor::readSensor(){
     QString rawString;
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("GET");  // send get command
+        this->socket->write("GET\n");  // send get command
 
-        qDebug() << "get sent";
+         // std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(1));
 
-        std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(1));
-
-        QByteArray rawData = socket->readLine(100);  // read answer
-        rawString.fromStdString(rawData.toStdString());
-
-        qDebug() << "bytes read from port: " << rawData;
-        qDebug() << "string read from port: " << rawString;
+        QByteArray rawData = socket->readLine(300);  // read answer
+        // QByteArray rawData = socket->readAll();
+        QString temp(rawData);
+        rawString = temp;
     }
     else
         rawString = "ERROR";

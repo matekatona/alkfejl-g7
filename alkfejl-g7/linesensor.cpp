@@ -6,7 +6,9 @@
 LineSensor::LineSensor()
     : AbstractSensor(27753)  // call superclass constructor with correct port number
 {
-    this->currentValues.clear();
+    float buf[21] = {.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0};
+    QVarLengthArray<float> def_vals;
+    this->currentValues.append(buf, 21);
 }
 
 
@@ -20,7 +22,7 @@ LineSensor::getBools()
     QVarLengthArray<bool> vals;
     this->getValues();
     for(uint i=0;i<21;i++)
-        vals.insert(i, this->currentValues.at(i) < LINE_THRESHOLD);
+        vals.append(this->currentValues.at(i) < LINE_THRESHOLD);
     return vals;
 }
 
@@ -31,13 +33,17 @@ LineSensor::getBools()
 QVarLengthArray<float>
 LineSensor::getValues()
 {
+    float buf[21] = {.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0,.0};
+    QVarLengthArray<float> def_vals;
+    def_vals.append(buf, 21);
+
     QString raw = this->readSensor();
-    if(raw == "ERROR")
+    if(raw.length() < 10)
     {
-        throw std::runtime_error("this is not really a runtime error");
+        return def_vals;
     }
     QStringList rawValues = raw.split(QRegExp("\\s"));
-    for(uint i=0;i<21;i++)
+    for(uint i=0;i<rawValues.size();i++)
         this->currentValues.insert(i, rawValues[i].toFloat());
     return this->currentValues;
 }

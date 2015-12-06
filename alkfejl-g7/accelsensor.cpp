@@ -34,13 +34,17 @@ AccelSensor::getX()
     {
         // read new values
         QString raw = this->readSensor();
+        if(raw.length() < 1)
+            return 0.0;
         QStringList values = raw.split(QRegExp("\\s"));
         x = values[0].toFloat();
         float y = values[1].toFloat();
         float z = values[2].toFloat();
         // cache the other values
         this->py = std::make_shared<float>(y);
+        this->cachey = this->py;
         this->pz = std::make_shared<float>(z);
+        this->cachez = this->pz;
     }
     return x;
 }
@@ -65,13 +69,17 @@ AccelSensor::getY()
     {
         // read new values
         QString raw = this->readSensor();
+        if(raw.length() < 1)
+            return 0.0;
         QStringList values = raw.split(QRegExp("\\s"));
         float x = values[0].toFloat();
         y = values[1].toFloat();
         float z = values[2].toFloat();
         // cache the other values
         this->px = std::make_shared<float>(x);
+        this->cachex = this->px;
         this->pz = std::make_shared<float>(z);
+        this->cachez = this->pz;
     }
     return y;
 }
@@ -96,13 +104,17 @@ AccelSensor::getZ()
     {
         // read new values
         QString raw = this->readSensor();
+        if(raw.length() < 1)
+            return 0.0;
         QStringList values = raw.split(QRegExp("\\s"));
         float x = values[0].toFloat();
         float y = values[1].toFloat();
         z = values[2].toFloat();
         // cache the other values
         this->px = std::make_shared<float>(x);
+        this->cachex = this->px;
         this->py = std::make_shared<float>(y);
+        this->cachey = this->py;
     }
     return z;
 }

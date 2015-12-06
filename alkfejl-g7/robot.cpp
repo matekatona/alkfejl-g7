@@ -49,7 +49,6 @@ Robot::status(QString status)
  */
 void
 Robot::update(){
-    // emit this->setAlert(alert);
     emit this->setLedStrip(this->line->getBools());
     float ay = this->accel->getY();
     emit this->setTextAccelX(this->accel->getX());
@@ -72,5 +71,4 @@ Robot::update(){
     emit this->setCarGyroX(gx);
     emit this->setCarGyroY(gy);
     emit this->setCarGyroZ(gz);
-    emit this->drawSpeedGraph(speed);
-}
+    emit this->drawSpeedGraph(speed);}

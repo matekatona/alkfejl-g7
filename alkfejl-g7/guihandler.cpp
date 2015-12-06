@@ -60,7 +60,9 @@ void GuiHandler::qmlbuttonSendStatusClicked()
 void GuiHandler::qmlbuttonSendSpeedClicked()
 {
     qDebug() << "Send speed clicked! Current speed: " << this->editSetSpeed->object->property("text").toString();
-    emit this->buttonSendSpeedClicked(this->editSetSpeed->object->property("text").toFloat());
+    QString raw = this->editSetSpeed->object->property("text").toString();
+    raw.replace(",", ".");
+    emit this->buttonSendSpeedClicked(raw.toFloat());
 }
 
 void GuiHandler::qmlbuttonCarSelfTestClicked()
