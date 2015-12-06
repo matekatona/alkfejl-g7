@@ -41,7 +41,6 @@ AbstractSensor::disconnected()
 void
 AbstractSensor::connect()
 {
-    qDebug() << "trying to connect...";
     this->socket->connectToHost("127.0.0.1", this->port);
     if(!this->socket->waitForConnected(1000))
     {
@@ -70,14 +69,19 @@ AbstractSensor::disconnect()
 QString
 AbstractSensor::readSensor(){
     QString rawString;
-    if(this->isConnected && this->socket->state() == QAbstractSocket::ConnectedState)
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("GET");  // send get command
+
+        qDebug() << "get sent";
 
         std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(1));
 
         QByteArray rawData = socket->readLine(100);  // read answer
         rawString.fromStdString(rawData.toStdString());
+
+        qDebug() << "bytes read from port: " << rawData;
+        qDebug() << "string read from port: " << rawString;
     }
     else
         rawString = "ERROR";

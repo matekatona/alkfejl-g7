@@ -18,6 +18,7 @@ QVarLengthArray<bool>
 LineSensor::getBools()
 {
     QVarLengthArray<bool> vals;
+    this->getValues();
     for(uint i=0;i<21;i++)
         vals.insert(i, this->currentValues.at(i) < LINE_THRESHOLD);
     return vals;

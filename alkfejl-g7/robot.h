@@ -33,6 +33,8 @@ signals:
 
 public slots:
     void update();
+    void speed(float speed);
+    void status(QString status);
 
 private:
     std::unique_ptr<CommandSocket> cmd;

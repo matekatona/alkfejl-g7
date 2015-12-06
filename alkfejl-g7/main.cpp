@@ -47,48 +47,23 @@ int main(int argc, char *argv[])
     GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
     Robot mikrobi;
 
-//    for(int i=0;i<20;i++){
-//        QMetaObject::invokeMethod(speedGraph.object, "removeFirstSample", Qt::DirectConnection);
-//        QMetaObject::invokeMethod(speedGraph.object, "appendSample", Qt::DirectConnection, Q_ARG(double, i/40.0+0.5));
-//    }
+    QObject::connect(&guihandle, SIGNAL(buttonCarSelfTestClicked()), &mikrobi, SLOT(update()));
+    QObject::connect(&guihandle, SIGNAL(buttonSendStatusClicked(QString)), &mikrobi, SLOT(status(QString)));
+    QObject::connect(&guihandle, SIGNAL(buttonSendSpeedClicked(float)), &mikrobi, SLOT(speed(float)));
 
-
-//    /**
-//     * @brief testStrip to QML
-//     */
-
-//    QVarLengthArray<bool> testStrip;
-
-//    for(int i=0; i<21; i++)
-//        testStrip.append(true);
-
-//    QVariantList testVar;
-
-//    for(int i=0; i<21; i++)
-//        testVar << testStrip.at(i);
-
-//    QMetaObject::invokeMethod(lineSens.object, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(testVar)));
-
-//    /**
-//     * @brief testStrip to QML
-//     */
-
-//    float speed = 0.5;
-//    QString status = "Run";
-
-//    //QMetaObject::invokeMethod(mainWindow.object, "test", Qt::DirectConnection);
-//    QMetaObject::invokeMethod(textCurSpeed.object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, speed));
-//    QMetaObject::invokeMethod(textCurStatus.object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, status));
-//    /** TODO: QMLHandlerCppSide object tagváltozója legyen private (mint eredetileg) és a nevét is írjuk át valami logikusabbra.
-//     *  Legyen callFunc() tagfüggvény, mely implementálva van pár esetre (van/nincs visszatérési érték, nincs/van/több argumentuma is van).
-//     */
-//    QMetaObject::invokeMethod(gyroX.object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, 0));
-
-//    RobotHistory testHistory(0);
-
-//    for(int i=0; i<4000; i++){
-//        testHistory.addNewAccelData(QVarLengthArray<float>({3.2, 0.2, 4.3}));
-//    }
-
-    return app.exec();
+    QObject::connect(&mikrobi, SIGNAL(setLedStrip(QVarLengthArray<bool>)), &guihandle, SLOT(setLedStrip(QVarLengthArray<bool>)));
+    QObject::connect(&mikrobi, SIGNAL(setTextAccelX(float)), &guihandle, SLOT(setTextAccelX(float)));
+    QObject::connect(&mikrobi, SIGNAL(setTextAccelY(float)), &guihandle, SLOT(setTextAccelY(float)));
+    QObject::connect(&mikrobi, SIGNAL(setTextAccelZ(float)), &guihandle, SLOT(setTextAccelZ(float)));
+    QObject::connect(&mikrobi, SIGNAL(setTextGyroX(float)), &guihandle, SLOT(setTextGyroX(float)));
+    QObject::connect(&mikrobi, SIGNAL(setTextGyroY(float)), &guihandle, SLOT(setTextGyroY(float)));
+    QObject::connect(&mikrobi, SIGNAL(setTextGyroZ(float)), &guihandle, SLOT(setTextGyroZ(float)));
+    QObject::connect(&mikrobi, SIGNAL(setTextStatus(QString)), &guihandle, SLOT(setTextStatus(QString)));
+    QObject::connect(&mikrobi, SIGNAL(setTextSpeed(float)), &guihandle, SLOT(setTextSpeed(float)));
+    QObject::connect(&mikrobi, SIGNAL(setWheels(QVarLengthArray<float>, const float)), &guihandle, SLOT(setWheels(QVarLengthArray<float>, const float)));
+    QObject::connect(&mikrobi, SIGNAL(setCarAccelY(QVarLengthArray<float>, float)), &guihandle, SLOT(setCarAccelY(QVarLengthArray<float>, float)));
+    QObject::connect(&mikrobi, SIGNAL(setCarGyroX(float)), &guihandle, SLOT(setCarGyroX(float)));
+    QObject::connect(&mikrobi, SIGNAL(setCarGyroY(float)), &guihandle, SLOT(setCarGyroY(float)));
+    QObject::connect(&mikrobi, SIGNAL(setCarGyroZ(float)), &guihandle, SLOT(setCarGyroZ(float)));
+    QObject::connect(&mikrobi, SIGNAL(drawSpeedGraph(float)), &guihandle, SLOT(drawSpeedGraph(float)));    return app.exec();
 }

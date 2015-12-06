@@ -58,7 +58,7 @@ private:
 
 signals:
     void buttonSendStatusClicked(QString status);
-    void buttonSendSpeedClicked(QString speed);
+    void buttonSendSpeedClicked(float speed);
     void buttonCarSelfTestClicked();
 
 public slots:

@@ -19,6 +19,32 @@ Robot::Robot()
 // ---------------------------------------------------------
 
 /*!
+ * \brief Robot::speed
+ * \param speed
+ */
+void
+Robot::speed(float speed)
+{
+    this->cmd->setSpeed(speed);
+    qDebug() << "speed set to " << speed;
+}
+
+/*!
+ * \brief Robot::status
+ * \param status
+ */
+void
+Robot::status(QString status)
+{
+    if(status == "Run")
+        this->cmd->run();
+    else if(status == "Stop")
+        this->cmd->stop();
+
+    qDebug() << "status set to " + status;
+}
+
+/*!
  * \brief Robot::update
  */
 void

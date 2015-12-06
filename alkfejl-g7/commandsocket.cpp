@@ -21,7 +21,11 @@ CommandSocket::connect()
     this->socket->connectToHost("127.0.0.1", this->port);
     if(!this->socket->waitForConnected(1000))
     {
-        throw std::runtime_error("Could not connect to socket!");
+        qDebug() << "could not connect to port " << this->port;
+    }
+    else
+    {
+        qDebug() << "connected to port " << this->port;
     }
 }
 
@@ -60,9 +64,12 @@ QString CommandSocket::getStatus()
 void
 CommandSocket::run()
 {
+    qDebug() << "inside run...";
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        this->socket->write("setStatus:Run");  // send run command
+        qDebug() << "sending run now...";
+        quint64 n = this->socket->write("setStatus:Run");  // send run command
+        qDebug() << "run has been sent, sent bytes (should be 13): " << n;
     }
 }
 
