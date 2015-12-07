@@ -57,7 +57,6 @@ CommandSocket::getStatus()
         // use cached value
         status = *cst;
         this->pstatus.reset();
-        qDebug() << "found cached status: " << status;
     }
     else
     {
@@ -68,12 +67,10 @@ CommandSocket::getStatus()
         }
         else
         {
-            qDebug() << "not in connected state";
             return "";
         }
 
         QByteArray rawData = socket->readLine(300);  // read answer
-        qDebug() << "read status: " << rawData;
         QString rawString(rawData);
         QStringList rawValues = rawString.split(" ");
         if(rawValues.size() < 2)
@@ -85,7 +82,6 @@ CommandSocket::getStatus()
         // cache speed
         this->pspeed = std::make_shared<float>(speed);
         this->cachespeed = this->pspeed;
-        qDebug() << "read new vals: " << status << speed;
     }
 
     return status;
@@ -105,7 +101,6 @@ CommandSocket::getSpeed()
         // use cached value
         speed = *csp;
         this->pspeed.reset();
-        qDebug() << "found cached speed: " << speed;
     }
     else
     {
@@ -116,11 +111,9 @@ CommandSocket::getSpeed()
         }
         else
         {
-            qDebug() << "not in connected state";
             return 0.0;
         }
         QByteArray rawData = socket->readLine(300);  // read answer
-        qDebug() << "read status: " << rawData;
         QString rawString(rawData);
         QStringList rawValues = rawString.split(" ");
         if(rawValues.size() < 2)
@@ -132,7 +125,6 @@ CommandSocket::getSpeed()
         // cache status
         this->pstatus = std::make_shared<QString>(status);
         this->cachestatus = this->pstatus;
-        qDebug() << "read new vals: " << status << speed;
     }
 
     return speed;
@@ -174,7 +166,6 @@ CommandSocket::setStatus(QString status)
         // TODO real solution
         QString command;
         command = "setStatus:" + status + "\n";
-        qDebug() << "sestatus command sent: " << command.toLocal8Bit();
         this->socket->write(command.toLocal8Bit());  // send setstatus command
     }
 }
@@ -191,7 +182,6 @@ CommandSocket::setSpeed(float speed)
         // TODO real solution
         QString command;
         command = "setSpeed:" + QString::number(speed) + "\n";
-        qDebug() << "setspeed command sent: " << command.toLocal8Bit();
         this->socket->write(command.toLocal8Bit());  // send setspeed command
     }
 }
