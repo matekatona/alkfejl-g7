@@ -1,5 +1,4 @@
 #include "abstractsensor.h"
-#include <thread>
 
 
 /*!
@@ -57,30 +56,27 @@ AbstractSensor::connect()
 void
 AbstractSensor::disconnect()
 {
-    this->socket.release();
+    this->socket->disconnectFromHost();
     // this->isConnected = false;  // will be set in disconnected() slot
 }
 
 /*!
  * \brief AbstractSensor::readSensor reads sensor data
- * \return sensor data as unparsed string on success or "ERROR" on error
+ * \return sensor data as unparsed QString on success or empty QString on error
  */
 QString
 AbstractSensor::readSensor(){
-    QString rawString;
+    QString rawString = "";
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("GET\n");  // send get command
-
-         // std::this_thread::sleep_for(std::chrono::duration<int, std::milli>(1));
-
-        QByteArray rawData = socket->readLine(300);  // read answer
-        // QByteArray rawData = socket->readAll();
-        QString temp(rawData);
-        rawString = temp;
+        bool ready = this->socket->waitForReadyRead(100);
+        if(ready)
+        {
+            QByteArray rawData = socket->readLine(300);  // read answer
+            rawString = QString(rawData);
+        }
     }
-    else
-        rawString = "ERROR";
 
     return rawString;
 }

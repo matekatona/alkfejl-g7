@@ -45,9 +45,11 @@ AccelSensor::getX()
     {
         // read new values
         QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        if(raw.length() < 20)
+            return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 3)
+            return 0.0/0.0;
         x = values[0].toFloat();
         float y = values[1].toFloat();
         float z = values[2].toFloat();
@@ -82,9 +84,11 @@ AccelSensor::getY()
     {
         // read new values
         QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        if(raw.length() < 20)
+            return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 3)
+            return 0.0/0.0;
         float x = values[0].toFloat();
         y = values[1].toFloat();
         float z = values[2].toFloat();
@@ -119,9 +123,11 @@ AccelSensor::getZ()
     {
         // read new values
         QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        if(raw.length() < 20)
+            return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 3)
+            return 0.0/0.0;
         float x = values[0].toFloat();
         float y = values[1].toFloat();
         z = values[2].toFloat();

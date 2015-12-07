@@ -18,8 +18,6 @@ public:
     explicit CommandSocket(int port = 0);
     void connect();
     void disconnect();
-    void run();
-    void stop();
     void setSpeed(float speed);
     void setStatus(QString status);
     QString getStatus();

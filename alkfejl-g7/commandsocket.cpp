@@ -71,7 +71,7 @@ CommandSocket::disconnect()
 QString
 CommandSocket::getStatus()
 {
-    QString status;
+    QString status = "";
     std::shared_ptr<QString> cst = this->cachestatus.lock();
     if(cst)
     {
@@ -84,27 +84,26 @@ CommandSocket::getStatus()
         if(this->socket->state() == QAbstractSocket::ConnectedState)
         {
             this->socket->write("getStatus\n");  // send get command
+            bool ready = this->socket->waitForReadyRead(100);
+            if(ready)
+            {
+                QByteArray rawData = socket->readLine(300);  // read answer
+                QString rawString(rawData);
+                QStringList rawValues = rawString.split(" ");
+                if(rawValues.size() < 2)
+                {
+                    return "";
+                }
+                status = rawValues[0];
+                float speed = rawValues[1].toFloat();
+                // cache values
+                this->pspeed = std::make_shared<float>(speed);
+                this->cachespeed = this->pspeed;
+                this->pstatus = std::make_shared<QString>(status);
+                this->cachestatus = this->pstatus;
+                this->start_cache_timer();  // will reset cache 70ms later
+            }
         }
-        else
-        {
-            return "";
-        }
-
-        QByteArray rawData = socket->readLine(300);  // read answer
-        QString rawString(rawData);
-        QStringList rawValues = rawString.split(" ");
-        if(rawValues.size() < 2)
-        {
-            return "";
-        }
-        status = rawValues[0];
-        float speed = rawValues[1].toFloat();
-        // cache values
-        this->pspeed = std::make_shared<float>(speed);
-        this->cachespeed = this->pspeed;
-        this->pstatus = std::make_shared<QString>(status);
-        this->cachestatus = this->pstatus;
-        this->start_cache_timer();  // will reset cache 70ms later
     }
 
     return status;
@@ -130,26 +129,26 @@ CommandSocket::getSpeed()
         if(this->socket->state() == QAbstractSocket::ConnectedState)
         {
             this->socket->write("getStatus\n");  // send get command
+            bool ready = this->socket->waitForReadyRead(100);
+            if(ready)
+            {
+                QByteArray rawData = socket->readLine(300);  // read answer
+                QString rawString(rawData);
+                QStringList rawValues = rawString.split(" ");
+                if(rawValues.size() < 2)
+                {
+                    return 0.0;
+                }
+                QString status = rawValues[0];
+                speed = rawValues[1].toFloat();
+                // cache values
+                this->pspeed = std::make_shared<float>(speed);
+                this->cachespeed = this->pspeed;
+                this->pstatus = std::make_shared<QString>(status);
+                this->cachestatus = this->pstatus;
+                this->start_cache_timer();  // will reset cache 70ms later
+            }
         }
-        else
-        {
-            return 0.0;
-        }
-        QByteArray rawData = socket->readLine(300);  // read answer
-        QString rawString(rawData);
-        QStringList rawValues = rawString.split(" ");
-        if(rawValues.size() < 2)
-        {
-            return 0.0;
-        }
-        QString status = rawValues[0];
-        speed = rawValues[1].toFloat();
-        // cache values
-        this->pspeed = std::make_shared<float>(speed);
-        this->cachespeed = this->pspeed;
-        this->pstatus = std::make_shared<QString>(status);
-        this->cachestatus = this->pstatus;
-        this->start_cache_timer();  // will reset cache 70ms later
     }
 
     return speed;

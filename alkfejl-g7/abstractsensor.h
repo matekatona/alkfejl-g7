@@ -17,7 +17,6 @@ public:
     explicit AbstractSensor(int port = 0);
     void connect();
     void disconnect();
-    QString readSensor();
 
 signals:
     void cache_expired();
@@ -27,6 +26,7 @@ protected slots:
 
 protected:
     void start_cache_timer();
+    QString readSensor();
 
 private:
     std::unique_ptr<QTimer> cache_timer;

@@ -26,7 +26,6 @@ void
 Robot::speed(float speed)
 {
     this->cmd->setSpeed(speed);
-    qDebug() << "speed set to " << speed;
 }
 
 /*!
@@ -37,7 +36,6 @@ void
 Robot::status(QString status)
 {
     this->cmd->setStatus(status);
-    qDebug() << "status set to " + status;
 }
 
 /*!

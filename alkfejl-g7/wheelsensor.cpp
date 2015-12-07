@@ -42,9 +42,11 @@ WheelSensor::getLeft()
     {
         // read new values
         QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        if(raw.length() < 10)
+            return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 2)
+            return 0.0/0.0;
         left = values[0].toFloat();
         float right = values[1].toFloat();
         // cache value
@@ -77,9 +79,11 @@ WheelSensor::getRight()
     {
         // read new values
         QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        if(raw.length() < 10)
+            return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 2)
+            return 0.0/0.0;
         float left = values[0].toFloat();
         right = values[1].toFloat();
         // cache value
