@@ -46,25 +46,18 @@ Robot::status(QString status)
 void
 Robot::update(){
     emit this->setLedStrip(this->line->getValues());
-    float ay = this->accel->getY();
     emit this->setTextAccelX(this->accel->getX());
-    emit this->setTextAccelY(ay);
+    emit this->setTextAccelY(this->accel->getY());
     emit this->setTextAccelZ(this->accel->getZ());
-    float gx = this->gyro->getX();
-    float gy = this->gyro->getY();
-    float gz = this->gyro->getZ();
-    emit this->setTextGyroX(gx);
-    emit this->setTextGyroY(gy);
-    emit this->setTextGyroZ(gz);
+    emit this->setTextGyroX(this->gyro->getX());
+    emit this->setTextGyroY(this->gyro->getY());
+    emit this->setTextGyroZ(this->gyro->getZ());
     emit this->setTextStatus(this->cmd->getStatus());
-    float speed = this->cmd->getSpeed();
-    emit this->setTextSpeed(speed);
-    QVarLengthArray<float> wheels;
-    wheels.insert(0,this->wheel->getLeft());
-    wheels.insert(1,this->wheel->getRight());
-    emit this->setWheels(wheels, this->D);
-    emit this->setCarAccelY(wheels, ay);
-    emit this->setCarGyroX(gx);
-    emit this->setCarGyroY(gy);
-    emit this->setCarGyroZ(gz);
-    emit this->drawSpeedGraph(speed);}
+    emit this->setTextSpeed(this->cmd->getSpeed());
+    emit this->setWheels(this->wheel->getWheels(), this->D);
+    emit this->setCarAccelY(this->wheel->getWheels(), this->accel->getY());
+    emit this->setCarGyroX(this->gyro->getX());
+    emit this->setCarGyroY(this->gyro->getY());
+    emit this->setCarGyroZ(this->gyro->getZ());
+    emit this->drawSpeedGraph(this->cmd->getSpeed());
+}

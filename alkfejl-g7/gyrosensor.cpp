@@ -15,6 +15,18 @@ GyroSensor::GyroSensor()
 }
 
 /*!
+ * \brief GyroSensor::reset_cache
+ */
+void
+GyroSensor::reset_cache()
+{
+    this->px.reset();
+    this->py.reset();
+    this->pz.reset();
+    qDebug() << "gyro cache expired";
+}
+
+/*!
  * \brief GyroSensor::GetX returns what?
  * \return -||-
  */
@@ -28,7 +40,6 @@ GyroSensor::getX()
     {
         // use cached value
         x = *cx;
-        this->px.reset();
     }
     else
     {
@@ -45,6 +56,7 @@ GyroSensor::getX()
         this->cachey = this->py;
         this->pz = std::make_shared<float>(z);
         this->cachez = this->pz;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
     return x;
 }
@@ -63,7 +75,6 @@ GyroSensor::getY()
     {
         // use cached value
         y = *cy;
-        this->py.reset();
     }
     else
     {
@@ -80,6 +91,7 @@ GyroSensor::getY()
         this->cachex = this->px;
         this->pz = std::make_shared<float>(z);
         this->cachez = this->pz;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
     return y;
 }
@@ -98,7 +110,6 @@ GyroSensor::getZ()
     {
         // use cached value
         z = *cz;
-        this->pz.reset();
     }
     else
     {
@@ -115,6 +126,7 @@ GyroSensor::getZ()
         this->cachex = this->px;
         this->py = std::make_shared<float>(y);
         this->cachey = this->py;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
     return z;
 }

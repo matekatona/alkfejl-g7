@@ -7,11 +7,15 @@
 
 class AccelSensor : public AbstractSensor
 {
+    Q_OBJECT
 public:
     explicit AccelSensor();
     float getX();
     float getY();
     float getZ();
+
+private slots:
+    void reset_cache();
 
 private:
     std::shared_ptr<float> px;

@@ -7,10 +7,31 @@
  * \param port
  */
 AbstractSensor::AbstractSensor(int port) :
+    cache_timer(new QTimer()),
     socket(new QTcpSocket()),
     port(port)
 {
     this->connect();
+    this->cache_timer->setSingleShot(true);
+    QObject::connect(this->cache_timer.get(), SIGNAL(timeout()), this, SLOT(cache_timeout()));
+}
+
+/*!
+ * \brief AbstractSensor::cache_timeout
+ */
+void
+AbstractSensor::cache_timeout()
+{
+    emit this->cache_expired();
+}
+
+/*!
+ * \brief AbstractSensor::start_cache_timer
+ */
+void
+AbstractSensor::start_cache_timer()
+{
+    this->cache_timer->start(70);
 }
 
 /*!

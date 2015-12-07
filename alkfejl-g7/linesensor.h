@@ -9,6 +9,7 @@
 
 class LineSensor : public AbstractSensor
 {
+    Q_OBJECT
 public:
     LineSensor();
     QVarLengthArray<bool> getValues();

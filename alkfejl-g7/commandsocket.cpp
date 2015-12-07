@@ -5,16 +5,37 @@
  * \param port
  */
 CommandSocket::CommandSocket(int port) :
-    socket(new QTcpSocket())
+    socket(new QTcpSocket()),
+    cache_timer(new QTimer())
 {
-    this->port = port;
-
     this->cachestatus = this->pstatus;
     this->cachespeed = this->pspeed;
     this->pstatus.reset();
     this->pspeed.reset();
-
+    this->cache_timer->setSingleShot(true);
+    this->port = port;
     this->connect();
+
+    QObject::connect(this->cache_timer.get(), SIGNAL(timeout()), this, SLOT(reset_cache()));
+}
+
+/*!
+ * \brief CommandSocket::reset_cache
+ */
+void
+CommandSocket::reset_cache()
+{
+    this->pspeed.reset();
+    this->pstatus.reset();
+}
+
+/*!
+ * \brief CommandSocket::start_cache_timer
+ */
+void
+CommandSocket::start_cache_timer()
+{
+   this->cache_timer->start(70);
 }
 
 /*!
@@ -56,7 +77,6 @@ CommandSocket::getStatus()
     {
         // use cached value
         status = *cst;
-        this->pstatus.reset();
     }
     else
     {
@@ -82,6 +102,7 @@ CommandSocket::getStatus()
         // cache speed
         this->pspeed = std::make_shared<float>(speed);
         this->cachespeed = this->pspeed;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
 
     return status;
@@ -100,7 +121,6 @@ CommandSocket::getSpeed()
     {
         // use cached value
         speed = *csp;
-        this->pspeed.reset();
     }
     else
     {
@@ -125,6 +145,7 @@ CommandSocket::getSpeed()
         // cache status
         this->pstatus = std::make_shared<QString>(status);
         this->cachestatus = this->pstatus;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
 
     return speed;

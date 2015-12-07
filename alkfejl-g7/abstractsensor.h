@@ -2,8 +2,8 @@
 #define ABSTRACTSENSOR_H
 
 #include <QObject>
-#include <QTcpSocket>
-#include <stdexcept>
+#include <QtWidgets>    // QTimer
+#include <QTcpSocket>   // QTcpSocket
 #include <memory>
 
 
@@ -19,7 +19,17 @@ public:
     void disconnect();
     QString readSensor();
 
+signals:
+    void cache_expired();
+
+protected slots:
+    void cache_timeout();
+
 protected:
+    void start_cache_timer();
+
+private:
+    std::unique_ptr<QTimer> cache_timer;
     std::unique_ptr<QTcpSocket> socket;
     int port = 0;
 };

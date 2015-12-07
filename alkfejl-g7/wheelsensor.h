@@ -7,10 +7,15 @@
 
 class WheelSensor : public AbstractSensor
 {
+    Q_OBJECT
 public:
     WheelSensor();
     float getLeft();
     float getRight();
+    QVarLengthArray<float> getWheels();
+
+private slots:
+    void reset_cache();
 
 private:
     std::shared_ptr<float> pleft;

@@ -16,11 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp       \
+    abstractsensor.cpp    \
+    accelsensor.cpp       \
     robot.cpp             \
     linesensor.cpp        \
     gyrosensor.cpp        \
-    accelsensor.cpp       \
-    abstractsensor.cpp    \
     qmlhandlercppside.cpp \
     graph.cpp             \
     gridnode.cpp          \
@@ -31,11 +31,11 @@ SOURCES += main.cpp       \
     wheelsensor.cpp
 
 HEADERS  +=              \
+    abstractsensor.h     \
+    accelsensor.h        \
     robot.h              \
     linesensor.h         \
     gyrosensor.h         \
-    accelsensor.h        \
-    abstractsensor.h     \
     qmlhandlercppside.h  \
     graph.h              \
     gridnode.h           \

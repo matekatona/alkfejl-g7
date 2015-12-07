@@ -12,6 +12,16 @@ WheelSensor::WheelSensor()
     this->pright.reset();
 }
 
+/*!
+ * \brief WheelSensor::reset_cache
+ */
+void
+WheelSensor::reset_cache()
+{
+    this->pleft.reset();
+    this->pright.reset();
+    qDebug() << "wheel cache expired";
+}
 
 /*!
  * \brief WheelSensor::getLeft returns what?
@@ -27,7 +37,6 @@ WheelSensor::getLeft()
     {
         // use cached value
         left = *cleft;
-        this->pleft.reset();
     }
     else
     {
@@ -41,6 +50,7 @@ WheelSensor::getLeft()
         // cache the other value
         this->pright = std::make_shared<float>(right);
         this->cacheright = this->pright;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
     return left;
 }
@@ -60,7 +70,6 @@ WheelSensor::getRight()
     {
         // use cached value
         right = *cright;
-        this->pright.reset();
     }
     else
     {
@@ -74,6 +83,20 @@ WheelSensor::getRight()
         // cache the other value
         this->pleft = std::make_shared<float>(left);
         this->cacheleft = this->pleft;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
     return right;
+}
+
+/*!
+ * \brief WheelSensor::getWheels
+ * \return
+ */
+QVarLengthArray<float>
+WheelSensor::getWheels()
+{
+    QVarLengthArray<float> wheels;
+    wheels.insert(0,this->getLeft());
+    wheels.insert(1,this->getRight());
+    return wheels;
 }
