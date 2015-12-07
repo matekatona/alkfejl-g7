@@ -13,9 +13,6 @@ public:
     float getY();
     float getZ();
 
-private slots:
-    void readSensor();
-
 private:
     std::shared_ptr<float> px;
     std::shared_ptr<float> py;

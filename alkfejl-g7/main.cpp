@@ -71,5 +71,6 @@ int main(int argc, char *argv[])
     QObject::connect(&mikrobi, SIGNAL(setCarGyroZ(float)), &guihandle, SLOT(setCarGyroZ(float)));
     QObject::connect(&mikrobi, SIGNAL(drawSpeedGraph(float)), &guihandle, SLOT(drawSpeedGraph(float)));
 
+    timer.start();
     return app.exec();
 }

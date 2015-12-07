@@ -11,13 +11,7 @@ class LineSensor : public AbstractSensor
 {
 public:
     LineSensor();
-    QVarLengthArray<bool> getCurrentValues();
-
-private slots:
-    void readSensor();
-
-private:
-    QVarLengthArray<bool> currentValues;
+    QVarLengthArray<bool> getValues();
 };
 
 #endif // LINESENSOR_H

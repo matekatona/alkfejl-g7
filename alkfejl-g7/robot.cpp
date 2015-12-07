@@ -36,11 +36,7 @@ Robot::speed(float speed)
 void
 Robot::status(QString status)
 {
-    if(status == "Run")
-        this->cmd->run();
-    else if(status == "Stop")
-        this->cmd->stop();
-
+    this->cmd->setStatus(status);
     qDebug() << "status set to " + status;
 }
 
@@ -49,7 +45,7 @@ Robot::status(QString status)
  */
 void
 Robot::update(){
-    emit this->setLedStrip(this->line->getBools());
+    emit this->setLedStrip(this->line->getValues());
     float ay = this->accel->getY();
     emit this->setTextAccelX(this->accel->getX());
     emit this->setTextAccelY(ay);

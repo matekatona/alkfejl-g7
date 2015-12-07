@@ -4,14 +4,13 @@
  * \brief CommandSocket::CommandSocket
  * \param port
  */
-CommandSocket::CommandSocket(int port)
+CommandSocket::CommandSocket(int port) :
+    socket(new QTcpSocket())
 {
-    // socket = std::make_unique<QTcpSocket>(new QTcpSocket());
     this->port = port;
 
     this->cachestatus = this->pstatus;
     this->cachespeed = this->pspeed;
-
     this->pstatus.reset();
     this->pspeed.reset();
 
@@ -24,8 +23,15 @@ CommandSocket::CommandSocket(int port)
 void
 CommandSocket::connect()
 {
-    QObject::connect(&this->socket, SIGNAL(readyRead()), this, SLOT(readStatus()));
-    this->socket.connectToHost("127.0.0.1", this->port, QIODevice::ReadWrite);
+    this->socket->connectToHost("127.0.0.1", this->port, QIODevice::ReadWrite);
+    if(!this->socket->waitForConnected(1000))
+    {
+        qDebug() << "could not connect to port " << this->port;
+    }
+    else
+    {
+        qDebug() << "connected to port " << this->port;
+    }
 }
 
 /*!
@@ -34,22 +40,102 @@ CommandSocket::connect()
 void
 CommandSocket::disconnect()
 {
-    this->socket.disconnectFromHost();
+    this->socket->disconnectFromHost();
 }
 
 /*!
  * \brief CommandSocket::getStatus
  * \return
  */
-int CommandSocket::getStatus()
+QString
+CommandSocket::getStatus()
 {
-    if(this->socket.state() == QAbstractSocket::ConnectedState)
+    QString status;
+    std::shared_ptr<QString> cst = this->cachestatus.lock();
+    if(cst)
     {
-        this->socket.write("getStatus\n");  // send get command
-        return 0;
+        // use cached value
+        status = *cst;
+        this->pstatus.reset();
+        qDebug() << "found cached status: " << status;
     }
     else
-        return 1;
+    {
+        // read new values
+        if(this->socket->state() == QAbstractSocket::ConnectedState)
+        {
+            this->socket->write("getStatus\n");  // send get command
+        }
+        else
+        {
+            qDebug() << "not in connected state";
+            return "";
+        }
+
+        QByteArray rawData = socket->readLine(300);  // read answer
+        qDebug() << "read status: " << rawData;
+        QString rawString(rawData);
+        QStringList rawValues = rawString.split(" ");
+        if(rawValues.size() < 2)
+        {
+            return "";
+        }
+        status = rawValues[0];
+        float speed = rawValues[1].toFloat();
+        // cache speed
+        this->pspeed = std::make_shared<float>(speed);
+        this->cachespeed = this->pspeed;
+        qDebug() << "read new vals: " << status << speed;
+    }
+
+    return status;
+}
+
+/*!
+ * \brief CommandSocket::getSpeed
+ * \return
+ */
+float
+CommandSocket::getSpeed()
+{
+    float speed;
+    std::shared_ptr<float> csp = this->cachespeed.lock();
+    if(csp)
+    {
+        // use cached value
+        speed = *csp;
+        this->pspeed.reset();
+        qDebug() << "found cached speed: " << speed;
+    }
+    else
+    {
+        // read new values
+        if(this->socket->state() == QAbstractSocket::ConnectedState)
+        {
+            this->socket->write("getStatus\n");  // send get command
+        }
+        else
+        {
+            qDebug() << "not in connected state";
+            return 0.0;
+        }
+        QByteArray rawData = socket->readLine(300);  // read answer
+        qDebug() << "read status: " << rawData;
+        QString rawString(rawData);
+        QStringList rawValues = rawString.split(" ");
+        if(rawValues.size() < 2)
+        {
+            return 0.0;
+        }
+        QString status = rawValues[0];
+        speed = rawValues[1].toFloat();
+        // cache status
+        this->pstatus = std::make_shared<QString>(status);
+        this->cachestatus = this->pstatus;
+        qDebug() << "read new vals: " << status << speed;
+    }
+
+    return speed;
 }
 
 /*!
@@ -58,9 +144,9 @@ int CommandSocket::getStatus()
 void
 CommandSocket::run()
 {
-    if(this->socket.state() == QAbstractSocket::ConnectedState)
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        this->socket.write("setStatus:Run");  // send run command
+        this->socket->write("setStatus:Run\n");  // send run command
     }
 }
 
@@ -70,53 +156,26 @@ CommandSocket::run()
 void
 CommandSocket::stop()
 {
-    if(this->socket.state() == QAbstractSocket::ConnectedState)
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
-        this->socket.write("setStatus:Stop");  // send stop command
+        this->socket->write("setStatus:Stop\n");  // send stop command
     }
 }
 
-QString
-CommandSocket::getCurrentStatus()
-{
-    return *this->pstatus.get();
-}
-
-float
-CommandSocket::getCurrentSpeed()
-{
-    return *this->pspeed.get();
-}
-
+/*!
+ * \brief CommandSocket::setStatus
+ * \param newstatus
+ */
 void
-CommandSocket::readStatus()
+CommandSocket::setStatus(QString status)
 {
-    while(!this->socket.canReadLine()){}
-
-    QByteArray rawData = this->socket.readAll();
-    QString rawString(rawData);
-
-    QStringList rawValues = rawString.split(" ");
-    QString status;
-    float speed;
-    status=rawValues[0];
-    speed=rawValues[1].toFloat();
-
-    this->pstatus = std::make_shared<QString>(status);
-    this->pspeed = std::make_shared<float>(speed);
-
-    emit this->dataReady();
-}
-
-void
-CommandSocket::setStatus(QString newstatus)
-{
-    if(this->socket.state() == QAbstractSocket::ConnectedState)
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         // TODO real solution
         QString command;
-        command="setStatus:" + newstatus + "\n";
-        this->socket.write(command.toUtf8());  // send setstatus command
+        command = "setStatus:" + status + "\n";
+        qDebug() << "sestatus command sent: " << command.toLocal8Bit();
+        this->socket->write(command.toLocal8Bit());  // send setstatus command
     }
 }
 
@@ -125,14 +184,15 @@ CommandSocket::setStatus(QString newstatus)
  * \param newspeed
  */
 void
-CommandSocket::setSpeed(float newspeed)
+CommandSocket::setSpeed(float speed)
 {
-    if(this->socket.state() == QAbstractSocket::ConnectedState)
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         // TODO real solution
         QString command;
-        command="setSpeed:" + QString::number(newspeed) + "\n";
-        this->socket.write(command.toUtf8());  // send setspeed command
+        command = "setSpeed:" + QString::number(speed) + "\n";
+        qDebug() << "setspeed command sent: " << command.toLocal8Bit();
+        this->socket->write(command.toLocal8Bit());  // send setspeed command
     }
 }
 

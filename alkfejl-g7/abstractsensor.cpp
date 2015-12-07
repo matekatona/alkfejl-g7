@@ -8,31 +8,9 @@
  */
 AbstractSensor::AbstractSensor(int port) :
     socket(new QTcpSocket()),
-    isConnected(false),
     port(port)
 {
-    // TODO build error
-    // QObject::connect(this->socket, &QAbstractSocket::connected, this, &AbstractSensor::connected);
-    // QObject::connect(this->socket, &QAbstractSocket::disconnected, this, &AbstractSensor::disconnected);
     this->connect();
-}
-
-/*!
- * \brief AbstractSensor::connected
- */
-void
-AbstractSensor::connected()
-{
-    this->isConnected = true;
-}
-
-/*!
- * \brief AbstractSensor::disconnected
- */
-void
-AbstractSensor::disconnected()
-{
-    this->isConnected = false;
 }
 
 /*!

@@ -12,9 +12,6 @@ public:
     float getLeft();
     float getRight();
 
-private slots:
-    void readSensor();
-
 private:
     std::shared_ptr<float> pleft;
     std::shared_ptr<float> pright;
