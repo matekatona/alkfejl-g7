@@ -1,15 +1,15 @@
 # UML diagram for Alkfejl-g7
 
 ![Alt text](http://g.gravizo.com/g?
-class VREPComm{}
-class Robot extends VREPComm {}
-class AbstractSensor extends VREPComm {}
+class Robot {}
+class AbstractSensor {}
 class AccelSensor extends AbstractSensor {}
 class GyroSensor extends AbstractSensor {}
 class LineSensor extends AbstractSensor {}
+class WheelSensor extends AbstractSensor {}
 )
 
-## Other sample UML diagrams
+## Detailed UML diagrams
 
 ![Alt text](http://g.gravizo.com/g?
 /**
@@ -18,16 +18,14 @@ class LineSensor extends AbstractSensor {}
 */
 class AbstractSensor{
     QTCPSocket commSock;
-    public int readSensor%28%29;
+    protected int readSensor%28%29;
 }
 /**
 *LineSensor
 *@opt all
 */
 class LineSensor extends AbstractSensor {
-        float[] sensorValues;
-        public bool isOk%28%29;
-        public int getValues%28float[] values%29;
+        public QVarLengthArray<bool> getValues%28float[] values%29;
 }
 /**
 *AccelSensor
@@ -68,11 +66,10 @@ class CommandSocket{
     QTCPSocket commSock;
     public int connect%28%29;
     public int disconnect%28%29;
-    public int getStatus%28%29;
-    public int run%28%29;
-    public int stop%28%29;
-    public int getSpeed%28%29;
-    public int setSpeed%28%29;
+    public QString getStatus%28%29;
+    public void setStatus(QString);
+    public float getSpeed%28%29;
+    public void setSpeed%28float%29;
 })
 
 ![Alt text](http://g.gravizo.com/g?
@@ -82,6 +79,7 @@ class CommandSocket{
 *@composed 1..* LineSensor
 *@composed 1..* AccelSensor
 *@composed 1..* GyroSensor
+*@composed 1..* WheelSensor
 *@composed 1 CommandSocket
 */
 class Robot{
@@ -89,27 +87,9 @@ class Robot{
 	AccelSensor accel;
 	GyroSensor gyro;
 	WheelSensor wheels;
-	CommandSocket command;
+	CommandSocket cmd;
 })
 
-![Alt text](http://g.gravizo.com/g?
-/**
-*RobotHistory
-*@opt all
-*@assoc Plotter
-*/
-class RobotHistory{
-	List speedHistory;
-	List statusHistory;
-	signal historyChanged%28%29;
-}
-/**
-*Plotter
-*@opt all
-*/
-class Plotter{
-	slot graph%28%29;
-})
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
@@ -136,23 +116,5 @@ D --> C: values;
 deactivate D;
 C --> B: values;
 deactivate C;
-@enduml
-)
-
-![Alt text](http://g.gravizo.com/g?
-@startuml;
-participant "Receive values" as A;
-participant "Robot" as B;
-participant "RobotHistory" as C;
-participant "Plotter" as D;
-A -> B: values;
-B -> C: newValues%28%29;
-C -> D: actualHistory%28%29;
-activate D;
-D -> D: graph%28%29;
-activate D;
-deactivate D;
-D --> C: endGraph;
-deactivate D;
 @enduml
 )
