@@ -99,9 +99,11 @@ CommandSocket::getStatus()
         }
         status = rawValues[0];
         float speed = rawValues[1].toFloat();
-        // cache speed
+        // cache values
         this->pspeed = std::make_shared<float>(speed);
         this->cachespeed = this->pspeed;
+        this->pstatus = std::make_shared<QString>(status);
+        this->cachestatus = this->pstatus;
         this->start_cache_timer();  // will reset cache 70ms later
     }
 
@@ -142,7 +144,9 @@ CommandSocket::getSpeed()
         }
         QString status = rawValues[0];
         speed = rawValues[1].toFloat();
-        // cache status
+        // cache values
+        this->pspeed = std::make_shared<float>(speed);
+        this->cachespeed = this->pspeed;
         this->pstatus = std::make_shared<QString>(status);
         this->cachestatus = this->pstatus;
         this->start_cache_timer();  // will reset cache 70ms later

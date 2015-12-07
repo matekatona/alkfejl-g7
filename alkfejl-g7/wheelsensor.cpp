@@ -10,6 +10,7 @@ WheelSensor::WheelSensor()
     this->cacheright = this->pright;
     this->pleft.reset();
     this->pright.reset();
+    QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
 }
 
 /*!
@@ -20,7 +21,6 @@ WheelSensor::reset_cache()
 {
     this->pleft.reset();
     this->pright.reset();
-    qDebug() << "wheel cache expired";
 }
 
 /*!
@@ -47,7 +47,9 @@ WheelSensor::getLeft()
         QStringList values = raw.split(QRegExp("\\s"));
         left = values[0].toFloat();
         float right = values[1].toFloat();
-        // cache the other value
+        // cache value
+        this->pleft = std::make_shared<float>(left);
+        this->cacheleft = this->pleft;
         this->pright = std::make_shared<float>(right);
         this->cacheright = this->pright;
         this->start_cache_timer();  // will reset cache 70ms later
@@ -80,9 +82,11 @@ WheelSensor::getRight()
         QStringList values = raw.split(QRegExp("\\s"));
         float left = values[0].toFloat();
         right = values[1].toFloat();
-        // cache the other value
+        // cache value
         this->pleft = std::make_shared<float>(left);
         this->cacheleft = this->pleft;
+        this->pright = std::make_shared<float>(right);
+        this->cacheright = this->pright;
         this->start_cache_timer();  // will reset cache 70ms later
     }
     return right;

@@ -12,6 +12,7 @@ GyroSensor::GyroSensor()
     this->px.reset();
     this->py.reset();
     this->pz.reset();
+    QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
 }
 
 /*!
@@ -23,7 +24,6 @@ GyroSensor::reset_cache()
     this->px.reset();
     this->py.reset();
     this->pz.reset();
-    qDebug() << "gyro cache expired";
 }
 
 /*!
@@ -51,7 +51,9 @@ GyroSensor::getX()
         x = values[0].toFloat();
         float y = values[1].toFloat();
         float z = values[2].toFloat();
-        // cache the other values
+        // cache values
+        this->px = std::make_shared<float>(x);
+        this->cachex = this->px;
         this->py = std::make_shared<float>(y);
         this->cachey = this->py;
         this->pz = std::make_shared<float>(z);
@@ -86,9 +88,11 @@ GyroSensor::getY()
         float x = values[0].toFloat();
         y = values[1].toFloat();
         float z = values[2].toFloat();
-        // cache the other values
+        // cache values
         this->px = std::make_shared<float>(x);
         this->cachex = this->px;
+        this->py = std::make_shared<float>(y);
+        this->cachey = this->py;
         this->pz = std::make_shared<float>(z);
         this->cachez = this->pz;
         this->start_cache_timer();  // will reset cache 70ms later
@@ -121,11 +125,13 @@ GyroSensor::getZ()
         float x = values[0].toFloat();
         float y = values[1].toFloat();
         z = values[2].toFloat();
-        // cache the other values
+        // cache values
         this->px = std::make_shared<float>(x);
         this->cachex = this->px;
         this->py = std::make_shared<float>(y);
         this->cachey = this->py;
+        this->pz = std::make_shared<float>(z);
+        this->cachez = this->pz;
         this->start_cache_timer();  // will reset cache 70ms later
     }
     return z;
