@@ -80,3 +80,16 @@ SimComm::read(){
 
     return rawString;
 }
+
+void
+SimComm::write(QString command)
+{
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    {
+        quint64 res = this->socket->write(command.toLocal8Bit());
+        if(res < command.length())
+        {
+            // TODO error
+        }
+    }
+}

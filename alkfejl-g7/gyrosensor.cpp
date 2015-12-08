@@ -3,8 +3,8 @@
 /*!
  * \brief GyroSensor::GyroSensor
  */
-GyroSensor::GyroSensor()
-    : SimComm(26489)  // call superclass constructor with correct port number
+GyroSensor::GyroSensor() :
+    SimComm(PORT_NUM_GYRO)  // call superclass constructor with correct port number
 {
     this->cachex = this->px;
     this->cachey = this->py;
@@ -12,6 +12,7 @@ GyroSensor::GyroSensor()
     this->px.reset();
     this->py.reset();
     this->pz.reset();
+
     QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
 }
 

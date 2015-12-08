@@ -6,8 +6,7 @@
 
 #define LINE_THRESHOLD 0.5f
 
-
-class LineSensor : public AbstractSensor
+class LineSensor : public SimComm
 {
     Q_OBJECT
 public:

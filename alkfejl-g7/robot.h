@@ -37,7 +37,7 @@ public slots:
     void status(QString status);
 
 private:
-    std::unique_ptr<RobotControl> cmd;
+    std::unique_ptr<RobotControl> control;
     std::unique_ptr<LineSensor> line;
     std::unique_ptr<AccelSensor> accel;
     std::unique_ptr<GyroSensor> gyro;

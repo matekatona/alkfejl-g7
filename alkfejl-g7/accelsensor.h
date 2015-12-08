@@ -1,11 +1,9 @@
 #ifndef ACCELSENSOR_H
 #define ACCELSENSOR_H
 
-
 #include "simcomm.h"
 
-
-class AccelSensor : public AbstractSensor
+class AccelSensor : public SimComm
 {
     Q_OBJECT
 public:

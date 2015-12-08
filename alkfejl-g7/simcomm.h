@@ -6,6 +6,11 @@
 #include <QTcpSocket>   // QTcpSocket
 #include <memory>
 
+#define PORT_NUM_CONTROL    25455
+#define PORT_NUM_ACCEl      24931
+#define PORT_NUM_GYRO       26489
+#define PORT_NUM_LINE       27753
+#define PORT_NUM_WHEEL      30568
 
 using namespace std;
 

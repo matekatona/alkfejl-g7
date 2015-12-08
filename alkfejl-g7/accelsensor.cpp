@@ -3,8 +3,8 @@
 /*!
  * \brief AccelSensor::AccelSensor
  */
-AccelSensor::AccelSensor()
-    : AbstractSensor(24931)  // call superclass constructor with correct port number
+AccelSensor::AccelSensor() :
+    SimComm(PORT_NUM_ACCEl)  // call superclass constructor with correct port number
 {
     this->cachex = this->px;
     this->cachey = this->py;
@@ -12,6 +12,7 @@ AccelSensor::AccelSensor()
     this->px.reset();
     this->py.reset();
     this->pz.reset();
+
     QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
 }
 
@@ -44,7 +45,7 @@ AccelSensor::getX()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 20)
             return x;
         QStringList values = raw.split(QRegExp("\\s"));
@@ -84,7 +85,7 @@ AccelSensor::getY()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 20)
             return y;
         QStringList values = raw.split(QRegExp("\\s"));
@@ -124,7 +125,7 @@ AccelSensor::getZ()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 20)
             return z;
         QStringList values = raw.split(QRegExp("\\s"));

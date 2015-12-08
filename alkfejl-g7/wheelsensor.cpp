@@ -4,12 +4,13 @@
  * \brief WheelSensor::WheelSensor
  */
 WheelSensor::WheelSensor()
-    : SimComm(30568)  // call superclass constructor with correct port number
+    : SimComm(PORT_NUM_WHEEL)  // call superclass constructor with correct port number
 {
     this->cacheleft = this->pleft;
     this->cacheright = this->pright;
     this->pleft.reset();
     this->pright.reset();
+
     QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
 }
 

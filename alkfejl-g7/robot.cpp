@@ -5,7 +5,7 @@
  * \brief Robot::Robot
  */
 Robot::Robot()
-    : cmd(new RobotControl(25455)),
+    : control(new RobotControl()),
       line(new LineSensor()),
       accel(new AccelSensor()),
       gyro(new GyroSensor()),
@@ -25,7 +25,7 @@ Robot::Robot()
 void
 Robot::speed(float speed)
 {
-    this->cmd->setSpeed(speed);
+    this->control->setSpeed(speed);
 }
 
 /*!
@@ -35,7 +35,7 @@ Robot::speed(float speed)
 void
 Robot::status(QString status)
 {
-    this->cmd->setStatus(status);
+    this->control->setStatus(status);
 }
 
 /*!
@@ -50,12 +50,12 @@ Robot::update(){
     emit this->setTextGyroX(this->gyro->getX());
     emit this->setTextGyroY(this->gyro->getY());
     emit this->setTextGyroZ(this->gyro->getZ());
-    emit this->setTextStatus(this->cmd->getStatus());
-    emit this->setTextSpeed(this->cmd->getSpeed());
+    emit this->setTextStatus(this->control->getStatus());
+    emit this->setTextSpeed(this->control->getSpeed());
     emit this->setWheels(this->wheel->getWheels(), this->D);
     emit this->setCarAccelY(this->wheel->getWheels(), this->accel->getY());
     emit this->setCarGyroX(this->gyro->getX());
     emit this->setCarGyroY(this->gyro->getY());
     emit this->setCarGyroZ(this->gyro->getZ());
-    emit this->drawSpeedGraph(this->cmd->getSpeed());
+    emit this->drawSpeedGraph(this->control->getSpeed());
 }
