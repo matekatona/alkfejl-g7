@@ -92,6 +92,7 @@ class Robot{
 	RobotControl control;
 })
 
+### Sequence diagram
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
@@ -102,9 +103,9 @@ participant "Sensors/Command" as C;
 participant "VREP" as D;
 User -> A: Run;
 activate A;
-A -> B: run%28%29;
+A -> B: run signal;
 activate B;
-B -> C: control.run signal;
+B -> C: control.run%28%29;
 activate C;
 C -> D: socket.send%28%29;
 deactivate A;
