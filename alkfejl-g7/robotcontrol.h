@@ -1,21 +1,14 @@
 #ifndef COMMANDSOCKET_H
 #define COMMANDSOCKET_H
 
-#include <QObject>
-#include <QTcpSocket>
-#include <QtWidgets>
-#include <stdexcept>
-#include <memory>
+#include "simcomm.h"
 
 
-using namespace std;
-
-
-class CommandSocket : public QObject
+class RobotControl : public SimComm
 {
     Q_OBJECT
 public:
-    explicit CommandSocket(int port = 0);
+    explicit RobotControl(int port = 0);
     void connect();
     void disconnect();
     void setSpeed(float speed);

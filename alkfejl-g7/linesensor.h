@@ -2,7 +2,7 @@
 #define LINESENSOR_H
 
 
-#include "abstractsensor.h"
+#include "simcomm.h"
 
 #define LINE_THRESHOLD 0.5f
 

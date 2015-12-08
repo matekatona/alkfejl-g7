@@ -92,7 +92,7 @@ CommandSocket::getStatus()
                 QStringList rawValues = rawString.split(" ");
                 if(rawValues.size() < 2)
                 {
-                    return "";
+                    return status;
                 }
                 status = rawValues[0];
                 float speed = rawValues[1].toFloat();
@@ -116,7 +116,7 @@ CommandSocket::getStatus()
 float
 CommandSocket::getSpeed()
 {
-    float speed;
+    float speed = 0.0/0.0;
     std::shared_ptr<float> csp = this->cachespeed.lock();
     if(csp)
     {
@@ -137,7 +137,7 @@ CommandSocket::getSpeed()
                 QStringList rawValues = rawString.split(" ");
                 if(rawValues.size() < 2)
                 {
-                    return 0.0;
+                    return speed;
                 }
                 QString status = rawValues[0];
                 speed = rawValues[1].toFloat();
@@ -152,30 +152,6 @@ CommandSocket::getSpeed()
     }
 
     return speed;
-}
-
-/*!
- * \brief CommandSocket::run
- */
-void
-CommandSocket::run()
-{
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
-    {
-        this->socket->write("setStatus:Run\n");  // send run command
-    }
-}
-
-/*!
- * \brief CommandSocket::stop
- */
-void
-CommandSocket::stop()
-{
-    if(this->socket->state() == QAbstractSocket::ConnectedState)
-    {
-        this->socket->write("setStatus:Stop\n");  // send stop command
-    }
 }
 
 /*!

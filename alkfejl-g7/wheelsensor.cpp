@@ -4,7 +4,7 @@
  * \brief WheelSensor::WheelSensor
  */
 WheelSensor::WheelSensor()
-    : AbstractSensor(30568)  // call superclass constructor with correct port number
+    : SimComm(30568)  // call superclass constructor with correct port number
 {
     this->cacheleft = this->pleft;
     this->cacheright = this->pright;
@@ -41,7 +41,7 @@ WheelSensor::getLeft()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 10)
             return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
@@ -78,7 +78,7 @@ WheelSensor::getRight()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 10)
             return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));

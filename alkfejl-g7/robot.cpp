@@ -5,7 +5,7 @@
  * \brief Robot::Robot
  */
 Robot::Robot()
-    : cmd(new CommandSocket(25455)),
+    : cmd(new RobotControl(25455)),
       line(new LineSensor()),
       accel(new AccelSensor()),
       gyro(new GyroSensor()),

@@ -2,7 +2,7 @@
 #define ACCELSENSOR_H
 
 
-#include "abstractsensor.h"
+#include "simcomm.h"
 
 
 class AccelSensor : public AbstractSensor

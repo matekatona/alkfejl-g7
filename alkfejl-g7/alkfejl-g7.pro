@@ -16,7 +16,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp       \
-    abstractsensor.cpp    \
     accelsensor.cpp       \
     robot.cpp             \
     linesensor.cpp        \
@@ -27,11 +26,11 @@ SOURCES += main.cpp       \
     linenode.cpp          \
     noisynode.cpp         \
     guihandler.cpp        \
-    commandsocket.cpp     \
-    wheelsensor.cpp
+    wheelsensor.cpp \
+    simcomm.cpp \
+    robotcontrol.cpp
 
 HEADERS  +=              \
-    abstractsensor.h     \
     accelsensor.h        \
     robot.h              \
     linesensor.h         \
@@ -42,8 +41,9 @@ HEADERS  +=              \
     linenode.h           \
     noisynode.h          \
     guihandler.h         \
-    commandsocket.h    \
-    wheelsensor.h
+    wheelsensor.h \
+    simcomm.h \
+    robotcontrol.h
 
 CONFIG += c++11
 

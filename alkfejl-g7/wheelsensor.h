@@ -2,10 +2,10 @@
 #define WHEELSENSOR_H
 
 
-#include "abstractsensor.h"
+#include "simcomm.h"
 
 
-class WheelSensor : public AbstractSensor
+class WheelSensor : public SimComm
 {
     Q_OBJECT
 public:

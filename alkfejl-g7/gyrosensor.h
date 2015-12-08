@@ -1,9 +1,9 @@
 #ifndef GYROSENSOR_H
 #define GYROSENSOR_H
 
-#include "abstractsensor.h"
+#include "simcomm.h"
 
-class GyroSensor : public AbstractSensor
+class GyroSensor : public SimComm
 {
     Q_OBJECT
 public:

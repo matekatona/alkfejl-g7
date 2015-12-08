@@ -4,7 +4,7 @@
  * \brief GyroSensor::GyroSensor
  */
 GyroSensor::GyroSensor()
-    : AbstractSensor(26489)  // call superclass constructor with correct port number
+    : SimComm(26489)  // call superclass constructor with correct port number
 {
     this->cachex = this->px;
     this->cachey = this->py;
@@ -44,7 +44,7 @@ GyroSensor::getX()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 20)
             return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
@@ -83,7 +83,7 @@ GyroSensor::getY()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 20)
             return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));
@@ -122,7 +122,7 @@ GyroSensor::getZ()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 20)
             return 0.0/0.0;
         QStringList values = raw.split(QRegExp("\\s"));

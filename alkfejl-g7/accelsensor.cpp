@@ -33,7 +33,7 @@ AccelSensor::reset_cache()
 float
 AccelSensor::getX()
 {
-    float x;
+    float x = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cx = this->cachex.lock();
     if(cx)
@@ -46,10 +46,10 @@ AccelSensor::getX()
         // read new values
         QString raw = this->readSensor();
         if(raw.length() < 20)
-            return 0.0/0.0;
+            return x;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 3)
-            return 0.0/0.0;
+            return x;
         x = values[0].toFloat();
         float y = values[1].toFloat();
         float z = values[2].toFloat();
@@ -62,6 +62,7 @@ AccelSensor::getX()
         this->cachez = this->pz;
         this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return x;
 }
 
@@ -72,7 +73,7 @@ AccelSensor::getX()
 float
 AccelSensor::getY()
 {
-    float y;
+    float y = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cy = this->cachey.lock();
     if(cy)
@@ -85,10 +86,10 @@ AccelSensor::getY()
         // read new values
         QString raw = this->readSensor();
         if(raw.length() < 20)
-            return 0.0/0.0;
+            return y;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 3)
-            return 0.0/0.0;
+            return y;
         float x = values[0].toFloat();
         y = values[1].toFloat();
         float z = values[2].toFloat();
@@ -101,6 +102,7 @@ AccelSensor::getY()
         this->cachez = this->pz;
         this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return y;
 }
 
@@ -111,7 +113,7 @@ AccelSensor::getY()
 float
 AccelSensor::getZ()
 {
-    float z;
+    float z = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cz = this->cachez.lock();
     if(cz)
@@ -124,10 +126,10 @@ AccelSensor::getZ()
         // read new values
         QString raw = this->readSensor();
         if(raw.length() < 20)
-            return 0.0/0.0;
+            return z;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 3)
-            return 0.0/0.0;
+            return z;
         float x = values[0].toFloat();
         float y = values[1].toFloat();
         z = values[2].toFloat();
@@ -140,5 +142,6 @@ AccelSensor::getZ()
         this->cachez = this->pz;
         this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return z;
 }

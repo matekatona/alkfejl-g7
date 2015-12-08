@@ -5,7 +5,7 @@
 #include "accelsensor.h"
 #include "gyrosensor.h"
 #include "wheelsensor.h"
-#include "commandsocket.h"
+#include "robotcontrol.h"
 
 class Robot : public QObject
 {
@@ -37,7 +37,7 @@ public slots:
     void status(QString status);
 
 private:
-    std::unique_ptr<CommandSocket> cmd;
+    std::unique_ptr<RobotControl> cmd;
     std::unique_ptr<LineSensor> line;
     std::unique_ptr<AccelSensor> accel;
     std::unique_ptr<GyroSensor> gyro;
