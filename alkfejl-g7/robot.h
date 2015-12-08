@@ -35,6 +35,8 @@ public slots:
     void update();
     void speed(float speed);
     void status(QString status);
+    void connect();
+    void disconnect();
 
 private:
     std::unique_ptr<RobotControl> control;

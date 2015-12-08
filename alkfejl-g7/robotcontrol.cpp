@@ -1,5 +1,6 @@
 #include "robotcontrol.h"
 
+
 /*!
  * \brief CommandSocket::CommandSocket
  * \param port
@@ -43,7 +44,8 @@ RobotControl::getStatus()
     {
         // read new values
         QString raw = this->read();
-        if(raw.length() < 5)
+        qDebug() << "status " << raw;
+        if(raw.length() < 3)
             return status;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)
@@ -79,7 +81,8 @@ RobotControl::getSpeed()
     {
         // read new values
         QString raw = this->read();
-        if(raw.length() < 5)
+        qDebug() << "speed " << raw;
+        if(raw.length() < 3)
             return speed;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)

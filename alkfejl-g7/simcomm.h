@@ -19,7 +19,7 @@ class SimComm : public QObject
 {
     Q_OBJECT
 public:
-    explicit SimComm(int port = 0);
+    explicit SimComm(int port = 80);
     void connect();
     void disconnect();
 
@@ -37,6 +37,6 @@ protected:
 private:
     std::unique_ptr<QTimer> cache_timer;
     std::unique_ptr<QTcpSocket> socket;
-    int port = 0;
+    const int port;
 };
 #endif // ABSTRACTSENSOR_H

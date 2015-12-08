@@ -31,7 +31,7 @@ WheelSensor::reset_cache()
 float
 WheelSensor::getLeft()
 {
-    float left;
+    float left = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cleft = this->cacheleft.lock();
     if(cleft)
@@ -44,10 +44,10 @@ WheelSensor::getLeft()
         // read new values
         QString raw = this->read();
         if(raw.length() < 10)
-            return 0.0/0.0;
+            return left;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)
-            return 0.0/0.0;
+            return left;
         left = values[0].toFloat();
         float right = values[1].toFloat();
         // cache value
@@ -57,6 +57,7 @@ WheelSensor::getLeft()
         this->cacheright = this->pright;
         this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return left;
 }
 
@@ -68,7 +69,7 @@ WheelSensor::getLeft()
 float
 WheelSensor::getRight()
 {
-    float right;
+    float right = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cright = this->cacheright.lock();
     if(cright)
@@ -81,10 +82,10 @@ WheelSensor::getRight()
         // read new values
         QString raw = this->read();
         if(raw.length() < 10)
-            return 0.0/0.0;
+            return right;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)
-            return 0.0/0.0;
+            return right;
         float left = values[0].toFloat();
         right = values[1].toFloat();
         // cache value
@@ -94,6 +95,7 @@ WheelSensor::getRight()
         this->cacheright = this->pright;
         this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return right;
 }
 

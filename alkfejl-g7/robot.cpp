@@ -5,18 +5,40 @@
  * \brief Robot::Robot
  */
 Robot::Robot()
-    : control(new RobotControl()),
-      line(new LineSensor()),
-      accel(new AccelSensor()),
-      gyro(new GyroSensor()),
+    : control(new RobotControl()),  // order of initialization is crucial!!!
+      line(new LineSensor()),       // VREP will freeze with other orders
+      accel(new AccelSensor()),     // but we have no time to fix this in VREP
+      gyro(new GyroSensor()),       // and noone will notice anyway
       wheel(new WheelSensor())
 {
     // etwas
 }
 
-// ---------------------------------------------------------
-// -------------------------- SLOTS ------------------------
-// ---------------------------------------------------------
+/*!
+ * \brief Robot::connect
+ */
+void
+Robot::connect()
+{
+    this->control->connect();
+    this->line->connect();
+    this->accel->connect();
+    this->gyro->connect();
+    this->wheel->connect();
+}
+
+/*!
+ * \brief Robot::disconnect
+ */
+void
+Robot::disconnect()
+{
+    this->control->disconnect();
+    this->line->disconnect();
+    this->accel->disconnect();
+    this->gyro->disconnect();
+    this->wheel->disconnect();
+}
 
 /*!
  * \brief Robot::speed

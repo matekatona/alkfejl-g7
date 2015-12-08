@@ -1,6 +1,5 @@
 #include "simcomm.h"
 
-
 /*!
  * \brief AbstractSensor::AbstractSensor
  * \param port
@@ -57,7 +56,6 @@ void
 SimComm::disconnect()
 {
     this->socket->disconnectFromHost();
-    // this->isConnected = false;  // will be set in disconnected() slot
 }
 
 /*!
@@ -70,12 +68,9 @@ SimComm::read(){
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         this->socket->write("GET\n");  // send get command
-        bool ready = this->socket->waitForReadyRead(100);
-        if(ready)
-        {
-            QByteArray rawData = socket->readLine(300);  // read answer
-            rawString = QString(rawData);
-        }
+        // TODO timeout
+        QByteArray rawData = socket->readLine(300);  // read answer
+        rawString = QString(rawData);
     }
 
     return rawString;
@@ -87,9 +82,9 @@ SimComm::write(QString command)
     if(this->socket->state() == QAbstractSocket::ConnectedState)
     {
         quint64 res = this->socket->write(command.toLocal8Bit());
-        if(res < command.length())
+        if(res < (quint64)command.length())
         {
-            // TODO error
+            // TODO feedback?
         }
     }
 }
