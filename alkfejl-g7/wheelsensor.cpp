@@ -4,12 +4,13 @@
  * \brief WheelSensor::WheelSensor
  */
 WheelSensor::WheelSensor()
-    : AbstractSensor(30568)  // call superclass constructor with correct port number
+    : SimComm(PORT_NUM_WHEEL)  // call superclass constructor with correct port number
 {
     this->cacheleft = this->pleft;
     this->cacheright = this->pright;
     this->pleft.reset();
     this->pright.reset();
+
     QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
 }
 
@@ -30,7 +31,7 @@ WheelSensor::reset_cache()
 float
 WheelSensor::getLeft()
 {
-    float left;
+    float left = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cleft = this->cacheleft.lock();
     if(cleft)
@@ -41,12 +42,12 @@ WheelSensor::getLeft()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 10)
-            return 0.0/0.0;
+            return left;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)
-            return 0.0/0.0;
+            return left;
         left = values[0].toFloat();
         float right = values[1].toFloat();
         // cache value
@@ -56,6 +57,7 @@ WheelSensor::getLeft()
         this->cacheright = this->pright;
         this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return left;
 }
 
@@ -67,7 +69,7 @@ WheelSensor::getLeft()
 float
 WheelSensor::getRight()
 {
-    float right;
+    float right = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cright = this->cacheright.lock();
     if(cright)
@@ -78,12 +80,12 @@ WheelSensor::getRight()
     else
     {
         // read new values
-        QString raw = this->readSensor();
+        QString raw = this->read();
         if(raw.length() < 10)
-            return 0.0/0.0;
+            return right;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)
-            return 0.0/0.0;
+            return right;
         float left = values[0].toFloat();
         right = values[1].toFloat();
         // cache value
@@ -93,6 +95,7 @@ WheelSensor::getRight()
         this->cacheright = this->pright;
         this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return right;
 }
 
