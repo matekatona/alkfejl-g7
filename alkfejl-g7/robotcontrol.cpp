@@ -38,13 +38,12 @@ RobotControl::getStatus()
     {
         // use cached value
         status = *cst;
-        qDebug() << "cached status: " << status;
     }
     else
     {
         // read new values
         QString raw = this->read();
-        if(raw.length() < 10)
+        if(raw.length() < 5)
             return status;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)
@@ -57,8 +56,6 @@ RobotControl::getStatus()
         this->pstatus = std::make_shared<QString>(status);
         this->cachestatus = this->pstatus;
         this->start_cache_timer();  // will reset cache 70ms later
-        qDebug() << "new values: " << status << speed;
-        qDebug() << "raw: " << raw;
     }
 
     return status;
@@ -77,13 +74,12 @@ RobotControl::getSpeed()
     {
         // use cached value
         speed = *csp;
-        qDebug() << "cached speed: " << speed;
     }
     else
     {
         // read new values
         QString raw = this->read();
-        if(raw.length() < 10)
+        if(raw.length() < 5)
             return speed;
         QStringList values = raw.split(QRegExp("\\s"));
         if(values.size() < 2)
@@ -96,8 +92,6 @@ RobotControl::getSpeed()
         this->pstatus = std::make_shared<QString>(status);
         this->cachestatus = this->pstatus;
         this->start_cache_timer();  // will reset cache 70ms later
-        qDebug() << "new values: " << status << speed;
-        qDebug() << "raw: " << raw;
     }
 
     return speed;
