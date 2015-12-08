@@ -25,7 +25,9 @@ class AbstractSensor{
 *@opt all
 */
 class LineSensor extends AbstractSensor {
-        public QVarLengthArray<bool> getValues%28float[] values%29;
+        public bool[] getValues%28%29;
+        public void connect%28%29;
+        public void disconnect%28%29;
 }
 /**
 *AccelSensor
@@ -64,12 +66,12 @@ class WheelSensor extends AbstractSensor {
 */
 class CommandSocket{
     QTCPSocket commSock;
-    public int connect%28%29;
-    public int disconnect%28%29;
+    public void connect%28%29;
+    public void disconnect%28%29;
     public QString getStatus%28%29;
-    public void setStatus(QString);
+    public void setStatus%28%29;
     public float getSpeed%28%29;
-    public void setSpeed%28float%29;
+    public void setSpeed%28%29;
 })
 
 ![Alt text](http://g.gravizo.com/g?
@@ -108,7 +110,9 @@ C -> D: TCPSocket.send%28%29;
 deactivate A;
 deactivate B;
 deactivate C;
-B -> C: line.getValues%28%29;
+A -> B: update%28%29;
+activate B;
+B -> C: sensors.getValue%28%29;
 activate C;
 C --> D: TCPSocket.send%28%29;
 activate D;
@@ -116,5 +120,7 @@ D --> C: values;
 deactivate D;
 C --> B: values;
 deactivate C;
+deactivate B;
+B -> A: setValues%28%29;
 @enduml
 )
