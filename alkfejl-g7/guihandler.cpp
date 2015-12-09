@@ -56,7 +56,6 @@ GuiHandler::GuiHandler( \
 
 void GuiHandler::qmlbuttonConDisconClicked()
 {
-    qDebug() << "ConDiscon button clicked! Command: " << this->buttonConDiscon->object->property("text").toString();
     QString command = this->buttonConDiscon->object->property("text").toString();
     if(command == "Connect")
         emit this->buttonConClicked();
@@ -66,13 +65,11 @@ void GuiHandler::qmlbuttonConDisconClicked()
 
 void GuiHandler::qmlbuttonSendStatusClicked()
 {
-    qDebug() << "Send status clicked! Current status: " << this->comboSetStatus->object->property("currentText").toString();
     emit this->buttonSendStatusClicked(this->comboSetStatus->object->property("currentText").toString());
 }
 
 void GuiHandler::qmlbuttonSendSpeedClicked()
 {
-    qDebug() << "Send speed clicked! Current speed: " << this->editSetSpeed->object->property("text").toString();
     QString raw = this->editSetSpeed->object->property("text").toString();
     raw.replace(",", ".");
     emit this->buttonSendSpeedClicked(raw.toFloat());
@@ -80,13 +77,11 @@ void GuiHandler::qmlbuttonSendSpeedClicked()
 
 void GuiHandler::qmlbuttonCarSelfTestClicked()
 {
-    qDebug() << "Car self test clicked!";
     emit this->buttonCarSelfTestClicked();
 }
 
 void GuiHandler::setAlert(int color)
 {
-    qDebug() << "new color: " << color;
     QMetaObject::invokeMethod(this->alertLamp->object, "setAlert", Qt::DirectConnection, Q_ARG(QVariant, color));
 }
 
@@ -97,7 +92,6 @@ void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
     for(int i=0; i<21; i++)
         values << leds.at(i);
     QMetaObject::invokeMethod(this->lineSens->object, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(values)));
-//    QMetaObject::invokeMethod(this->alertLamp->object, "setAlertLamp", Qt::DirectConnectionQ_ARG(QVariant, QVariant::fromValue(values)));
 }
 
 void GuiHandler::setTextAccelX(float accelX)

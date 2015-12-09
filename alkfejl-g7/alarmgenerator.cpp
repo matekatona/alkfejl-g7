@@ -33,10 +33,7 @@ AlarmGenerator::setLineState(QVarLengthArray<bool> l)
     this->lineFound = false;
 
     if(l.size() > 0)
-    {
         oneofthem = l[0];
-        qDebug() << "lines"<<l[0]<<l[1]<<l[2]<<l[3]<<l[4]<<l[5]<<l[6]<<l[7]<<l[8]<<l[9]<<l[10]<<l[11]<<l[12]<<l[13]<<l[14]<<l[15]<<l[16]<<l[17]<<l[18]<<l[19]<<l[20];
-    }
     else
         return;
 

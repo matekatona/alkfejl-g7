@@ -60,7 +60,7 @@ SimComm::connect()
         return;
 
     this->socket->connectToHost("127.0.0.1", this->port);
-    if(!this->socket->waitForConnected(1000))
+    if(!this->socket->waitForConnected(100))
     {
         qDebug() << "could not connect to port " << this->port;
     }

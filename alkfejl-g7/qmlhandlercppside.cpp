@@ -15,8 +15,6 @@ QMLHandlerCppSide::QMLHandlerCppSide(QObject *rootObject, const QString& name)
     {
         qDebug() << "could not find" + name;
     }
-
-    qDebug() << name + " initialized";
 }
 
 QQuickItem* QMLHandlerCppSide::findItemByName(const QString& name)
