@@ -44,6 +44,7 @@ public slots:
     void connect();
     void disconnect();
     void socketStateChanged();
+    void selfTest();
 
 private:
     std::unique_ptr<RobotControl> control;
@@ -53,7 +54,9 @@ private:
     std::unique_ptr<WheelSensor> wheel;
     std::unique_ptr<QTimer> update_timer;
     std::unique_ptr<AlarmGenerator> alarmgen;
+    std::unique_ptr<QTimer> test_timer;
     int connectedSockets;
+    int testState = 0;
     const float D = 0.12;
 };
 
