@@ -58,8 +58,12 @@ Window {
             mainWindow.sensors.shift();
             mainWindow.sensors[20]=!temp;
 
+<<<<<<< HEAD
             alertLamp.alert=(alertLamp.alert+1)%3;
 
+=======
+            alertLamp.alert=!alertLamp.alert;
+>>>>>>> origin/master
             textAccelX.setValue(angle);
             textAccelY.setValue(angle);
             textAccelZ.setValue(angle);
@@ -180,7 +184,17 @@ Window {
                 objectName: "alertLamp";
                 anchors.horizontalCenter: parent.horizontalCenter;
                 alertLabel: "Line lost";
+<<<<<<< HEAD
                 alert: 1;
+=======
+                alert: false;
+
+                function setAlertLamp()
+                {
+                    alertLamp.alert = ( lineSens.ledValues.reduce(function(a,b,c,d){return a && b; }, true) || //all sensors 1
+                        !lineSens.ledValues.reduce(function(a,b,c,d){return a || b; }, false)); //all sensors 0
+                }
+>>>>>>> origin/master
             }
         }
 

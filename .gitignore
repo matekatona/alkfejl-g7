@@ -33,3 +33,7 @@ build-alkfejl-g7-*
 #QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
+
+# Doxygen
+
+doc

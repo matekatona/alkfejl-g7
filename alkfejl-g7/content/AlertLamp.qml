@@ -5,7 +5,7 @@ Item {
     width: 70;
     height: 100;
 
-    property bool alert: false;
+    property int alert: 1;
     property alias alertLabel: label.text;
 
     function setAlert(values){
@@ -19,13 +19,18 @@ Item {
         anchors.bottom: parent.bottom;
 
         Image {
-            source: "alert_on.png"
-            visible: alert;
+            source: "alert_lost.png"
+            visible: alertLamp.alert==2;
         }
 
         Image {
-            source: "alert_off.png"
-            visible: !alert;
+            source: "alert_ok.png"
+            visible: alertLamp.alert==0;
+        }
+
+        Image {
+            source: "alert_disconnected.png"
+            visible: alertLamp.alert==1;
         }
     }
 
