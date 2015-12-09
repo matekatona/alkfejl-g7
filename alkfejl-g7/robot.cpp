@@ -138,4 +138,14 @@ Robot::update(){
     emit this->setCarGyroY(this->gyro->getY());
     emit this->setCarGyroZ(this->gyro->getZ());
     emit this->drawSpeedGraph(this->control->getSpeed());
+
+    bool s0 = this->control->isConnected();
+    bool s1 = this->accel->isConnected();
+    bool s2 = this->gyro->isConnected();
+    bool s3 = this->line->isConnected();
+    bool s4 = this->wheel->isConnected();
+
+    this->alarmgen->setConnectionState( s0 & s1 & s2 & s3 & s4 );
+    this->alarmgen->setLineState(this->line->getValues());
+    this->alarmgen->updateAlarm();
 }

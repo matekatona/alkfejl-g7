@@ -9,7 +9,22 @@
 LineSensor::LineSensor() :
     SimComm(PORT_NUM_LINE)  // call superclass constructor with correct port number
 {
-    // nothing
+    this->cachevalues = this->pvalues;
+    this->pvalues.reset();
+
+    QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
+}
+
+/*!
+ * \brief AccelSensor::clear_cache delete cached sensor values
+ *
+ * The next sensor read will result in reading new values from VREP
+ * \see SimComm::cache_expired
+ */
+void
+LineSensor::reset_cache()
+{
+    this->pvalues.reset();
 }
 
 /*!
@@ -25,10 +40,35 @@ LineSensor::LineSensor() :
 QVarLengthArray<bool>
 LineSensor::getValues()
 {
-    QVarLengthArray<bool> vals(21);
-    QString raw = this->read();
-    QStringList rawValues = raw.split(QRegExp("\\s"));
-    for(quint8 i=0;i<rawValues.size();i++)
-        vals.insert(i, rawValues[i].toFloat() < LINE_THRESHOLD);
+    QVarLengthArray<bool> vals;
+    for(quint8 i=0;i<21;i++)
+        vals.append(false);
+
+    // check for value in cache
+    std::shared_ptr<QVarLengthArray<bool>> cvalues = this->cachevalues.lock();
+    if(cvalues)
+    {
+        // use cached value
+        vals = *cvalues;
+    }
+    else
+    {
+        // read new values
+        QString raw = this->read();
+        if(raw.length() < 100)
+            return vals;
+        QStringList rawValues = raw.split(QRegExp("\\s"));
+        if(rawValues.size() < 21)
+            return vals;
+
+        for(quint8 i=0;i<rawValues.size();i++)
+            vals.replace(i, rawValues[i].toFloat() < LINE_THRESHOLD);
+
+        // cache values
+        this->pvalues = std::make_shared<QVarLengthArray<bool>>(vals);
+        this->cachevalues = this->pvalues;
+        this->start_cache_timer();  // will reset cache 70ms later
+    }
+
     return vals;
 }

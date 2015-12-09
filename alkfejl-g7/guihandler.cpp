@@ -86,6 +86,7 @@ void GuiHandler::qmlbuttonCarSelfTestClicked()
 
 void GuiHandler::setAlert(int color)
 {
+    qDebug() << "new color: " << color;
     QMetaObject::invokeMethod(this->alertLamp->object, "setAlert", Qt::DirectConnection, Q_ARG(QVariant, color));
 }
 
