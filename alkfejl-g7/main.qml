@@ -59,7 +59,6 @@ Window {
             mainWindow.sensors[20]=!temp;
 
             alertLamp.alert=!alertLamp.alert;
-
             textAccelX.setValue(angle);
             textAccelY.setValue(angle);
             textAccelZ.setValue(angle);
@@ -181,6 +180,12 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 alertLabel: "Line lost";
                 alert: false;
+
+                function setAlertLamp()
+                {
+                    alertLamp.alert = ( lineSens.ledValues.reduce(function(a,b,c,d){return a && b; }, true) || //all sensors 1
+                        !lineSens.ledValues.reduce(function(a,b,c,d){return a || b; }, false)); //all sensors 0
+                }
             }
         }
 
