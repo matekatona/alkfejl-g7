@@ -23,6 +23,15 @@ Robot::Robot()
       wheel(new WheelSensor())      // at least we hope so
 {
     // etwas
+
+    this->timer.setSingleShot(false);
+    this->timer.setInterval(100);
+    QObject::connect(&this->timer, SIGNAL(timeout()), this, SLOT(update()));
+    QObject::connect(this->control.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
+    QObject::connect(this->line.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
+    QObject::connect(this->accel.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
+    QObject::connect(this->gyro.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
+    QObject::connect(this->wheel.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
 }
 
 /*!
@@ -31,11 +40,35 @@ Robot::Robot()
 void
 Robot::connect()
 {
-    this->control->connect();
-    this->line->connect();
-    this->accel->connect();
-    this->gyro->connect();
-    this->wheel->connect();
+    qDebug() << "Robot try to connect...";
+
+    if(!this->control->isConnected())
+    {
+        this->connectedSockets++;
+        this->control->connect();
+    }
+    if(!this->line->isConnected())
+    {
+        this->connectedSockets++;
+        this->line->connect();
+    }
+    if(!this->accel->isConnected())
+    {
+        this->connectedSockets++;
+        this->accel->connect();
+    }
+    if(!this->gyro->isConnected())
+    {
+        this->connectedSockets++;
+        this->gyro->connect();
+    }
+    if(!this->wheel->isConnected())
+    {
+        this->connectedSockets++;
+        this->wheel->connect();
+    }
+
+    qDebug() << this->connectedSockets;
 }
 
 /*!
@@ -49,6 +82,24 @@ Robot::disconnect()
     this->accel->disconnect();
     this->gyro->disconnect();
     this->wheel->disconnect();
+}
+
+void
+Robot::socketStateChanged(QAbstractSocket::SocketState socketState)
+{
+    if (socketState==QAbstractSocket::UnconnectedState)
+        this->connectedSockets--;
+
+    if(connectedSockets==NUM_OF_SOCKETS)
+    {
+        this->timer.start();
+        emit this->connected();
+    }
+    else
+    {
+        this->timer.stop();
+        emit this->disconnected();
+    }
 }
 
 /*!

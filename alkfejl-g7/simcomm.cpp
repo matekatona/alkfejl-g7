@@ -12,9 +12,10 @@ SimComm::SimComm(int port) :
     socket(new QTcpSocket()),
     port(port)
 {
-    this->connect();
+//    this->connect();
     this->cache_timer->setSingleShot(true);
     QObject::connect(this->cache_timer.get(), SIGNAL(timeout()), this, SLOT(cache_timeout()));
+    QObject::connect(this->socket.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
 }
 
 /*!
@@ -29,6 +30,14 @@ void
 SimComm::cache_timeout()
 {
     emit this->cache_expired();
+}
+
+void
+SimComm::socketStateChanged(QAbstractSocket::SocketState socketState)
+{
+    if(socketState==QAbstractSocket::ConnectedState)
+        this->connected=true;
+    emit this->stateChanged(socketState);
 }
 
 /*!
@@ -77,6 +86,12 @@ void
 SimComm::disconnect()
 {
     this->socket->disconnectFromHost();
+}
+
+bool
+SimComm::isConnected()
+{
+    return this->connected;
 }
 
 /*!

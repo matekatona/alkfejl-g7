@@ -7,6 +7,8 @@
 #include "wheelsensor.h"
 #include "robotcontrol.h"
 
+#define NUM_OF_SOCKETS 5
+
 class Robot : public QObject
 {
     Q_OBJECT
@@ -31,14 +33,20 @@ signals:
     void setCarGyroZ(float gyroZ);
     void drawSpeedGraph(float speed);
 
+    void connected();
+    void disconnected();
+
 public slots:
     void update();
     void speed(float speed);
     void status(QString status);
     void connect();
     void disconnect();
+    void socketStateChanged(QAbstractSocket::SocketState socketState);
 
 private:
+    QTimer timer;
+    int connectedSockets = 0;
     std::unique_ptr<RobotControl> control;
     std::unique_ptr<LineSensor> line;
     std::unique_ptr<AccelSensor> accel;

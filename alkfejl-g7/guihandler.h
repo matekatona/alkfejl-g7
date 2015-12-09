@@ -86,6 +86,9 @@ public slots:
     void setCarGyroY(float gyroY);
     void setCarGyroZ(float gyroZ);
     void drawSpeedGraph(float speed);
+
+    void robotConnected();
+    void robotDisconnected();
 };
 
 #endif // GUIHANDLER_H

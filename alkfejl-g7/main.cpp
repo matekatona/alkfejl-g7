@@ -13,10 +13,6 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    QTimer timer;
-
-    timer.setSingleShot(false);
-    timer.setInterval(100);
 
     qmlRegisterType<Graph>("Graph", 1, 0, "Graph");
 
@@ -25,7 +21,6 @@ int main(int argc, char *argv[])
 
     app.setWindowIcon(QIcon(":/content/icon.png"));
 
-    QMLHandlerCppSide mainWindow(engine.rootObjects()[0], "mainWindow");
     QMLHandlerCppSide alertLamp(engine.rootObjects()[0], "alertLamp");
     QMLHandlerCppSide lineSens(engine.rootObjects()[0], "lineSens");
     QMLHandlerCppSide textAccelX(engine.rootObjects()[0], "textAccelX");
@@ -52,9 +47,13 @@ int main(int argc, char *argv[])
     GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonConDiscon, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
     Robot mikrobi;
 
-    QObject::connect(&timer, SIGNAL(timeout()), &mikrobi, SLOT(update()));
+
+    QObject::connect(&guihandle, SIGNAL(buttonConDisconClicked()), &mikrobi, SLOT(connect()));
     QObject::connect(&guihandle, SIGNAL(buttonSendStatusClicked(QString)), &mikrobi, SLOT(status(QString)));
     QObject::connect(&guihandle, SIGNAL(buttonSendSpeedClicked(float)), &mikrobi, SLOT(speed(float)));
+
+    QObject::connect(&mikrobi, SIGNAL(connected()), &guihandle, SLOT(robotConnected()));
+    QObject::connect(&mikrobi, SIGNAL(disconnected()), &guihandle, SLOT(robotDisconnected()));
 
     QObject::connect(&mikrobi, SIGNAL(setLedStrip(QVarLengthArray<bool>)), &guihandle, SLOT(setLedStrip(QVarLengthArray<bool>)));
     QObject::connect(&mikrobi, SIGNAL(setTextAccelX(float)), &guihandle, SLOT(setTextAccelX(float)));
@@ -72,6 +71,5 @@ int main(int argc, char *argv[])
     QObject::connect(&mikrobi, SIGNAL(setCarGyroZ(float)), &guihandle, SLOT(setCarGyroZ(float)));
     QObject::connect(&mikrobi, SIGNAL(drawSpeedGraph(float)), &guihandle, SLOT(drawSpeedGraph(float)));
 
-    timer.start();
     return app.exec();
 }

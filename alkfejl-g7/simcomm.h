@@ -26,12 +26,15 @@ public:
     explicit SimComm(int port = 80);
     void connect();
     void disconnect();
+    bool isConnected();
 
 signals:
     void cache_expired();
+    void stateChanged(QAbstractSocket::SocketState socketState);
 
 protected slots:
     void cache_timeout();
+    void socketStateChanged(QAbstractSocket::SocketState socketState);
 
 protected:
     void start_cache_timer();
@@ -41,6 +44,7 @@ protected:
 private:
     std::unique_ptr<QTimer> cache_timer;
     std::unique_ptr<QTcpSocket> socket;
+    bool connected=false;
     const int port;
 };
 #endif // SIMCOMM_H

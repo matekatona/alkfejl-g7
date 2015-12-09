@@ -92,7 +92,7 @@ void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
     for(int i=0; i<21; i++)
         values << leds.at(i);
     QMetaObject::invokeMethod(this->lineSens->object, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(values)));
-    QMetaObject::invokeMethod(this->alertLamp->object, "setAlertLamp", Qt::DirectConnection);
+//    QMetaObject::invokeMethod(this->alertLamp->object, "setAlertLamp", Qt::DirectConnectionQ_ARG(QVariant, QVariant::fromValue(values)));
 }
 
 void GuiHandler::setTextAccelX(float accelX)
@@ -167,20 +167,42 @@ void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
 
 void GuiHandler::setCarGyroX(float gyroX)
 {
+    if(gyroX!=gyroX)
+        gyroX=0;
+
     QMetaObject::invokeMethod(this->carGyroX->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroX));
 }
 
 void GuiHandler::setCarGyroY(float gyroY)
 {
+    if(gyroY!=gyroY)
+        gyroY=0;
+
     QMetaObject::invokeMethod(this->carGyroY->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroY));
 }
 
 void GuiHandler::setCarGyroZ(float gyroZ)
 {
+    if(gyroZ!=gyroZ)
+        gyroZ=0;
+
     QMetaObject::invokeMethod(this->carGyroZ->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroZ));
 }
 
 void GuiHandler::drawSpeedGraph(float speed)
 {
+    if(speed!=speed)
+        speed=0;
+
     QMetaObject::invokeMethod(this->speedGraph->object, "newSample", Qt::DirectConnection, Q_ARG(QVariant, (-speed/3.0)+0.5));
+}
+
+void GuiHandler::robotConnected()
+{
+    this->buttonConDiscon->object->setProperty("text", "Disconnect");
+}
+
+void GuiHandler::robotDisconnected()
+{
+    this->buttonConDiscon->object->setProperty("text", "Connect");
 }
