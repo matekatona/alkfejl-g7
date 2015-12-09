@@ -6,6 +6,7 @@
 
 #define LINE_THRESHOLD 0.5f
 
+//!* A class for the line sensor.
 class LineSensor : public SimComm
 {
     Q_OBJECT
