@@ -100,7 +100,7 @@ Robot::selfTest()
 {
     switch(this->testState){
     case 0:
-        this->test_timer =  std::make_unique<QTimer>();
+        this->test_timer =  std::unique_ptr<QTimer>(new QTimer());
         QObject::connect(this->test_timer.get(), SIGNAL(timeout()), this, SLOT(selfTest()));
         this->control->setStatus(QString("Run"));
         this->testState++;
