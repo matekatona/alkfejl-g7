@@ -4,7 +4,7 @@
  * \brief SimComm::SimComm creates an abstract object to communicate with VREP
  *
  * This object does the actual communication via TCP sockets, and has the timer
- * to signal cache expiration
+ * to signal cache expiration.
  * \param port
  */
 SimComm::SimComm(int port) :
@@ -20,9 +20,10 @@ SimComm::SimComm(int port) :
 /*!
  * \brief SimComm::cache_timeout slot to handle cache timeout
  *
- * This slot is signaled, when `cache_timer` timed out. It then emits the
+ * This slot is signaled, when `cache_timer` times out. It then emits the
  * `cache_expired()` signal, which should be connected in inherited classes to
- * clear the actual cache
+ * clear the actual cache.
+ * \sa cache_expired
  */
 void
 SimComm::cache_timeout()
@@ -34,7 +35,8 @@ SimComm::cache_timeout()
  * \brief SimComm::start_cache_timer starts cache timer
  *
  * The class has a one-shot timer, which can be started by this function. The
- * timer will emit the `timeout()` signal 70 ms after start, and then stop.
+ * timer will emit the `cache_timeout()` signal 70 ms after start, and then stop.
+ * \sa cache_timeout
  */
 void
 SimComm::start_cache_timer()
@@ -66,7 +68,7 @@ SimComm::connect()
 /*!
  * \brief SimComm::disconnect disconnects from port
  *
- * The socket is implicitly closed before detroying instances of this object, so
+ * The socket is implicitly closed before destroying instances of this object, so
  * there is no need to explicitly call this function. It can be used to reconnect
  * if there were errors with the initial connect, or if VREP has been restarted
  * during program execution.
@@ -82,7 +84,7 @@ SimComm::disconnect()
  *
  * This function is handling communication with VREP. It sends the "GET" string
  * to the instance's port, so the user does not have to send it using `write()`,
- * and reads the string sent back. It does not parse the received string.
+ * and reads the answer until the next newline. It does not parse the received string.
  * \return unparsed robot data
  */
 QString
@@ -105,9 +107,9 @@ SimComm::read(){
  * This function is handling communication with VREP. It sends the given command
  * to the instance's port. No modification is made on the command, so it has to
  * be a valid one. Nothing is returned, since the robot only replies to the
- * "GET" command. To check wether the command has been executed by the robot,
+ * "GET" command. To check whether the command has been executed by the robot,
  * the user can call getter functions later, and check the returned values.
- * \param command
+ * \param command the command string to send.
  */
 void
 SimComm::write(QString command)

@@ -1,5 +1,5 @@
-#ifndef ABSTRACTSENSOR_H
-#define ABSTRACTSENSOR_H
+#ifndef SIMCOMM_H
+#define SIMCOMM_H
 
 #include <QObject>
 #include <QtWidgets>    // QTimer
@@ -15,6 +15,10 @@
 using namespace std;
 
 
+/*! 
+ * This class is the base of all classes that communicate with VREP. 
+ * It handles the control socket (TCP) and the communication protocol.
+ */
 class SimComm : public QObject
 {
     Q_OBJECT
@@ -39,4 +43,4 @@ private:
     std::unique_ptr<QTcpSocket> socket;
     const int port;
 };
-#endif // ABSTRACTSENSOR_H
+#endif // SIMCOMM_H
