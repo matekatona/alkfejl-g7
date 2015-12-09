@@ -3,6 +3,13 @@
 
 #include "simcomm.h"
 
+/*!
+ * This class is for reading the values of the acceleration sensor of the robot.
+ * The class uses cache to store sensor values to minimize communication with
+ * the simulator. Every read value is cached, and expires after 70 ms. Repeated
+ * reads within this 70 ms will return the same values.
+ */
+
 class AccelSensor : public SimComm
 {
     Q_OBJECT

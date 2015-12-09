@@ -3,10 +3,6 @@
 /*!
  * \brief AccelSensor::AccelSensor creates sensor object, that is connected to
  *                                 the acceleration sensor port of VREP
- *
- * The class uses cache to store sensor values to minimize communication with
- * the simulator. Every read value is cached, and expires after 70 ms. Repeated
- * reads within this 70 ms will return the same values.
  */
 AccelSensor::AccelSensor() :
     SimComm(PORT_NUM_ACCEl)  // call superclass constructor with correct port number

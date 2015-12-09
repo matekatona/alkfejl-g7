@@ -1,7 +1,6 @@
 #ifndef WHEELSENSOR_H
 #define WHEELSENSOR_H
 
-
 #include "simcomm.h"
 
 /*!

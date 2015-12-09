@@ -43,6 +43,13 @@
 
 #include <QQuickItem>
 
+/*! 
+ * This class implements a graph control for QML. 
+ * This is taken from the stock QtQuick SceneGraph example. 
+ * Documentation is available on the following URL:
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
+
 class Graph : public QQuickItem
 {
     Q_OBJECT

@@ -5,6 +5,8 @@
 #include <QVarLengthArray>
 #include "qmlhandlercppside.h"
 
+/*! This class implements the event handlers for the Qt Quick controls. */
+
 class GuiHandler : public QObject
 {
     Q_OBJECT

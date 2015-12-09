@@ -44,6 +44,13 @@
 #include <QtQuick/QSGGeometryNode>
 #include <QtQuick/QSGFlatColorMaterial>
 
+/*! 
+ * This class implements a graph control for QML. 
+ * This is taken from the stock QtQuick SceneGraph example. 
+ * Documentation is available on the following URL:
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
+
 class GridNode : public QSGGeometryNode
 {
 public:

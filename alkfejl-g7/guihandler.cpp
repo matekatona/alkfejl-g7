@@ -1,5 +1,12 @@
 #include "guihandler.h"
 
+/*! 
+ * This is the constructor of GuiHandler.
+ * Its parameters are objects on the mainWindow (defined in main.qml).
+ * It will also connect the event handlers to the signals of some objects passed here.
+ * \see mainWindow
+ */
+
 GuiHandler::GuiHandler( \
         QMLHandlerCppSide *alertLamp, \
         QMLHandlerCppSide *lineSens, \
@@ -54,18 +61,32 @@ GuiHandler::GuiHandler( \
 
 }
 
+/*! 
+ * This is the click event handler of buttonConDiscon. 
+ * It will emit another signal, `buttonConDisconClicked`.
+ */
 void GuiHandler::qmlbuttonConDisconClicked()
 {
     qDebug() << "ConDiscon button clicked! Command: " << this->buttonConDiscon->object->property("text").toString();
     emit this->buttonConDisconClicked();
 }
 
+/*! 
+ * This is the click event handler of buttonSendStatus. 
+ * It will emit another signal, `buttonSendStatusClicked`, which is connected to the `status` slot of the `Robot` instance 
+ * in `main`, and sends V-REP the new status to set.
+ */
 void GuiHandler::qmlbuttonSendStatusClicked()
 {
     qDebug() << "Send status clicked! Current status: " << this->comboSetStatus->object->property("currentText").toString();
     emit this->buttonSendStatusClicked(this->comboSetStatus->object->property("currentText").toString());
 }
 
+/*! 
+ * This is the click event handler of buttonSendSpeed. 
+ * It will emit another signal, `buttonSendSpeedClicked`, which is connected to the `speed` slot of the `Robot` instance 
+ * in `main`, and sends V-REP the new speed to set.
+ */
 void GuiHandler::qmlbuttonSendSpeedClicked()
 {
     qDebug() << "Send speed clicked! Current speed: " << this->editSetSpeed->object->property("text").toString();
@@ -74,6 +95,9 @@ void GuiHandler::qmlbuttonSendSpeedClicked()
     emit this->buttonSendSpeedClicked(raw.toFloat());
 }
 
+/*! 
+ * This is the click event handler of buttonCarSelfTest.
+ */
 void GuiHandler::qmlbuttonCarSelfTestClicked()
 {
     qDebug() << "Car self test clicked!";
