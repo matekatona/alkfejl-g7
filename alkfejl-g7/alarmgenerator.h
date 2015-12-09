@@ -2,6 +2,7 @@
 #define ALARMGENERATOR_H
 
 #include <QObject>
+#include <QDebug>
 
 #define ALARM_GREEN     0
 #define ALARM_YELLOW    1

@@ -12,6 +12,14 @@ class LineSensor : public SimComm
 public:
     LineSensor();
     QVarLengthArray<bool> getValues();
+
+private slots:
+    void reset_cache();
+
+private:
+    std::shared_ptr<QVarLengthArray<bool>> pvalues;
+
+    std::weak_ptr<QVarLengthArray<bool>> cachevalues;
 };
 
 #endif // LINESENSOR_H

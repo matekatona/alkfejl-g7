@@ -26,20 +26,23 @@ AlarmGenerator::AlarmGenerator()
  * \param lineVals linesensor values read from linesensor
  */
 void
-AlarmGenerator::setLineState(QVarLengthArray<bool> lineVals)
+AlarmGenerator::setLineState(QVarLengthArray<bool> l)
 {
     bool oneofthem;
 
     this->lineFound = false;
 
-    if(lineVals.size() > 0)
-        oneofthem = lineVals[0];
+    if(l.size() > 0)
+    {
+        oneofthem = l[0];
+        qDebug() << "lines"<<l[0]<<l[1]<<l[2]<<l[3]<<l[4]<<l[5]<<l[6]<<l[7]<<l[8]<<l[9]<<l[10]<<l[11]<<l[12]<<l[13]<<l[14]<<l[15]<<l[16]<<l[17]<<l[18]<<l[19]<<l[20];
+    }
     else
         return;
 
-    for(quint8 i = 1 ; i < lineVals.size() ; i++)
+    for(quint8 i = 1 ; i < l.size() ; i++)
     {
-        if(lineVals[i] != oneofthem)
+        if(l[i] != oneofthem)
         {
             this->lineFound = true;
             return;
