@@ -1,4 +1,6 @@
-# UML diagram for Alkfejl-g7
+# Alkalmazásfejlesztés házi feladat
+
+## UML diagram for Alkfejl-g7
 
 ![Alt text](http://g.gravizo.com/g?
 class SimComm {}
@@ -92,7 +94,7 @@ class Robot{
 	RobotControl control;
 })
 
-### Sequence diagram
+## Sequence diagram
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
