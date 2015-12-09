@@ -57,7 +57,11 @@ GuiHandler::GuiHandler( \
 void GuiHandler::qmlbuttonConDisconClicked()
 {
     qDebug() << "ConDiscon button clicked! Command: " << this->buttonConDiscon->object->property("text").toString();
-    emit this->buttonConDisconClicked();
+    QString command = this->buttonConDiscon->object->property("text").toString();
+    if(command == "Connect")
+        emit this->buttonConClicked();
+    else
+        emit this->buttonDisClicked();
 }
 
 void GuiHandler::qmlbuttonSendStatusClicked()

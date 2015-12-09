@@ -10,11 +10,11 @@
 SimComm::SimComm(int port) :
     cache_timer(new QTimer()),
     socket(new QTcpSocket()),
-    port(port)
+    port(port),
+    connected(false)
 {
-//    this->connect();
     this->cache_timer->setSingleShot(true);
-    QObject::connect(this->cache_timer.get(), SIGNAL(timeout()), this, SLOT(cache_timeout()));
+    QObject::connect(this->cache_timer.get(), SIGNAL(timeout()), this, SIGNAL(cache_expired()));
     QObject::connect(this->socket.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
 }
 
@@ -32,11 +32,17 @@ SimComm::cache_timeout()
     emit this->cache_expired();
 }
 
+/*!
+ * \brief SimComm::socketStateChanged
+ * \param socketState
+ */
 void
 SimComm::socketStateChanged(QAbstractSocket::SocketState socketState)
 {
     if(socketState==QAbstractSocket::ConnectedState)
-        this->connected=true;
+        this->connected = true;
+    if(socketState==QAbstractSocket::UnconnectedState)
+        this->connected = false;
     emit this->stateChanged(socketState);
 }
 
@@ -63,6 +69,9 @@ SimComm::start_cache_timer()
 void
 SimComm::connect()
 {
+    if(this->connected)
+        return;
+
     this->socket->connectToHost("127.0.0.1", this->port);
     if(!this->socket->waitForConnected(1000))
     {
@@ -88,6 +97,10 @@ SimComm::disconnect()
     this->socket->disconnectFromHost();
 }
 
+/*!
+ * \brief SimComm::isConnected
+ * \return
+ */
 bool
 SimComm::isConnected()
 {

@@ -1,6 +1,5 @@
 #include "robot.h"
 
-
 /*!
  * \brief Robot::Robot creates a robot object, trough which the GUI can
  *                     communicate with all VREP sockets in an organized way
@@ -9,6 +8,8 @@
  * This is the interface between the GUI and the backend, and as such does not
  * provide any special functionality, only translates GUI requests to commands
  * for VREP, and sensor data to GUI data.
+ * \warning initialization order of objects inherited from SimComm is crucial!
+ *          DO NOT change it!
  * \see RobotControl
  * \see LineSensor
  * \see AccelSensor
@@ -16,17 +17,19 @@
  * \see WheelSensor
  */
 Robot::Robot()
-    : control(new RobotControl()),  // order of initialization is crucial!!!
+    : control(new RobotControl()),
       line(new LineSensor()),       // VREP will freeze with any other order
       accel(new AccelSensor()),     // but we have no time to fix this in VREP
       gyro(new GyroSensor()),       // and noone will notice anyway
-      wheel(new WheelSensor())      // at least we hope so
+      wheel(new WheelSensor()),
+      update_timer(new QTimer()),
+      alarmgen(new AlarmGenerator())
 {
-    // etwas
+    this->update_timer->setSingleShot(false);
+    this->update_timer->setInterval(100);
+    this->connectedSockets = 0;
 
-    this->timer.setSingleShot(false);
-    this->timer.setInterval(100);
-    QObject::connect(&this->timer, SIGNAL(timeout()), this, SLOT(update()));
+    QObject::connect(this->update_timer.get(), SIGNAL(timeout()), this, SLOT(update()));
     QObject::connect(this->control.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
     QObject::connect(this->line.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
     QObject::connect(this->accel.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
@@ -40,35 +43,11 @@ Robot::Robot()
 void
 Robot::connect()
 {
-    qDebug() << "Robot try to connect...";
-
-    if(!this->control->isConnected())
-    {
-        this->connectedSockets++;
-        this->control->connect();
-    }
-    if(!this->line->isConnected())
-    {
-        this->connectedSockets++;
-        this->line->connect();
-    }
-    if(!this->accel->isConnected())
-    {
-        this->connectedSockets++;
-        this->accel->connect();
-    }
-    if(!this->gyro->isConnected())
-    {
-        this->connectedSockets++;
-        this->gyro->connect();
-    }
-    if(!this->wheel->isConnected())
-    {
-        this->connectedSockets++;
-        this->wheel->connect();
-    }
-
-    qDebug() << this->connectedSockets;
+    this->control->connect();
+    this->line->connect();
+    this->accel->connect();
+    this->gyro->connect();
+    this->wheel->connect();
 }
 
 /*!
@@ -84,20 +63,29 @@ Robot::disconnect()
     this->wheel->disconnect();
 }
 
+/*!
+ * \brief Robot::socketStateChanged
+ * \param socketState
+ */
 void
 Robot::socketStateChanged(QAbstractSocket::SocketState socketState)
 {
-    if (socketState==QAbstractSocket::UnconnectedState)
-        this->connectedSockets--;
+    bool s0 = this->control->isConnected();
+    bool s1 = this->accel->isConnected();
+    bool s2 = this->gyro->isConnected();
+    bool s3 = this->line->isConnected();
+    bool s4 = this->wheel->isConnected();
 
-    if(connectedSockets==NUM_OF_SOCKETS)
+    bool robotConnected = s0 & s1 & s2 & s3 & s4;
+
+    if(robotConnected)
     {
-        this->timer.start();
+        this->update_timer->start();
         emit this->connected();
     }
     else
     {
-        this->timer.stop();
+        this->update_timer->stop();
         emit this->disconnected();
     }
 }

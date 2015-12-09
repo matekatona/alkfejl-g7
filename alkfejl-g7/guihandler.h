@@ -59,7 +59,8 @@ private:
     QMLHandlerCppSide *buttonCarSelfTest;
 
 signals:
-    void buttonConDisconClicked();
+    void buttonConClicked();
+    void buttonDisClicked();
     void buttonSendStatusClicked(QString status);
     void buttonSendSpeedClicked(float speed);
     void buttonCarSelfTestClicked();

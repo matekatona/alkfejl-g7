@@ -6,6 +6,7 @@
 #include "gyrosensor.h"
 #include "wheelsensor.h"
 #include "robotcontrol.h"
+#include "alarmgenerator.h"
 
 #define NUM_OF_SOCKETS 5
 
@@ -45,13 +46,14 @@ public slots:
     void socketStateChanged(QAbstractSocket::SocketState socketState);
 
 private:
-    QTimer timer;
-    int connectedSockets = 0;
     std::unique_ptr<RobotControl> control;
     std::unique_ptr<LineSensor> line;
     std::unique_ptr<AccelSensor> accel;
     std::unique_ptr<GyroSensor> gyro;
     std::unique_ptr<WheelSensor> wheel;
+    std::unique_ptr<QTimer> update_timer;
+    std::unique_ptr<AlarmGenerator> alarmgen;
+    int connectedSockets;
     const float D = 0.12;
 };
 

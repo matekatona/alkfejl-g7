@@ -44,7 +44,7 @@ protected:
 private:
     std::unique_ptr<QTimer> cache_timer;
     std::unique_ptr<QTcpSocket> socket;
-    const int port;
     bool connected;
+    const int port;
 };
 #endif // SIMCOMM_H
