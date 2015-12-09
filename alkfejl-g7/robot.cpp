@@ -95,6 +95,50 @@ Robot::socketStateChanged()
     this->alarmgen->updateAlarm();
 }
 
+void
+Robot::selfTest()
+{
+    switch(this->testState){
+    case 0:
+        this->test_timer =  std::make_unique<QTimer>();
+        QObject::connect(this->test_timer.get(), SIGNAL(timeout()), this, SLOT(selfTest()));
+        this->control->setStatus(QString("Run"));
+        this->testState++;
+        this->test_timer->setInterval(5000);
+        this->test_timer->start();
+        break;
+    case 1:
+        this->control->setSpeed(0.8);
+        this->testState++;
+        this->test_timer->setInterval(2000);
+        this->test_timer->start();
+        break;
+    case 2:
+        this->control->setSpeed(0);
+        this->testState++;
+        this->test_timer->setInterval(8000);
+        this->test_timer->start();
+        break;
+    case 3:
+        this->control->setSpeed(0.5);
+        this->control->setStatus(QString("Run"));
+        this->testState++;
+        this->test_timer->setInterval(4000);
+        this->test_timer->start();
+        break;
+    case 4:
+        this->control->setStatus(QString("Stop"));
+        this->testState++;
+        this->test_timer->setInterval(1000);
+        this->test_timer->start();
+        break;
+    default:
+        QObject::disconnect(this->test_timer.get(), SIGNAL(timeout()), this, SLOT(selfTest()));
+        this->test_timer.reset();
+        this->testState=0;
+    }
+}
+
 /*!
  * \brief Robot::speed slot to set speed of robot
  * \param speed the speed to be set

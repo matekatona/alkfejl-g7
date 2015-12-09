@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&guihandle, SIGNAL(buttonConClicked()), &mikrobi, SLOT(connect()));
     QObject::connect(&guihandle, SIGNAL(buttonDisClicked()), &mikrobi, SLOT(disconnect()));
+    QObject::connect(&guihandle, SIGNAL(buttonCarSelfTestClicked()), &mikrobi, SLOT(selfTest()));
     QObject::connect(&guihandle, SIGNAL(buttonSendStatusClicked(QString)), &mikrobi, SLOT(status(QString)));
     QObject::connect(&guihandle, SIGNAL(buttonSendSpeedClicked(float)), &mikrobi, SLOT(speed(float)));
 
