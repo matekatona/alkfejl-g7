@@ -74,15 +74,15 @@ AlarmGenerator::updateAlarm()
     {
         if(lineFound)
         {
-            emit this->setAlarm(ALARM_GREEN)
+            emit this->setAlarm(ALARM_GREEN);
         }
         else
         {
-            emit this->setAlarm(ALARM_RED)
+            emit this->setAlarm(ALARM_RED);
         }
     }
     else
     {
-        emit this->setAlarm(ALARM_YELLOW)
+        emit this->setAlarm(ALARM_YELLOW);
     }
 }

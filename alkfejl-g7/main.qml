@@ -58,7 +58,7 @@ Window {
             mainWindow.sensors.shift();
             mainWindow.sensors[20]=!temp;
 
-            alertLamp.alert=!alertLamp.alert;
+            alertLamp.alert=(alertLamp.alert+1)%3;
 
             textAccelX.setValue(angle);
             textAccelY.setValue(angle);
@@ -77,7 +77,7 @@ Window {
                 mainWindow.testPhase=true;
                 testTimer.running=false;
                 lineSens.setValues(mainWindow.sensorsInit);
-                alertLamp.alert=false;
+                alertLamp.alert=1;
                 textAccelX.setValue("UNKNOWN");
                 textAccelY.setValue("UNKNOWN");
                 textAccelZ.setValue("UNKNOWN");
@@ -180,7 +180,7 @@ Window {
                 objectName: "alertLamp";
                 anchors.horizontalCenter: parent.horizontalCenter;
                 alertLabel: "Line lost";
-                alert: false;
+                alert: 1;
             }
         }
 
@@ -209,6 +209,16 @@ Window {
                 anchors.top: parent.top;
                 anchors.horizontalCenter: parent.horizontalCenter;
                 stripLabel: "Line Sensor";
+            }
+
+            Button{
+                id: buttonConDiscon;
+                objectName: "buttonConDiscon";
+                anchors.top: lineSens.bottom;
+                anchors.horizontalCenter: lineSens.horizontalCenter;
+                anchors.margins: mainWindow.buttonMargin;
+                implicitWidth: 150;
+                text: "Connect";
             }
 
             Item{

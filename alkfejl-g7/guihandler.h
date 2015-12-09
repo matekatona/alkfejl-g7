@@ -29,6 +29,7 @@ public:
             QMLHandlerCppSide *carGyroY, \
             QMLHandlerCppSide *carGyroZ, \
             QMLHandlerCppSide *speedGraph, \
+            QMLHandlerCppSide *buttonConDiscon, \
             QMLHandlerCppSide *buttonSendStatus, \
             QMLHandlerCppSide *buttonSendSpeed, \
             QMLHandlerCppSide *buttonCarSelfTest);
@@ -52,16 +53,19 @@ private:
     QMLHandlerCppSide *carGyroY;
     QMLHandlerCppSide *carGyroZ;
     QMLHandlerCppSide *speedGraph;
+    QMLHandlerCppSide *buttonConDiscon;
     QMLHandlerCppSide *buttonSendStatus;
     QMLHandlerCppSide *buttonSendSpeed;
     QMLHandlerCppSide *buttonCarSelfTest;
 
 signals:
+    void buttonConDisconClicked();
     void buttonSendStatusClicked(QString status);
     void buttonSendSpeedClicked(float speed);
     void buttonCarSelfTestClicked();
 
 public slots:
+    void qmlbuttonConDisconClicked();
     void qmlbuttonSendStatusClicked();
     void qmlbuttonSendSpeedClicked();
     void qmlbuttonCarSelfTestClicked();

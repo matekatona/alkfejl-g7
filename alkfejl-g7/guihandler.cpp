@@ -19,6 +19,7 @@ GuiHandler::GuiHandler( \
         QMLHandlerCppSide *carGyroY, \
         QMLHandlerCppSide *carGyroZ, \
         QMLHandlerCppSide *speedGraph, \
+        QMLHandlerCppSide *buttonConDiscon, \
         QMLHandlerCppSide *buttonSendStatus, \
         QMLHandlerCppSide *buttonSendSpeed, \
         QMLHandlerCppSide *buttonCarSelfTest)
@@ -41,14 +42,22 @@ GuiHandler::GuiHandler( \
     this->carGyroY=carGyroY;
     this->carGyroZ=carGyroZ;
     this->speedGraph=speedGraph;
+    this->buttonConDiscon=buttonConDiscon;
     this->buttonSendStatus=buttonSendStatus;
     this->buttonSendSpeed=buttonSendSpeed;
     this->buttonCarSelfTest=buttonCarSelfTest;
 
+    QObject::connect(this->buttonConDiscon->object, SIGNAL(clicked()), this, SLOT(qmlbuttonConDisconClicked()));
     QObject::connect(this->buttonCarSelfTest->object, SIGNAL(clicked()), this, SLOT(qmlbuttonCarSelfTestClicked()));
     QObject::connect(this->buttonSendStatus->object, SIGNAL(clicked()), this, SLOT(qmlbuttonSendStatusClicked()));
     QObject::connect(this->buttonSendSpeed->object, SIGNAL(clicked()), this, SLOT(qmlbuttonSendSpeedClicked()));
 
+}
+
+void GuiHandler::qmlbuttonConDisconClicked()
+{
+    qDebug() << "ConDiscon button clicked! Command: " << this->buttonConDiscon->object->property("text").toString();
+    emit this->buttonConDisconClicked();
 }
 
 void GuiHandler::qmlbuttonSendStatusClicked()
