@@ -91,8 +91,8 @@ void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
 
     for(int i=0; i<21; i++)
         values << leds.at(i);
-
     QMetaObject::invokeMethod(this->lineSens->object, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(values)));
+    QMetaObject::invokeMethod(this->alertLamp->object, "setAlertLamp", Qt::DirectConnection);
 }
 
 void GuiHandler::setTextAccelX(float accelX)
