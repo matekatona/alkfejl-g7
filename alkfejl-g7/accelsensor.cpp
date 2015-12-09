@@ -1,10 +1,15 @@
 #include "accelsensor.h"
 
 /*!
- * \brief AccelSensor::AccelSensor
+ * \brief AccelSensor::AccelSensor creates sensor object, that is connected to
+ *                                 the acceleration sensor port of VREP
+ *
+ * The class uses cache to store sensor values to minimize communication with
+ * the simulator. Every read value is cached, and expires after 70 ms. Repeated
+ * reads within this 70 ms will return the same values.
  */
-AccelSensor::AccelSensor()
-    : AbstractSensor(24931)  // call superclass constructor with correct port number
+AccelSensor::AccelSensor() :
+    SimComm(PORT_NUM_ACCEl)  // call superclass constructor with correct port number
 {
     this->cachex = this->px;
     this->cachey = this->py;
@@ -12,109 +17,152 @@ AccelSensor::AccelSensor()
     this->px.reset();
     this->py.reset();
     this->pz.reset();
+
+    QObject::connect(this, SIGNAL(cache_expired()), this, SLOT(reset_cache()));
 }
 
 /*!
- * \brief AccelSensor::GetX returns acceleration in x direction
- * \return -||-
+ * \brief AccelSensor::clear_cache delete cached sensor values
+ *
+ * The next sensor read will result in reading new values from VREP
+ * \see SimComm::cache_expired
+ */
+void
+AccelSensor::reset_cache()
+{
+    this->px.reset();
+    this->py.reset();
+    this->pz.reset();
+}
+
+/*!
+ * \brief AccelSensor::getX get robot acceleration in longitudinal direction
+ *
+ * If a valid value is found in cache, tha cached value is returned. Otherwise
+ * new values are read from VREP, put into the cache, and returned.
+ * \see SimComm::read
+ * \return longitudinal acceleration in m/s?
  */
 float
 AccelSensor::getX()
 {
-    float x;
+    float x = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cx = this->cachex.lock();
     if(cx)
     {
         // use cached value
         x = *cx;
-        this->px.reset();
     }
     else
     {
         // read new values
-        QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        QString raw = this->read();
+        if(raw.length() < 20)
+            return x;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 3)
+            return x;
         x = values[0].toFloat();
         float y = values[1].toFloat();
         float z = values[2].toFloat();
-        // cache the other values
+        // cache values
+        this->px = std::make_shared<float>(x);
+        this->cachex = this->px;
         this->py = std::make_shared<float>(y);
         this->cachey = this->py;
         this->pz = std::make_shared<float>(z);
         this->cachez = this->pz;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return x;
 }
 
 /*!
- * \brief AccelSensor::GetY returns acceleration in y direction
- * \return -||-
+ * \brief AccelSensor::getY get robot acceleration in lateral direction
+ *
+ * If a valid value is found in cache, tha cached value is returned. Otherwise
+ * new values are read from VREP, put into the cache, and returned.
+ * \see SimComm::read
+ * \return lateral acceleration in m/s?
  */
 float
 AccelSensor::getY()
 {
-    float y;
+    float y = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cy = this->cachey.lock();
     if(cy)
     {
         // use cached value
         y = *cy;
-        this->py.reset();
     }
     else
     {
         // read new values
-        QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        QString raw = this->read();
+        if(raw.length() < 20)
+            return y;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 3)
+            return y;
         float x = values[0].toFloat();
         y = values[1].toFloat();
         float z = values[2].toFloat();
-        // cache the other values
+        // cache values
         this->px = std::make_shared<float>(x);
         this->cachex = this->px;
+        this->py = std::make_shared<float>(y);
+        this->cachey = this->py;
         this->pz = std::make_shared<float>(z);
         this->cachez = this->pz;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return y;
 }
 
 /*!
- * \brief AccelSensor::GetZ returns acceleration in z direction
- * \return -||-
+ * \brief AccelSensor::getZ get robot acceleration in vertical direction
+ *
+ * If a valid value is found in cache, tha cached value is returned. Otherwise
+ * new values are read from VREP, put into the cache, and returned.
+ * \see SimComm::read
+ * \return vertical acceleration in m/s?
  */
 float
 AccelSensor::getZ()
 {
-    float z;
+    float z = 0.0/0.0;
     // check for value in cache
     std::shared_ptr<float> cz = this->cachez.lock();
     if(cz)
     {
         // use cached value
         z = *cz;
-        this->pz.reset();
     }
     else
     {
         // read new values
-        QString raw = this->readSensor();
-        if(raw.length() < 1)
-            return 0.0;
+        QString raw = this->read();
+        if(raw.length() < 20)
+            return z;
         QStringList values = raw.split(QRegExp("\\s"));
+        if(values.size() < 3)
+            return z;
         float x = values[0].toFloat();
         float y = values[1].toFloat();
         z = values[2].toFloat();
-        // cache the other values
+        // cache values
         this->px = std::make_shared<float>(x);
         this->cachex = this->px;
         this->py = std::make_shared<float>(y);
         this->cachey = this->py;
+        this->pz = std::make_shared<float>(z);
+        this->cachez = this->pz;
+        this->start_cache_timer();  // will reset cache 70ms later
     }
+
     return z;
 }

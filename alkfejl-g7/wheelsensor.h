@@ -2,15 +2,20 @@
 #define WHEELSENSOR_H
 
 
-#include "abstractsensor.h"
+#include "simcomm.h"
 
 
-class WheelSensor : public AbstractSensor
+class WheelSensor : public SimComm
 {
+    Q_OBJECT
 public:
     WheelSensor();
     float getLeft();
     float getRight();
+    QVarLengthArray<float> getWheels();
+
+private slots:
+    void reset_cache();
 
 private:
     std::shared_ptr<float> pleft;

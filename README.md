@@ -1,78 +1,77 @@
 # UML diagram for Alkfejl-g7
 
 ![Alt text](http://g.gravizo.com/g?
-class VREPComm{}
-class Robot extends VREPComm {}
-class AbstractSensor extends VREPComm {}
-class AccelSensor extends AbstractSensor {}
-class GyroSensor extends AbstractSensor {}
-class LineSensor extends AbstractSensor {}
+class SimComm {}
+class Robot {}
+class RobotControl extends SimComm {}
+class AccelSensor extends SimComm {}
+class GyroSensor extends SimComm {}
+class LineSensor extends SimComm {}
+class WheelSensor extends SimComm {}
 )
 
-## Other sample UML diagrams
+## Detailed UML diagrams
 
 ![Alt text](http://g.gravizo.com/g?
 /**
-*Abstract Sensor
+*SimComm
 *@opt all
 */
-class AbstractSensor{
-    QTCPSocket commSock;
-    public int readSensor%28%29;
+class SimComm{
+    QTCPSocket socket;
+    protected QString read%28%29;
+    protected void write%28%29;
+    public void connect%28%29;
+    public void disconnect%28%29;
 }
 /**
 *LineSensor
 *@opt all
 */
-class LineSensor extends AbstractSensor {
-        float[] sensorValues;
-        public bool isOk%28%29;
-        public int getValues%28float[] values%29;
+class LineSensor extends SimComm {
+	bool[] values;
+    public bool[] getValues%28%29;
 }
 /**
 *AccelSensor
 *@opt all
 */
-class AccelSensor extends AbstractSensor {
-        float[] sensorValues;
-        public float getX%28%29;
-        public float getY%28%29;
-        public float getZ%28%29;
+class AccelSensor extends SimComm {
+    float[] values;
+    public float getX%28%29;
+    public float getY%28%29;
+    public float getZ%28%29;
 }
 /**
 *GyroSensor
 *@opt all
 */
-class GyroSensor extends AbstractSensor {
-        float[] sensorValues;
-        public float getX%28%29;
-        public float getY%28%29;
-        public float getZ%28%29;
+class GyroSensor extends SimComm {
+    float[] values;
+    public float getX%28%29;
+    public float getY%28%29;
+    public float getZ%28%29;
 }
 /**
 *WheelSensor
 *@opt all
 */
-class WheelSensor extends AbstractSensor {
-        float[] sensorValues;
-        public float getLeft%28%29;
-        public float getRight%28%29;
-})
-
-![Alt text](http://g.gravizo.com/g?
+class WheelSensor extends SimComm {
+    float[] values;
+    public float getLeft%28%29;
+    public float getRight%28%29;
+}
 /**
-*Command Socket
+*RobotControl
 *@opt all
 */
-class CommandSocket{
-    QTCPSocket commSock;
-    public int connect%28%29;
-    public int disconnect%28%29;
-    public int getStatus%28%29;
-    public int run%28%29;
-    public int stop%28%29;
-    public int getSpeed%28%29;
-    public int setSpeed%28%29;
+class RobotControl extends SimComm {
+	float speed;
+	QString status;
+	public QString getStatus%28%29;
+	public void setStatus%28%29;
+	public float getSpeed%28%29;
+	public void setSpeed%28%29;
 })
 
 ![Alt text](http://g.gravizo.com/g?
@@ -82,34 +81,18 @@ class CommandSocket{
 *@composed 1..* LineSensor
 *@composed 1..* AccelSensor
 *@composed 1..* GyroSensor
-*@composed 1 CommandSocket
+*@composed 1..* WheelSensor
+*@composed 1..* RobotControl
 */
 class Robot{
 	LineSensor line;
 	AccelSensor accel;
 	GyroSensor gyro;
 	WheelSensor wheels;
-	CommandSocket command;
+	RobotControl control;
 })
 
-![Alt text](http://g.gravizo.com/g?
-/**
-*RobotHistory
-*@opt all
-*@assoc Plotter
-*/
-class RobotHistory{
-	List speedHistory;
-	List statusHistory;
-	signal historyChanged%28%29;
-}
-/**
-*Plotter
-*@opt all
-*/
-class Plotter{
-	slot graph%28%29;
-})
+### Sequence diagram
 
 ![Alt text](http://g.gravizo.com/g?
 @startuml;
@@ -120,39 +103,25 @@ participant "Sensors/Command" as C;
 participant "VREP" as D;
 User -> A: Run;
 activate A;
-A -> B: run%28%29;
+A -> B: run signal;
 activate B;
-B -> C: command.run%28%29;
+B -> C: control.run%28%29;
 activate C;
-C -> D: TCPSocket.send%28%29;
+C -> D: socket.send%28%29;
 deactivate A;
 deactivate B;
 deactivate C;
-B -> C: line.getValues%28%29;
+A -> B: update signal;
+activate B;
+B -> C: sensors.get%28%29;
 activate C;
-C --> D: TCPSocket.send%28%29;
+C --> D: socket.send%28%29;
 activate D;
-D --> C: values;
+D --> C: socket.read%28%29;
 deactivate D;
 C --> B: values;
 deactivate C;
-@enduml
-)
-
-![Alt text](http://g.gravizo.com/g?
-@startuml;
-participant "Receive values" as A;
-participant "Robot" as B;
-participant "RobotHistory" as C;
-participant "Plotter" as D;
-A -> B: values;
-B -> C: newValues%28%29;
-C -> D: actualHistory%28%29;
-activate D;
-D -> D: graph%28%29;
-activate D;
-deactivate D;
-D --> C: endGraph;
-deactivate D;
+B -> A: setValue signals;
+deactivate B;
 @enduml
 )

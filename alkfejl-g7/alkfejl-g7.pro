@@ -16,34 +16,36 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp       \
+    accelsensor.cpp       \
+    alarmgenerator.cpp    \
     robot.cpp             \
     linesensor.cpp        \
     gyrosensor.cpp        \
-    accelsensor.cpp       \
-    abstractsensor.cpp    \
     qmlhandlercppside.cpp \
     graph.cpp             \
     gridnode.cpp          \
     linenode.cpp          \
     noisynode.cpp         \
     guihandler.cpp        \
-    commandsocket.cpp     \
-    wheelsensor.cpp
+    wheelsensor.cpp       \
+    simcomm.cpp           \
+    robotcontrol.cpp
 
-HEADERS  +=              \
-    robot.h              \
-    linesensor.h         \
-    gyrosensor.h         \
-    accelsensor.h        \
-    abstractsensor.h     \
-    qmlhandlercppside.h  \
-    graph.h              \
-    gridnode.h           \
-    linenode.h           \
-    noisynode.h          \
-    guihandler.h         \
-    commandsocket.h    \
-    wheelsensor.h
+HEADERS  +=               \
+    accelsensor.h         \
+    alarmgenerator.h      \
+    robot.h               \
+    linesensor.h          \
+    gyrosensor.h          \
+    qmlhandlercppside.h   \
+    graph.h               \
+    gridnode.h            \
+    linenode.h            \
+    noisynode.h           \ 
+    guihandler.h          \
+    wheelsensor.h         \
+    simcomm.h             \
+    robotcontrol.h
 
 CONFIG += c++11
 

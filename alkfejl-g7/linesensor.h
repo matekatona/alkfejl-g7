@@ -2,13 +2,13 @@
 #define LINESENSOR_H
 
 
-#include "abstractsensor.h"
+#include "simcomm.h"
 
 #define LINE_THRESHOLD 0.5f
 
-
-class LineSensor : public AbstractSensor
+class LineSensor : public SimComm
 {
+    Q_OBJECT
 public:
     LineSensor();
     QVarLengthArray<bool> getValues();

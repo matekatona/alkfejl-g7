@@ -1,17 +1,19 @@
 #ifndef ACCELSENSOR_H
 #define ACCELSENSOR_H
 
+#include "simcomm.h"
 
-#include "abstractsensor.h"
-
-
-class AccelSensor : public AbstractSensor
+class AccelSensor : public SimComm
 {
+    Q_OBJECT
 public:
     explicit AccelSensor();
     float getX();
     float getY();
     float getZ();
+
+private slots:
+    void reset_cache();
 
 private:
     std::shared_ptr<float> px;

@@ -1,0 +1,124 @@
+#include "simcomm.h"
+
+/*!
+ * \brief SimComm::SimComm creates an abstract object to communicate with VREP
+ *
+ * This object does the actual communication via TCP sockets, and has the timer
+ * to signal cache expiration
+ * \param port
+ */
+SimComm::SimComm(int port) :
+    cache_timer(new QTimer()),
+    socket(new QTcpSocket()),
+    port(port)
+{
+    this->connect();
+    this->cache_timer->setSingleShot(true);
+    QObject::connect(this->cache_timer.get(), SIGNAL(timeout()), this, SLOT(cache_timeout()));
+}
+
+/*!
+ * \brief SimComm::cache_timeout slot to handle cache timeout
+ *
+ * This slot is signaled, when `cache_timer` timed out. It then emits the
+ * `cache_expired()` signal, which should be connected in inherited classes to
+ * clear the actual cache
+ */
+void
+SimComm::cache_timeout()
+{
+    emit this->cache_expired();
+}
+
+/*!
+ * \brief SimComm::start_cache_timer starts cache timer
+ *
+ * The class has a one-shot timer, which can be started by this function. The
+ * timer will emit the `timeout()` signal 70 ms after start, and then stop.
+ */
+void
+SimComm::start_cache_timer()
+{
+    this->cache_timer->start(70);
+}
+
+/*!
+ * \brief SimComm::connect connects to the port given in constructor
+ *
+ * This function is explicitly called in constructor, so it does not have to be
+ * called after object instantiation. It can be used to reconnect to VREP if the
+ * initial connect failed, or if `disconnect()` has been called previously.
+ */
+void
+SimComm::connect()
+{
+    this->socket->connectToHost("127.0.0.1", this->port);
+    if(!this->socket->waitForConnected(1000))
+    {
+        qDebug() << "could not connect to port " << this->port;
+    }
+    else
+    {
+        qDebug() << "connected to port " << this->port;
+    }
+}
+
+/*!
+ * \brief SimComm::disconnect disconnects from port
+ *
+ * The socket is implicitly closed before detroying instances of this object, so
+ * there is no need to explicitly call this function. It can be used to reconnect
+ * if there were errors with the initial connect, or if VREP has been restarted
+ * during program execution.
+ */
+void
+SimComm::disconnect()
+{
+    this->socket->disconnectFromHost();
+}
+
+/*!
+ * \brief SimComm::read reads robot data
+ *
+ * This function is handling communication with VREP. It sends the "GET" string
+ * to the instance's port, so the user does not have to send it using `write()`,
+ * and reads the string sent back. It does not parse the received string.
+ * \return unparsed robot data
+ */
+QString
+SimComm::read(){
+    QString rawString = "";
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    {
+        this->socket->write("GET\n");  // send get command
+        // TODO timeout
+        QByteArray rawData = socket->readLine(300);  // read answer
+        rawString = QString(rawData);
+    }
+
+    return rawString;
+}
+
+/*!
+ * \brief SimComm::write writes command to socket
+ *
+ * This function is handling communication with VREP. It sends the given command
+ * to the instance's port. No modification is made on the command, so it has to
+ * be a valid one. Nothing is returned, since the robot only replies to the
+ * "GET" command. To check wether the command has been executed by the robot,
+ * the user can call getter functions later, and check the returned values.
+ * \param command
+ */
+void
+SimComm::write(QString command)
+{
+    if(this->socket->state() == QAbstractSocket::ConnectedState)
+    {
+        quint64 res = this->socket->write(command.toLocal8Bit());
+        if(res < (quint64)command.length())
+        {
+            // could not send the command
+            // TODO feedback?
+        }
+    }
+}

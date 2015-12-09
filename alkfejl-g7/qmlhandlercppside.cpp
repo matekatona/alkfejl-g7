@@ -6,17 +6,17 @@ QMLHandlerCppSide::QMLHandlerCppSide(QObject *rootObject, const QString& name)
 {
     if (!rootObject)
     {
-        qDebug() << "Nem találom a rootObject-et.";
+        qDebug() << "rootObject not found";
     }
 
     object = findItemByName(rootObject, name);
 
     if (!object)
     {
-        qDebug() << "Nem találom a(z) " + name + " objektumot.";
+        qDebug() << "could not find" + name;
     }
 
-    qDebug() << name + " inicializálva.";
+    qDebug() << name + " initialized";
 }
 
 QQuickItem* QMLHandlerCppSide::findItemByName(const QString& name)
@@ -43,12 +43,12 @@ QQuickItem* QMLHandlerCppSide::findItemByName(QList<QObject*> nodes, const QStri
 {
     for(int i = 0; i < nodes.size(); i++)
     {
-        // Node keresése
+        // search nodes
         if (nodes.at(i) && nodes.at(i)->objectName() == name)
         {
             return dynamic_cast<QQuickItem*>(nodes.at(i));
         }
-        // Gyerekekben keresés
+        // search nodes in children
         else if (nodes.at(i) && nodes.at(i)->children().size() > 0)
         {
             QQuickItem* item = findItemByName(nodes.at(i)->children(), name);
@@ -56,6 +56,6 @@ QQuickItem* QMLHandlerCppSide::findItemByName(QList<QObject*> nodes, const QStri
                 return item;
         }
     }
-    // Nem találtuk.
+    // none found
     return nullptr;
 }

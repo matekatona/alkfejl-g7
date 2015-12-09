@@ -1,15 +1,19 @@
 #ifndef GYROSENSOR_H
 #define GYROSENSOR_H
 
-#include "abstractsensor.h"
+#include "simcomm.h"
 
-class GyroSensor : public AbstractSensor
+class GyroSensor : public SimComm
 {
+    Q_OBJECT
 public:
     explicit GyroSensor();
     float getX();
     float getY();
     float getZ();
+
+private slots:
+    void reset_cache();
 
 private:
     std::shared_ptr<float> px;
