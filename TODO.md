@@ -29,8 +29,8 @@ Bónusz pontok
 (a leadott dokumentációban külön kiemelve)
 
 -   **DONE** 3p: A repository a githubon vagy bitbucketen van és meg van osztva az előadóval, aki így folyamatában is látja a fejlesztést.
--   5p: Öntesztelő funkció a robot számára. A tesztet futtathatja a kliens program is, de a robot firmwareje is. A lényeg, hogy van öntesztelési funkció.
--   2p: A dokumentáció számos UML diagramot használ, a leírások kihasználják a Markdown lehetőségeit, valamint a dokumentációban vannak hivatkozások, @see, @warning stb. parancsok.
+-   **DONE** 5p: Öntesztelő funkció a robot számára. A tesztet futtathatja a kliens program is, de a robot firmwareje is. A lényeg, hogy van öntesztelési funkció.
+-   **DONE** 2p: A dokumentáció számos UML diagramot használ, a leírások kihasználják a Markdown lehetőségeit, valamint a dokumentációban vannak hivatkozások, @see, @warning stb. parancsok.
 -   **DONE** 2p (+1p): A forráskód használ smart pointereket. weak\_ptr esetén +1 pont jár.
 -   3p: Tervezési minták azonosítása a programban: minimum 3 hely azonosítása a forráskódban (dokumentációba beleírva), ahol egy tervezési minta szerepel.
 -   4p: QTest unit teszt, legalább 3 eltérő test case.
