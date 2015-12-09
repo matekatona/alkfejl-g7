@@ -3,6 +3,8 @@
 #include <QObject>
 #include <QQuickItem>
 
+/*! This class helps referencing objects defined in a QML file. */
+
 class QMLHandlerCppSide : public QObject
 {
     Q_OBJECT

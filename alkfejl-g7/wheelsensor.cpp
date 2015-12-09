@@ -2,11 +2,7 @@
 
 /*!
  * \brief WheelSensor::WheelSensor creates sensor object, that is connected to
- *                                 the wheelsensor port of VREP
- *
- * The class uses cache to store sensor values to minimize communication with
- * the simulator. Every read value is cached, and expires after 70 ms. Repeated
- * reads within this 70 ms will return the same values.
+ *        the wheelsensor port of VREP
  */
 WheelSensor::WheelSensor()
     : SimComm(PORT_NUM_WHEEL)  // call superclass constructor with correct port number
