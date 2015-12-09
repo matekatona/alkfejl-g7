@@ -17,7 +17,7 @@ public:
     explicit Robot();
 
 signals:
-    void setAlert(bool alert);
+    void setAlert(int color);
     void setLedStrip(QVarLengthArray<bool> leds);
     void setTextAccelX(float accelX);
     void setTextAccelY(float accelY);
@@ -43,7 +43,7 @@ public slots:
     void status(QString status);
     void connect();
     void disconnect();
-    void socketStateChanged(QAbstractSocket::SocketState socketState);
+    void socketStateChanged();
 
 private:
     std::unique_ptr<RobotControl> control;

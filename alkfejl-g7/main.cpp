@@ -47,13 +47,13 @@ int main(int argc, char *argv[])
     GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonConDiscon, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
     Robot mikrobi;
 
-
     QObject::connect(&guihandle, SIGNAL(buttonConClicked()), &mikrobi, SLOT(connect()));
     QObject::connect(&guihandle, SIGNAL(buttonDisClicked()), &mikrobi, SLOT(disconnect()));
     QObject::connect(&guihandle, SIGNAL(buttonSendStatusClicked(QString)), &mikrobi, SLOT(status(QString)));
     QObject::connect(&guihandle, SIGNAL(buttonSendSpeedClicked(float)), &mikrobi, SLOT(speed(float)));
 
     QObject::connect(&mikrobi, SIGNAL(connected()), &guihandle, SLOT(robotConnected()));
+    QObject::connect(&mikrobi, SIGNAL(setAlert(int)), &guihandle, SLOT(setAlert(int)));
     QObject::connect(&mikrobi, SIGNAL(disconnected()), &guihandle, SLOT(robotDisconnected()));
 
     QObject::connect(&mikrobi, SIGNAL(setLedStrip(QVarLengthArray<bool>)), &guihandle, SLOT(setLedStrip(QVarLengthArray<bool>)));

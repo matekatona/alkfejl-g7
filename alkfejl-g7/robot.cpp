@@ -30,11 +30,12 @@ Robot::Robot()
     this->connectedSockets = 0;
 
     QObject::connect(this->update_timer.get(), SIGNAL(timeout()), this, SLOT(update()));
-    QObject::connect(this->control.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
-    QObject::connect(this->line.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
-    QObject::connect(this->accel.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
-    QObject::connect(this->gyro.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
-    QObject::connect(this->wheel.get(), SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(socketStateChanged(QAbstractSocket::SocketState)));
+    QObject::connect(this->alarmgen.get(), SIGNAL(setAlarm(int)), this, SIGNAL(setAlert(int)));
+    QObject::connect(this->control.get(), SIGNAL(stateChanged()), this, SLOT(socketStateChanged()));
+    QObject::connect(this->line.get(), SIGNAL(stateChanged()), this, SLOT(socketStateChanged()));
+    QObject::connect(this->accel.get(), SIGNAL(stateChanged()), this, SLOT(socketStateChanged()));
+    QObject::connect(this->gyro.get(), SIGNAL(stateChanged()), this, SLOT(socketStateChanged()));
+    QObject::connect(this->wheel.get(), SIGNAL(stateChanged()), this, SLOT(socketStateChanged()));
 }
 
 /*!
@@ -68,7 +69,7 @@ Robot::disconnect()
  * \param socketState
  */
 void
-Robot::socketStateChanged(QAbstractSocket::SocketState socketState)
+Robot::socketStateChanged()
 {
     bool s0 = this->control->isConnected();
     bool s1 = this->accel->isConnected();
@@ -88,6 +89,10 @@ Robot::socketStateChanged(QAbstractSocket::SocketState socketState)
         this->update_timer->stop();
         emit this->disconnected();
     }
+
+    this->alarmgen->setConnectionState(robotConnected);
+    this->alarmgen->setLineState(this->line->getValues());
+    this->alarmgen->updateAlarm();
 }
 
 /*!

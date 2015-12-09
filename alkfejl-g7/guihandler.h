@@ -71,7 +71,7 @@ public slots:
     void qmlbuttonSendSpeedClicked();
     void qmlbuttonCarSelfTestClicked();
 
-    void setAlert(bool alert);
+    void setAlert(int color);
     void setLedStrip(QVarLengthArray<bool> leds);
     void setTextAccelX(float accelX);
     void setTextAccelY(float accelY);

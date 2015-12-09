@@ -84,9 +84,9 @@ void GuiHandler::qmlbuttonCarSelfTestClicked()
     emit this->buttonCarSelfTestClicked();
 }
 
-void GuiHandler::setAlert(bool alert)
+void GuiHandler::setAlert(int color)
 {
-    QMetaObject::invokeMethod(this->alertLamp->object, "setAlert", Qt::DirectConnection, Q_ARG(QVariant, alert));
+    QMetaObject::invokeMethod(this->alertLamp->object, "setAlert", Qt::DirectConnection, Q_ARG(QVariant, color));
 }
 
 void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)

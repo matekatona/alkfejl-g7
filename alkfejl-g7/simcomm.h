@@ -30,10 +30,9 @@ public:
 
 signals:
     void cache_expired();
-    void stateChanged(QAbstractSocket::SocketState socketState);
+    void stateChanged();
 
 protected slots:
-    void cache_timeout();
     void socketStateChanged(QAbstractSocket::SocketState socketState);
 
 protected:

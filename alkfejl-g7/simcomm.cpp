@@ -19,20 +19,6 @@ SimComm::SimComm(int port) :
 }
 
 /*!
- * \brief SimComm::cache_timeout slot to handle cache timeout
- *
- * This slot is signaled, when `cache_timer` times out. It then emits the
- * `cache_expired()` signal, which should be connected in inherited classes to
- * clear the actual cache.
- * \sa cache_expired
- */
-void
-SimComm::cache_timeout()
-{
-    emit this->cache_expired();
-}
-
-/*!
  * \brief SimComm::socketStateChanged
  * \param socketState
  */
@@ -43,7 +29,8 @@ SimComm::socketStateChanged(QAbstractSocket::SocketState socketState)
         this->connected = true;
     if(socketState==QAbstractSocket::UnconnectedState)
         this->connected = false;
-    emit this->stateChanged(socketState);
+
+    emit this->stateChanged();
 }
 
 /*!
