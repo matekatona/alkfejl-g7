@@ -169,6 +169,8 @@ void GuiHandler::setCarGyroX(float gyroX)
     if(gyroX!=gyroX)
         gyroX=0;
 
+    gyroX*=-5.55;
+
     QMetaObject::invokeMethod(this->carGyroX->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroX));
 }
 
@@ -177,6 +179,8 @@ void GuiHandler::setCarGyroY(float gyroY)
     if(gyroY!=gyroY)
         gyroY=0;
 
+    gyroY*=-5.55;
+
     QMetaObject::invokeMethod(this->carGyroY->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroY));
 }
 
@@ -184,6 +188,8 @@ void GuiHandler::setCarGyroZ(float gyroZ)
 {
     if(gyroZ!=gyroZ)
         gyroZ=0;
+
+    gyroZ*=-5.55;
 
     QMetaObject::invokeMethod(this->carGyroZ->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroZ));
 }
