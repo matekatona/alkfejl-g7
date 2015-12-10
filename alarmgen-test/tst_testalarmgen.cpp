@@ -56,7 +56,7 @@ void TestAlarmgen::setConnectedLineLost1()
     this->alarmgen.setConnectionState(this->connected);
     this->alarmgen.setLineState(this->lineLost1);
     this->alarmgen.updateColor();
-    QVERIFY(this->alarmgen.getColor() == ALARM_RED);
+    QVERIFY2(this->alarmgen.getColor() == ALARM_RED, "connected state, no line1 is not RED");
 }
 
 void TestAlarmgen::setConnectedLineLost2()
@@ -64,7 +64,7 @@ void TestAlarmgen::setConnectedLineLost2()
     this->alarmgen.setConnectionState(this->connected);
     this->alarmgen.setLineState(this->lineLost2);
     this->alarmgen.updateColor();
-    QVERIFY(this->alarmgen.getColor() == ALARM_RED);
+    QVERIFY2(this->alarmgen.getColor() == ALARM_RED, "connected state, no line2 is not RED");
 }
 
 void TestAlarmgen::setConnectedLineFound()
@@ -72,7 +72,7 @@ void TestAlarmgen::setConnectedLineFound()
     this->alarmgen.setConnectionState(this->connected);
     this->alarmgen.setLineState(this->lineFound);
     this->alarmgen.updateColor();
-    QVERIFY(this->alarmgen.getColor() == ALARM_GREEN);
+    QVERIFY2(this->alarmgen.getColor() == ALARM_GREEN, "connected state, found line is not GREEN");
 }
 
 void TestAlarmgen::setDisconnectedLineLost1()
@@ -80,7 +80,7 @@ void TestAlarmgen::setDisconnectedLineLost1()
     this->alarmgen.setConnectionState(this->disconnected);
     this->alarmgen.setLineState(this->lineLost1);
     this->alarmgen.updateColor();
-    QVERIFY(this->alarmgen.getColor() == ALARM_YELLOW);
+    QVERIFY2(this->alarmgen.getColor() == ALARM_YELLOW, "disconnected state, no line1 is not YELLOW");
 }
 
 void TestAlarmgen::setDisconnectedLineLost2()
@@ -88,7 +88,7 @@ void TestAlarmgen::setDisconnectedLineLost2()
     this->alarmgen.setConnectionState(this->disconnected);
     this->alarmgen.setLineState(this->lineLost2);
     this->alarmgen.updateColor();
-    QVERIFY(this->alarmgen.getColor() == ALARM_YELLOW);
+    QVERIFY2(this->alarmgen.getColor() == ALARM_YELLOW, "disconnected state, no line2 is not YELLOW");
 }
 
 void TestAlarmgen::setDisconnectedLineFound()
@@ -96,7 +96,7 @@ void TestAlarmgen::setDisconnectedLineFound()
     this->alarmgen.setConnectionState(this->disconnected);
     this->alarmgen.setLineState(this->lineFound);
     this->alarmgen.updateColor();
-    QVERIFY(this->alarmgen.getColor() == ALARM_YELLOW);
+    QVERIFY2(this->alarmgen.getColor() == ALARM_YELLOW, "disconnected state, found line is not YELLOW");
 }
 
 
