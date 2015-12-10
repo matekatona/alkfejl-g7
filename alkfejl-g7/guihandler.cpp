@@ -18,6 +18,7 @@ GuiHandler::GuiHandler( \
         QMLHandlerCppSide *carGyroX, \
         QMLHandlerCppSide *carGyroY, \
         QMLHandlerCppSide *carGyroZ, \
+        QMLHandlerCppSide *statusHistory, \
         QMLHandlerCppSide *speedGraph, \
         QMLHandlerCppSide *buttonConDiscon, \
         QMLHandlerCppSide *buttonSendStatus, \
@@ -41,6 +42,7 @@ GuiHandler::GuiHandler( \
     this->carGyroX=carGyroX;
     this->carGyroY=carGyroY;
     this->carGyroZ=carGyroZ;
+    this->statusHistory=statusHistory;
     this->speedGraph=speedGraph;
     this->buttonConDiscon=buttonConDiscon;
     this->buttonSendStatus=buttonSendStatus;
@@ -202,12 +204,19 @@ void GuiHandler::drawSpeedGraph(float speed)
     QMetaObject::invokeMethod(this->speedGraph->object, "newSample", Qt::DirectConnection, Q_ARG(QVariant, (-speed/3.0)+0.5));
 }
 
+void GuiHandler::addStatusHistory(QString status)
+{
+    QMetaObject::invokeMethod(this->textCurStatus->object, "addValue", Qt::DirectConnection, Q_ARG(QVariant, status));
+}
+
 void GuiHandler::robotConnected()
 {
+    this->buttonCarSelfTest->object->setProperty("enabled", true);
     this->buttonConDiscon->object->setProperty("text", "Disconnect");
 }
 
 void GuiHandler::robotDisconnected()
 {
+    this->buttonCarSelfTest->object->setProperty("enabled", false);
     this->buttonConDiscon->object->setProperty("text", "Connect");
 }
