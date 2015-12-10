@@ -11,7 +11,7 @@ Window {
     objectName: "mainWindow";
     visible: true
     minimumWidth: 900;
-    minimumHeight: 700;
+    minimumHeight: 650;
 
     property bool testPhase: true;
     property int angle: 0;
@@ -131,7 +131,7 @@ Window {
         GyroIndicator{
             id: wheels;
             objectName: "wheels";
-            anchors.left: parent.left;
+            anchors.right: parent.right;
             anchors.bottom: accelY.top;
             view: "top";
             title: "Wheels";
@@ -140,8 +140,8 @@ Window {
         GyroIndicator{
             id: accelY;
             objectName: "carAccelY"
-            anchors.left: parent.left;
-            anchors.bottom: parent.bottom;
+            anchors.right: parent.right;
+            anchors.bottom: gyroX.top;
             view: "top";
             title: "AccelY";
         }
@@ -151,8 +151,9 @@ Window {
 
             anchors.top: parent.top;
             anchors.left: parent.left;
-            anchors.right: graphContainer.left;
             anchors.margins: mainWindow.buttonMargin;
+
+            width: 140;
 
             Button{
                 id: buttonGUISelfTest;
@@ -197,7 +198,7 @@ Window {
             id: graphContainer;
 
             anchors.top: parent.top;
-            anchors.left: wheels.right;
+            anchors.left: leftControlContainer.right;
             anchors.right: gyroZ.left;
             anchors.bottom: parent.bottom;
 
