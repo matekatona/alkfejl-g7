@@ -1,16 +1,7 @@
 #include "alarmgenerator.h"
 
-
 /*!
- * \brief AlarmGenerator::AlarmGenerator this class handles the alarm on the GUI
- *
- * Based on two parameters, the class sets the color o the LED in the GUI. The
- * colors are as following:
- *      YELLOW -> if not all sockets are connected
- *      RED    -> if all sockets are connected, but no line is found
- *      GREEN  -> if all sockets are connected, and a line is found
- * Wether a line is found or not is determined by the linesensor values: if all
- * values are the same, then no line is present, otherwise there is one.
+ * \brief This is the constructor of AlarmGenerator.
  */
 AlarmGenerator::AlarmGenerator()
 {
@@ -19,11 +10,12 @@ AlarmGenerator::AlarmGenerator()
 }
 
 /*!
- * \brief AlarmGenerator::setLineState determines line _foundness_
- *                                     TODO: introduce this word to the English language
+ * \brief AlarmGenerator::setLineState determines line _foundness_. \n
+ *
+ *                                     TODO: introduce the word _foundness_ to the English language.
  *
  * If all values are the same, sets `lineFound` to `false`, otherwise to `true`
- * \param lineVals linesensor values read from linesensor
+ * \param lineVals line sensor values read from line sensor
  */
 void
 AlarmGenerator::setLineState(QVarLengthArray<bool> l)
@@ -48,8 +40,9 @@ AlarmGenerator::setLineState(QVarLengthArray<bool> l)
 }
 
 /*!
- * \brief AlarmGenerator::setConnectionState determines socket connectedness
- *                                           TODO: introduce this word to the English language
+ * \brief AlarmGenerator::setConnectionState determines socket connectedness. \n
+ *
+ *                                           TODO: introduce the word _connectedness_ to the English language.
  *
  * If all sockets are connected, sets `isConnected` to `true`, otherwise to `false`
  * \param isConnected AND of all socket connection states
@@ -62,6 +55,8 @@ AlarmGenerator::setConnectionState(bool isConnected)
 
 /*!
  * \brief AlarmGenerator::updateColor
+ *
+ *
  */
 void AlarmGenerator::updateColor()
 {
@@ -83,12 +78,12 @@ void AlarmGenerator::updateColor()
 }
 
 /*!
- * \brief AlarmGenerator::updateAlarm updates LED on GUI to current color
+ * \brief AlarmGenerator::updateAlarm updates LED on GUI to current color.
  *
- * Emits the `setAlarm()` signal with the color as paramter. The color is
- * determined by the previously set states in `updateColor()`.
- * \see the slot to which this signal is connected
- * \see AlarmGenerator::updateColor()
+ * Emits the `setAlarm()` signal with the color as parameter. The color is
+ * determined by the previously set state.
+ * \see setAlarm signal
+ * \see AlarmGenerator::updateColor
  */
 void
 AlarmGenerator::updateAlarm()

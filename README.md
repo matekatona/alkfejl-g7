@@ -1,4 +1,6 @@
-# UML diagram for Alkfejl-g7
+# Alkalmazásfejlesztés házi feladat
+
+## UML diagram for Alkfejl-g7
 
 ![Alt text](http://g.gravizo.com/g?
 class QObject {}
@@ -109,7 +111,6 @@ class Robot{
 	RobotControl control;
   AlarmGenerator alarmgen;
 })
-
 
 ### Sequence diagram
 

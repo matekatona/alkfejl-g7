@@ -2,9 +2,7 @@
 
 /*!
  * \brief LineSensor::LineSensor creates sensor object, that is connected to
- *                               the linesensor port of VREP
- *
- * No detailed description is available, sorry about that.
+ *        the linesensor port of V-REP.
  */
 LineSensor::LineSensor() :
     SimComm(PORT_NUM_LINE)  // call superclass constructor with correct port number

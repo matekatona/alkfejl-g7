@@ -1,6 +1,12 @@
 #include <QQmlProperty>
 #include "qmlhandlercppside.h"
-
+/*! 
+ * The constructor finds a QML element by its name, and initializes 
+ * the `object` public member variable with a pointer to it.
+ * You access the QML element via `object`.
+ * \param rootObject the object to start the search form.
+ * \param name the unique name of the QML element to search for, defined in the "objectName" field of the element in the QML file.
+ */
 QMLHandlerCppSide::QMLHandlerCppSide(QObject *rootObject, const QString& name)
     : QObject(nullptr)
 {
@@ -17,6 +23,11 @@ QMLHandlerCppSide::QMLHandlerCppSide(QObject *rootObject, const QString& name)
     }
 }
 
+/*!
+ * It finds a QML element with the given name, starting from `object` as the root object.
+ * \param name the unique name of the QML element to search for.
+ * \return If the element is found, it returns a pointer to it, else it returns a NULL pointer.
+ */
 QQuickItem* QMLHandlerCppSide::findItemByName(const QString& name)
 {
     Q_ASSERT(object != nullptr);
@@ -27,6 +38,12 @@ QQuickItem* QMLHandlerCppSide::findItemByName(const QString& name)
     return findItemByName(object->children(), name);
 }
 
+/*!
+ * It finds a QML element with the given name, starting from rootObject.
+ * \param name the unique name of the QML element to search for.
+ * \param rootObject is a pointer to the QML element to start the search from.
+ * \return If the element is found, it returns a pointer to it, else it returns a NULL pointer.
+ */
 QQuickItem* QMLHandlerCppSide::findItemByName(QObject *rootObject, const QString& name)
 {
     Q_ASSERT(rootObject != nullptr);
@@ -37,6 +54,14 @@ QQuickItem* QMLHandlerCppSide::findItemByName(QObject *rootObject, const QString
     return findItemByName(rootObject->children(), name);
 }
 
+/*!
+ * It finds a QML element with the given name, within a list of nodes. It is rather internally used 
+ * by the other overloaded findItemByName functions. It is called when the recursive search approaches
+ * a QML element that has multiple children.
+ * \param name the unique name of the QML element to search for.
+ * \param nodes is a list of QML elements to search within.
+ * \return If the element is found, it returns a pointer to it, else it returns a NULL pointer.
+ */
 QQuickItem* QMLHandlerCppSide::findItemByName(QList<QObject*> nodes, const QString& name)
 {
     for(int i = 0; i < nodes.size(); i++)

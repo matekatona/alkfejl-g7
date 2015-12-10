@@ -3,11 +3,7 @@
 
 /*!
  * \brief RobotControl::RobotControl creates control object, that is connected to
- *                                   the command port of VREP
- *
- * The class uses cache to store values to minimize communication with
- * the simulator. Every read value is cached, and expires after 70 ms. Repeated
- * reads within this 70 ms will return the same values.
+ *                                   the command port of V-REP
  */
 RobotControl::RobotControl() :
     SimComm(PORT_NUM_CONTROL)  // call superclass constructor with correct port number
@@ -23,7 +19,7 @@ RobotControl::RobotControl() :
 /*!
  * \brief RobotControl::clear_cache delete cached values
  *
- * The next read will result in reading new values from VREP
+ * The next read will result in reading new values from V-REP
  * \see SimComm::cache_expired
  */
 void
@@ -37,7 +33,7 @@ RobotControl::reset_cache()
  * \brief RobotControl::getStatus get robot status
  *
  * If a valid value is found in cache, tha cached value is returned. Otherwise
- * new values are read from VREP, put into the cache, and returned.
+ * new values are read from V-REP, put into the cache, and returned.
  * \see SimComm::read
  * \return current status of robot, either "Run" or "Stop"
  */
@@ -77,7 +73,7 @@ RobotControl::getStatus()
  * \brief RobotControl::getSpeed get robot speed
  *
  * If a valid value is found in cache, tha cached value is returned. Otherwise
- * new values are read from VREP, put into the cache, and returned.
+ * new values are read from V-REP, put into the cache, and returned.
  * \see SimComm::read
  * \return current speed of robot
  */
@@ -120,7 +116,7 @@ RobotControl::getSpeed()
  * (i.e. "Run" or "Stop") the robot will change it's state accordingly. Other
  * status words are ignored.
  * \see SimComm::write
- * \param the new status, either "Run" or "Stop"
+ * \param status the new status, either "Run" or "Stop"
  */
 void
 RobotControl::setStatus(QString status)
@@ -138,7 +134,7 @@ RobotControl::setStatus(QString status)
  * \see SimComm::write
  * \warning high speeds may cause the robot to lose line tracking, and fall off
  * the edge of the world.
- * \param the new speed
+ * \param speed the new speed
  */
 void
 RobotControl::setSpeed(float speed)

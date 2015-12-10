@@ -1,11 +1,10 @@
 #include "simcomm.h"
 
 /*!
- * \brief SimComm::SimComm creates an abstract object to communicate with VREP
- *
+ * \brief SimComm::SimComm creates an abstract object to communicate with V-REP. \n
  * This object does the actual communication via TCP sockets, and has the timer
  * to signal cache expiration.
- * \param port
+ * \param port the TCP port to open.
  */
 SimComm::SimComm(int port) :
     cache_timer(new QTimer()),
@@ -19,8 +18,10 @@ SimComm::SimComm(int port) :
 }
 
 /*!
- * \brief SimComm::socketStateChanged
- * \param socketState
+ * \brief SimComm::socketStateChanged is called when the state of the TCP socket SimComm::socket changes.
+ *
+ * It also emits the SimComm::stateChanged signal when this happens.
+ * \param socketState the new socket state.
  */
 void
 SimComm::socketStateChanged(QAbstractSocket::SocketState socketState)
@@ -50,7 +51,7 @@ SimComm::start_cache_timer()
  * \brief SimComm::connect connects to the port given in constructor
  *
  * This function is explicitly called in constructor, so it does not have to be
- * called after object instantiation. It can be used to reconnect to VREP if the
+ * called after object instantiation. It can be used to reconnect to V-REP if the
  * initial connect failed, or if `disconnect()` has been called previously.
  */
 void
@@ -75,7 +76,7 @@ SimComm::connect()
  *
  * The socket is implicitly closed before destroying instances of this object, so
  * there is no need to explicitly call this function. It can be used to reconnect
- * if there were errors with the initial connect, or if VREP has been restarted
+ * if there were errors with the initial connect, or if V-REP has been restarted
  * during program execution.
  */
 void
@@ -97,7 +98,7 @@ SimComm::isConnected()
 /*!
  * \brief SimComm::read reads robot data
  *
- * This function is handling communication with VREP. It sends the "GET" string
+ * This function is handling communication with V-REP. It sends the "GET" string
  * to the instance's port, so the user does not have to send it using `write()`,
  * and reads the answer until the next newline. It does not parse the received string.
  * \return unparsed robot data
@@ -119,7 +120,7 @@ SimComm::read(){
 /*!
  * \brief SimComm::write writes command to socket
  *
- * This function is handling communication with VREP. It sends the given command
+ * This function is handling communication with V-REP. It sends the given command
  * to the instance's port. No modification is made on the command, so it has to
  * be a valid one. Nothing is returned, since the robot only replies to the
  * "GET" command. To check whether the command has been executed by the robot,

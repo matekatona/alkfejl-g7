@@ -1,0 +1,23 @@
+/**
+\mainpage Documentation
+
+\section howto How to build
+
+You can build *alkfejl-g7* with Qt 5.5.1 on Windows, by opening the `alkfejl-g7/alkfejl-g7.pro` project file in Qt Creator.
+
+On Linux, you can build the project with the following commands:
+
+@code
+mkdir build
+cd build
+qmake ..
+make
+@endcode
+
+You can start the application by typing:
+
+@code
+./alkfejl-g7
+@endcode
+
+*/

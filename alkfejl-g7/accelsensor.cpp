@@ -2,11 +2,7 @@
 
 /*!
  * \brief AccelSensor::AccelSensor creates sensor object, that is connected to
- *                                 the acceleration sensor port of VREP
- *
- * The class uses cache to store sensor values to minimize communication with
- * the simulator. Every read value is cached, and expires after 70 ms. Repeated
- * reads within this 70 ms will return the same values.
+ *                                 the acceleration sensor port of V-REP
  */
 AccelSensor::AccelSensor() :
     SimComm(PORT_NUM_ACCEl)  // call superclass constructor with correct port number
@@ -24,7 +20,7 @@ AccelSensor::AccelSensor() :
 /*!
  * \brief AccelSensor::clear_cache delete cached sensor values
  *
- * The next sensor read will result in reading new values from VREP
+ * The next sensor read will result in reading new values from V-REP
  * \see SimComm::cache_expired
  */
 void
@@ -39,8 +35,8 @@ AccelSensor::reset_cache()
  * \brief AccelSensor::getX get robot acceleration in longitudinal direction
  *
  * If a valid value is found in cache, tha cached value is returned. Otherwise
- * new values are read from VREP, put into the cache, and returned.
- * \see SimComm::read
+ * new values are read from V-REP, put into the cache, and returned.
+ * \see SimComm::read, the function that is internally used to get data from V-REP.
  * \return longitudinal acceleration in m/s?
  */
 float
@@ -83,8 +79,8 @@ AccelSensor::getX()
  * \brief AccelSensor::getY get robot acceleration in lateral direction
  *
  * If a valid value is found in cache, tha cached value is returned. Otherwise
- * new values are read from VREP, put into the cache, and returned.
- * \see SimComm::read
+ * new values are read from V-REP, put into the cache, and returned.
+ * \see SimComm::read, the function that is internally used to get data from V-REP.
  * \return lateral acceleration in m/s?
  */
 float
@@ -127,8 +123,8 @@ AccelSensor::getY()
  * \brief AccelSensor::getZ get robot acceleration in vertical direction
  *
  * If a valid value is found in cache, tha cached value is returned. Otherwise
- * new values are read from VREP, put into the cache, and returned.
- * \see SimComm::read
+ * new values are read from V-REP, put into the cache, and returned.
+ * \see SimComm::read, the function that is internally used to get data from V-REP.
  * \return vertical acceleration in m/s?
  */
 float

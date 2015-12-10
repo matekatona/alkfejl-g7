@@ -1,3 +1,6 @@
+//! \file 
+//! \brief This file contains the Robot class.
+
 #ifndef ROBOT_H
 #define ROBOT_H
 
@@ -10,6 +13,18 @@
 
 #define NUM_OF_SOCKETS 5
 
+/*!
+ * \brief The Robot class is the interface between the GUI and the backend.
+ *
+ * It has one instance of every sensor, and one control socket. 
+ * It does not provide any special functionality, only translates GUI requests to commands
+ * for V-REP, and sensor data to GUI data.
+ * \see RobotControl
+ * \see LineSensor
+ * \see AccelSensor
+ * \see GyroSensor
+ * \see WheelSensor
+ */
 class Robot : public QObject
 {
     Q_OBJECT

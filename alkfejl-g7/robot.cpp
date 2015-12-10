@@ -3,18 +3,6 @@
 /*!
  * \brief Robot::Robot creates a robot object, trough which the GUI can
  *                     communicate with all VREP sockets in an organized way
- *
- * The Robot class has one instance of every sensor, and one control socket.
- * This is the interface between the GUI and the backend, and as such does not
- * provide any special functionality, only translates GUI requests to commands
- * for VREP, and sensor data to GUI data.
- * \warning initialization order of objects inherited from SimComm is crucial!
- *          DO NOT change it!
- * \see RobotControl
- * \see LineSensor
- * \see AccelSensor
- * \see GyroSensor
- * \see WheelSensor
  */
 Robot::Robot()
     : control(new RobotControl()),
@@ -39,7 +27,7 @@ Robot::Robot()
 }
 
 /*!
- * \brief Robot::connect connects all sockets to VREP
+ * \brief Robot::connect connects all sockets to V-REP
  */
 void
 Robot::connect()
@@ -52,7 +40,7 @@ Robot::connect()
 }
 
 /*!
- * \brief Robot::disconnect disconnects all sockets from VREP
+ * \brief Robot::disconnect disconnects all sockets from V-REP
  */
 void
 Robot::disconnect()
@@ -163,7 +151,7 @@ Robot::status(QString status)
  * \brief Robot::update slot to send an update request to all sensors
  *
  * This slot will emit signals to update all GUI elements with sensor data read
- * from VREP
+ * from V-REP
  */
 void
 Robot::update(){

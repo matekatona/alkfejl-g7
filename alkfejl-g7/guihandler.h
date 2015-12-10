@@ -1,9 +1,14 @@
+//! \file 
+//! \brief This file contains the GuiHandler class.
+
 #ifndef GUIHANDLER_H
 #define GUIHANDLER_H
 
 #include <QObject>
 #include <QVarLengthArray>
 #include "qmlhandlercppside.h"
+
+/*! \brief This class implements the event handlers for the Qt Quick controls. */
 
 class GuiHandler : public QObject
 {
@@ -61,14 +66,17 @@ private:
     QMLHandlerCppSide *buttonCarSelfTest;
 
 signals:
-    void buttonConClicked();
-    void buttonDisClicked();
-    void buttonSendStatusClicked(QString status);
-    void buttonSendSpeedClicked(float speed);
-    void buttonCarSelfTestClicked();
+
+    void buttonConClicked(); //!< This signal is emitted by `qmlbuttonConDisconClicked`, and is connected to the `connect` slot of `Robot`.
+    void buttonDisClicked(); //!< This signal is emitted by `qmlbuttonConDisconClicked`, and is connected to the `disconnect` slot of `Robot`.
+    void buttonSendStatusClicked(QString status); //!< This signal is emitted by `qmlbuttonSendStatusClicked`, and is connected to the `status` slot of `Robot`, which will actually send the new status to V-REP.
+												  //!< \param status is the new status of the `Robot` instance.
+    void buttonSendSpeedClicked(float speed); //!< This signal is emitted by `qmlbuttonSendSpeedClicked`, and is connected to the `speed` slot of `Robot`, which will actually send the new speed to V-REP.
+											  //!< \param speed is the new speed of the `Robot` instance.
+    void buttonCarSelfTestClicked(); //!< This signal is emitted by `qmlbuttonCarSelfTestClicked`.
 
 public slots:
-    void qmlbuttonConDisconClicked();
+    void qmlbuttonConDisconClicked(); 
     void qmlbuttonSendStatusClicked();
     void qmlbuttonSendSpeedClicked();
     void qmlbuttonCarSelfTestClicked();

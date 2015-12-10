@@ -74,7 +74,13 @@ void Graph::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
 }
 
-
+/*! 
+ * \brief This class is part of a graph control implementation for QML.
+ *
+ * It has been taken from the stock QtQuick SceneGraph example. \n
+ * Documentation is available on the following URL: \n
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
 class GraphNode : public QSGNode
 {
 public:

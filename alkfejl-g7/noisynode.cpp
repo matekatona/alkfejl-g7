@@ -46,6 +46,13 @@
 
 #define NOISE_SIZE 64
 
+/*! 
+ * \brief This struct is part of a graph control implementation for QML.
+ *
+ * It has been taken from the stock QtQuick SceneGraph example. \n
+ * Documentation is available on the following URL: \n
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
 struct NoisyMaterial
 {
     ~NoisyMaterial() {
@@ -56,6 +63,13 @@ struct NoisyMaterial
     QSGTexture *texture;
 };
 
+/*! 
+ * \brief This class is part of a graph control implementation for QML.
+ *
+ * It has been taken from the stock QtQuick SceneGraph example. \n
+ * Documentation is available on the following URL: \n
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
 class NoisyShader : public QSGSimpleMaterialShader<NoisyMaterial>
 {
     QSG_DECLARE_SIMPLE_SHADER(NoisyShader, NoisyMaterial)

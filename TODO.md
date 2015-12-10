@@ -1,5 +1,4 @@
-Alkalmazásfejlesztés házi
-=========================
+# Feladatlista
 
 Minimális feladatok (e nélkül a házi feladat értékelhetetlen és nem ér pontot):
 
