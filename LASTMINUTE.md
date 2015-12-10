@@ -7,7 +7,7 @@ Uccsónapi feladatok
 4.  Azonosítjuk a tervezési mintákat
     -   backend-frontend van: GUI és Robot között csak signalokkal kommunikálunk, elfedjük a belső működést, stb.
     -   server-client van
-    -   még valamit kinézünk a diákból
+    -   Facade Strukturális minta: egy létező inteface becsomagolása. Ezt megcsináltuk a VREP-es kommunikációval, `"SetSpeed:0.134"` helyett `control->setSpeed(0.134)`
 
 5.  Csinálunk még UML-t, update-elünk
 6.  A fenti kódokat mind jól megdoxygeneljük
