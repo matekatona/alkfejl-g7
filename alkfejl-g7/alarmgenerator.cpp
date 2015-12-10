@@ -61,28 +61,48 @@ AlarmGenerator::setConnectionState(bool isConnected)
 }
 
 /*!
- * \brief AlarmGenerator::updateAlarm updates LED on GUI according to states
- *
- * Emits the `setAlarm()` signal with the color as paramter. The color is
- * determined by the previously set states.
- * \see the slot to which this signal is connected
+ * \brief AlarmGenerator::updateColor
  */
-void
-AlarmGenerator::updateAlarm()
+void AlarmGenerator::updateColor()
 {
     if(socketsConnected)
     {
         if(lineFound)
         {
-            emit this->setAlarm(ALARM_GREEN);
+            this->color = ALARM_GREEN;
         }
         else
         {
-            emit this->setAlarm(ALARM_RED);
+            this->color = ALARM_RED;
         }
     }
     else
     {
-        emit this->setAlarm(ALARM_YELLOW);
+        this->color = ALARM_YELLOW;
     }
 }
+
+/*!
+ * \brief AlarmGenerator::updateAlarm updates LED on GUI to current color
+ *
+ * Emits the `setAlarm()` signal with the color as paramter. The color is
+ * determined by the previously set states in `updateColor()`.
+ * \see the slot to which this signal is connected
+ * \see AlarmGenerator::updateColor()
+ */
+void
+AlarmGenerator::updateAlarm()
+{
+    emit this->setAlarm(this->color);
+}
+
+/*!
+ * \brief AlarmGenerator::getColor
+ * \return
+ */
+int
+AlarmGenerator::getColor()
+{
+    return this->color;
+}
+

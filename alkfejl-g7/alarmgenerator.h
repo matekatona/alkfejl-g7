@@ -20,11 +20,13 @@ signals:
 public:
     void setLineState(QVarLengthArray<bool> lineVals);
     void setConnectionState(bool isConnected);
-    void updateAlarm();
+    void updateColor();
+    int getColor();
 
 private:
     bool socketsConnected;
     bool lineFound;
+    int color;
 };
 
 #endif // ACCELSENSOR_H
