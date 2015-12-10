@@ -10,6 +10,19 @@ Item {
 
     function setAlert(values){
         alertLamp.alert=values;
+        switch(values) {
+        case 0:
+            alertLamp.alertLabel="Connected";
+            break;
+        case 1:
+            alertLamp.alertLabel="Disconnected";
+            break;
+        case 2:
+            alertLamp.alertLabel="Line lost";
+            break;
+        default:
+
+        }
     }
 
     Item{

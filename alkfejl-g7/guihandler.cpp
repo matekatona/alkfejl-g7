@@ -159,7 +159,7 @@ void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
     if(R==0 || R!=R)
         angle=0;
     else
-        angle=-v*dt/R;
+        angle=v*dt/R;
 
     QMetaObject::invokeMethod(this->carAccelY->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }

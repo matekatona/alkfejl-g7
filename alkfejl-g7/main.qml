@@ -179,7 +179,7 @@ Window {
                 id: alertLamp;
                 objectName: "alertLamp";
                 anchors.horizontalCenter: parent.horizontalCenter;
-                alertLabel: "Line lost";
+                alertLabel: "Disconnected";
                 alert: 1;
             }
         }
