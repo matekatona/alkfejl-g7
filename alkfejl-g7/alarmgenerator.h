@@ -23,7 +23,6 @@ public:
     void updateColor();
     void updateAlarm();
     int getColor();
-    void updateAlarm();
 
 private:
     bool socketsConnected;

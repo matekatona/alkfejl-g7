@@ -62,8 +62,8 @@ LineSensor::getValues()
             return vals;
 
         for(quint8 i=0;i<rawValues.size();i++)
-            if(i<vals.size()) vals.replace(i, rawValues[i].toFloat() < LINE_THRESHOLD);
-            else vals.append(rawValues[i].toFloat() < LINE_THRESHOLD);
+            if(i<vals.size())
+                vals.replace(i, rawValues[i].toFloat() < LINE_THRESHOLD);
 
         // cache values
         this->pvalues = std::make_shared<QVarLengthArray<bool>>(vals);
