@@ -2,10 +2,10 @@ Uccsónapi feladatok
 ===================
 
 1.  Szöveges history
-2.  Innentől minden fícsör megvan csinálunk videót (7. pontig kitolható)
-3.  Unittest alarmgen-re
+2.  Innentől minden fícsör megvan csinálunk videót (8. pontig kitolható)
+3.  **DONE** Unittest alarmgen-re
 4.  Azonosítjuk a tervezési mintákat
-    -   backend-frontend van
+    -   backend-frontend van: GUI és Robot között csak signalokkal kommunikálunk, elfedjük a belső működést, stb.
     -   server-client van
     -   még valamit kinézünk a diákból
 

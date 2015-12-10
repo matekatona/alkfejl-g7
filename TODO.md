@@ -33,6 +33,6 @@ Bónusz pontok
 -   **DONE** 2p: A dokumentáció számos UML diagramot használ, a leírások kihasználják a Markdown lehetőségeit, valamint a dokumentációban vannak hivatkozások, @see, @warning stb. parancsok.
 -   **DONE** 2p (+1p): A forráskód használ smart pointereket. weak\_ptr esetén +1 pont jár.
 -   3p: Tervezési minták azonosítása a programban: minimum 3 hely azonosítása a forráskódban (dokumentációba beleírva), ahol egy tervezési minta szerepel.
--   4p: QTest unit teszt, legalább 3 eltérő test case.
+-   **DONE** 4p: QTest unit teszt, legalább 3 eltérő test case.
 -   5p: A fejlesztés során tapasztalt tanulságok részletes összefoglalása egy publikálható jegyzet (“snippet”) formájában, githubon pull request formájában leadva.
 
