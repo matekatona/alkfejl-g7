@@ -3,6 +3,10 @@ import QtQuick 2.0
 Item {
     id: textHistory;
 
+    anchors.left: parent.left;
+
+    anchors.horizontalCenter: parent.horizontalCenter;
+
     anchors.margins: 30;
 
     width: 140;

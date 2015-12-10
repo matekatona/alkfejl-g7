@@ -206,7 +206,7 @@ void GuiHandler::drawSpeedGraph(float speed)
 
 void GuiHandler::addStatusHistory(QString status)
 {
-    QMetaObject::invokeMethod(this->textCurStatus->object, "addValue", Qt::DirectConnection, Q_ARG(QVariant, status));
+    QMetaObject::invokeMethod(this->statusHistory->object, "addValue", Qt::DirectConnection, Q_ARG(QVariant, status));
 }
 
 void GuiHandler::robotConnected()
