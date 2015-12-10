@@ -88,6 +88,7 @@ void AlarmGenerator::updateColor()
 void
 AlarmGenerator::updateAlarm()
 {
+    this->updateColor();
     emit this->setAlarm(this->color);
 }
 
