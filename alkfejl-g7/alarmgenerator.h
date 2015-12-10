@@ -21,6 +21,7 @@ public:
     void setLineState(QVarLengthArray<bool> lineVals);
     void setConnectionState(bool isConnected);
     void updateColor();
+    void updateAlarm();
     int getColor();
     void updateAlarm();
 

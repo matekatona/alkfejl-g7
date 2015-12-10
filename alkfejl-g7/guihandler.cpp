@@ -91,7 +91,7 @@ void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
 {
     QVariantList values;
 
-    for(int i=0; i<21; i++)
+    for(int i=0; i<leds.size(); i++)
         values << leds.at(i);
     QMetaObject::invokeMethod(this->lineSens->object, "setValues", Qt::DirectConnection, Q_ARG(QVariant, QVariant::fromValue(values)));
 }
