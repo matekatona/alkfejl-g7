@@ -1,5 +1,13 @@
 /**
 \mainpage Documentation
+\section Overview
+
+`alkfejl-g7` is a diagnostic client for a simulated line follower robot running in a 3D environment provided by <a href="http://www.coppeliarobotics.com/">Coppelia Robotics V-REP</a>.
+
+`alkfejl-g7`, which communicates with V-REP over TCP, lets you start or stop the robot and set its speed from a Qt-based GUI. 
+
+It also features self-test functions for both the GUI and the simulated robot, displays the robot's speed on a graph, and indicates the values read from the simulated accelerometer, gyro sensor and wheel speed sensors on the robot.
+To see how the robot's line sensors perform, there is a LED bar on the interface. 
 
 \section Video
 
@@ -13,7 +21,9 @@
 
 \section howto How to build
 
-You can build and run *alkfejl-g7* with Qt 5.5.1, by opening the `alkfejl-g7/alkfejl-g7.pro` project file in Qt Creator.
+You can build and run `alkfejl-g7` with Qt 5.5.1, by opening the `alkfejl-g7/alkfejl-g7.pro` project file in Qt Creator.
+
+Before clicking the _Connect_ button on the GUI, open V-REP and start the robot from `Robot_simulation/line_follower_w_TCP.ttt`.
 
 \section uml Version control system usage
 
