@@ -34,7 +34,7 @@ WheelSensor::reset_cache()
  * If a valid value is found in cache, tha cached value is returned. Otherwise
  * new values are read from V-REP, put into the cache, and returned.
  * \see SimComm::read
- * \return left wheel speed in m/s?
+ * \return left wheel speed in m/s
  */
 float
 WheelSensor::getLeft()
@@ -75,7 +75,7 @@ WheelSensor::getLeft()
  * If a valid value is found in cache, tha cached value is returned. Otherwise
  * new values are read from V-REP, put into the cache, and returned.
  * \see SimComm::read
- * \return right wheel speed in m/s?
+ * \return right wheel speed in m/s
  */
 float
 WheelSensor::getRight()

@@ -36,4 +36,5 @@ build-alkfejl-g7-*
 
 # Doxygen
 
-doc
+alkfejl-g7/doc/html
+alkfejl-g7/doc/latex
