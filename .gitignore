@@ -35,6 +35,5 @@ build-alkfejl-g7-*
 *.qmlproject.user.*
 
 # Doxygen
-
-doc/html
-doc/latex
+alkfejl-g7/doc/html
+alkfejl-g7/doc/latex

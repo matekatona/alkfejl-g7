@@ -3,6 +3,7 @@
 /*!
  * \brief Robot::Robot creates a robot object, trough which the GUI can
  *                     communicate with all VREP sockets in an organized way
+ * \image html "../robot_UML.png"
  */
 Robot::Robot()
     : control(new RobotControl()),
@@ -54,7 +55,6 @@ Robot::disconnect()
 
 /*!
  * \brief Robot::socketStateChanged
- * \param socketState
  */
 void
 Robot::socketStateChanged()
@@ -83,6 +83,16 @@ Robot::socketStateChanged()
     this->alarmgen->updateAlarm();
 }
 
+/*!
+* \brief Robot::selfTest runs a self-test on the robot.
+*
+*  - It starts the robot with slow speed, and waits for 5 seconds.
+*  - It accelerates the robot, and waits for 2 seconds.
+*  - It stops the robot and waits 8 more seconds.
+*  - It restarts the robot again, and waits 4 seconds.
+*  - Then it stops the robot.
+* \image html "../selfTest_sequence.png"
+*/
 void
 Robot::selfTest()
 {

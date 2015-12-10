@@ -1,5 +1,5 @@
 //! \file 
-//! \brief This file contains the GuiHandler class.
+//! \brief _Connection between Front-end and Back-end._ This file contains the GuiHandler class.
 
 #ifndef GUIHANDLER_H
 #define GUIHANDLER_H

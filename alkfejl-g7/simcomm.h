@@ -1,5 +1,5 @@
 //! \file 
-//! \brief This file contains the SimComm class.
+//! \brief _Client in the Server-Client design pattern._ This file contains the SimComm class.
 
 #ifndef SIMCOMM_H
 #define SIMCOMM_H
