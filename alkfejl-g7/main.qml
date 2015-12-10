@@ -383,7 +383,7 @@ Window {
                         id: editSetSpeed;
                         objectName: "editSetSpeed";
                         Layout.alignment: Qt.AlignRight;
-                        text: "0,4";
+                        text: "0.4";
                         implicitWidth: comboSetStatus.width;
                     }
 

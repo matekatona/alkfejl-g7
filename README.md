@@ -152,3 +152,71 @@ deactivate B;
 A -> User: happiness;
 @enduml
 )
+
+### Car self test
+
+![Alt text](http://g.gravizo.com/g?
+@startuml;
+actor User;
+participant "GUI" as A;
+participant "GuiHandler" as A2;
+participant "Robot" as B;
+participant "Sensors/Command" as C;
+participant "VREP" as D;
+User -> A: Car self test;
+activate A;
+A -> A2: buttonCarSelfTestClicked%28%29;
+activate A2;
+A2 -> B: signal selfTest%28%29;
+activate B;
+B -> C: setStatus%28%22Run%22%29;
+activate C;
+C -> D: socket.write%28%29;
+deactivate C;
+B -> B: test_timer.start%28%29;
+deactivate A;
+deactivate A2;
+deactivate B;
+B -> B: signal timeout%28%29;
+activate B;
+B -> C: setSpeed%28speed%29;
+activate C;
+C -> D: socket.write%28%29;
+deactivate C;
+B -> B: test_timer.start%28%29;
+deactivate B;
+B -> B: signal timeout%28%29;
+activate B;
+B -> C: setSpeed%280%29;
+activate C;
+C -> D: socket.write%28%29;
+deactivate C;
+B -> B: test_timer.start%28%29;
+deactivate B;
+B -> B: signal timeout%28%29;
+activate B;
+B -> C: setSpeed%28speed%29;
+activate C;
+C -> D: socket.write%28%29;
+deactivate C;
+B -> C: setStatus%28%22Run%22%29;
+activate C;
+C -> D: socket.write%28%29;
+deactivate C;
+B -> B: test_timer.start%28%29;
+deactivate B;
+B -> B: timeout%28%29;
+activate B;
+B -> C: setStatus%28%22Stop%22%29;
+activate C;
+C -> D: socket.write%28%29;
+deactivate C;
+B -> B: test_timer.start%28%29;
+deactivate B;
+B -> B: timeout%28%29;
+activate B;
+B -> B:test_timer.reset%28%29;
+deactivate B;
+A -> User: happiness;
+@enduml
+)

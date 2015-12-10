@@ -22,6 +22,7 @@ public:
     void setConnectionState(bool isConnected);
     void updateColor();
     int getColor();
+    void updateAlarm();
 
 private:
     bool socketsConnected;
