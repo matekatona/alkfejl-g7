@@ -118,7 +118,7 @@ RobotControl::getSpeed()
  * (i.e. "Run" or "Stop") the robot will change it's state accordingly. Other
  * status words are ignored.
  * \see SimComm::write
- * \param the new status, either "Run" or "Stop"
+ * \param status the new status, either "Run" or "Stop"
  */
 void
 RobotControl::setStatus(QString status)
@@ -136,7 +136,7 @@ RobotControl::setStatus(QString status)
  * \see SimComm::write
  * \warning high speeds may cause the robot to lose line tracking, and fall off
  * the edge of the world.
- * \param the new speed
+ * \param speed the new speed
  */
 void
 RobotControl::setSpeed(float speed)

@@ -1,10 +1,14 @@
+//! \file 
+//! \brief This file contains the RobotControl class.
+
 #ifndef COMMANDSOCKET_H
 #define COMMANDSOCKET_H
 
 #include "simcomm.h"
 
-/*
- * This class is for setting and getting global robot parameters.
+/*!
+ * \brief This class is for setting and getting global robot parameters.
+ *
  * The class uses cache to store values to minimize communication with
  * the simulator. Every read value is cached, and expires after 70 ms. Repeated
  * reads within this 70 ms will return the same values.

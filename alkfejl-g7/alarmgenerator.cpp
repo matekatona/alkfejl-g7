@@ -56,7 +56,7 @@ AlarmGenerator::setConnectionState(bool isConnected)
 /*!
  * \brief AlarmGenerator::updateAlarm updates LED on GUI according to states
  *
- * Emits the `setAlarm()` signal with the color as paramter. The color is
+ * Emits the `setAlarm()` signal with the color as parameter. The color is
  * determined by the previously set states.
  * \see setAlarm signal 
  */

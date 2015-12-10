@@ -1,3 +1,6 @@
+//! \file 
+//! \brief This file contains the SimComm class.
+
 #ifndef SIMCOMM_H
 #define SIMCOMM_H
 
@@ -16,7 +19,8 @@ using namespace std;
 
 
 /*! 
- * This class is the base of all classes that communicate with V-REP. 
+ * \brief This class is the base of all classes that communicate with V-REP. 
+ *
  * It handles the control socket (TCP) and the communication protocol.
  */
 class SimComm : public QObject
@@ -28,7 +32,8 @@ public:
     void disconnect();
 
 signals:
-    void cache_expired();
+    void cache_expired(); //!<This signal is emitted by `SimComm::cache_timeout`.
+
 
 protected slots:
     void cache_timeout();

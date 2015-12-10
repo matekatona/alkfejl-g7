@@ -62,7 +62,8 @@ GuiHandler::GuiHandler( \
 }
 
 /*! 
- * This is the click event handler of buttonConDiscon. 
+ * \brief The click event handler of buttonConDiscon. 
+ *
  * It will emit another signal, `buttonConDisconClicked`.
  */
 void GuiHandler::qmlbuttonConDisconClicked()
@@ -72,7 +73,8 @@ void GuiHandler::qmlbuttonConDisconClicked()
 }
 
 /*! 
- * This is the click event handler of buttonSendStatus. 
+ * \brief The click event handler of buttonSendStatus. 
+ *
  * It will emit another signal, `buttonSendStatusClicked`, which is connected to the `status` slot of the `Robot` instance 
  * in `main`, and sends V-REP the new status to set.
  */
@@ -83,7 +85,8 @@ void GuiHandler::qmlbuttonSendStatusClicked()
 }
 
 /*! 
- * This is the click event handler of buttonSendSpeed. 
+ * \brief The click event handler of buttonSendSpeed. 
+ *
  * It will emit another signal, `buttonSendSpeedClicked`, which is connected to the `speed` slot of the `Robot` instance 
  * in `main`, and sends V-REP the new speed to set.
  */
@@ -96,7 +99,8 @@ void GuiHandler::qmlbuttonSendSpeedClicked()
 }
 
 /*! 
- * This is the click event handler of buttonCarSelfTest.
+ * \brief The click event handler of buttonCarSelfTest.
+ *
  * It will emit another signal, `buttonCarSelfTestClicked`.
  */
 void GuiHandler::qmlbuttonCarSelfTestClicked()
@@ -106,7 +110,7 @@ void GuiHandler::qmlbuttonCarSelfTestClicked()
 }
 
 /*!
- * This calls the setAlert JavaScript method in `alertLamp`, to set the alert value.
+ * \brief This calls the setAlert JavaScript method in `alertLamp`, to set the alert value.
  * \param alert sets the `alertLamp` status indicator value. If it is true, `alertLamp` is ON.
  */
 void GuiHandler::setAlert(bool alert)
@@ -115,7 +119,7 @@ void GuiHandler::setAlert(bool alert)
 }
 
 /*!
- * This calls the setValues JavaScript method in `lineSens`, to set the ON/OFF status of the LEDs on the strip.
+ * \brief This calls the setValues JavaScript method in `lineSens`, to set the ON/OFF status of the LEDs on the strip.
  * \param leds is an array of boolean values to set the corresponding LEDs ON/OFF.
  */
 void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
@@ -129,7 +133,7 @@ void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
 }
 
 /*!
- * This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration X" on the GUI.
+ * \brief This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration X" on the GUI.
  * \param accelX is the floating point acceleration value to display.
  */
 void GuiHandler::setTextAccelX(float accelX)
@@ -138,8 +142,8 @@ void GuiHandler::setTextAccelX(float accelX)
 }
 
 /*!
- * This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration Y" on the GUI.
- * \param accelX is the floating point acceleration value to display.
+ * \brief This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration Y" on the GUI.
+ * \param accelY is the floating point acceleration value to display.
  */
 
 void GuiHandler::setTextAccelY(float accelY)
@@ -148,7 +152,7 @@ void GuiHandler::setTextAccelY(float accelY)
 }
 
 /*!
- * This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration Z" on the GUI.
+ * \brief This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration Z" on the GUI.
  * \param accelZ is the floating point acceleration value to display.
  */
 void GuiHandler::setTextAccelZ(float accelZ)
@@ -157,7 +161,7 @@ void GuiHandler::setTextAccelZ(float accelZ)
 }
 
 /*!
- * This sets the text of the `KeyValuePair` QML element showing the value for "Gyroscope X" on the GUI.
+ * \brief This sets the text of the `KeyValuePair` QML element showing the value for "Gyroscope X" on the GUI.
  * \param gyroX is the floating point gyro sensor value to display.
  */
 void GuiHandler::setTextGyroX(float gyroX)
@@ -175,8 +179,8 @@ void GuiHandler::setTextGyroY(float gyroY)
 }
 
 /*!
- * This sets the text of the `KeyValuePair` QML element showing the value for "Gyroscope Z" on the GUI.
- * \param gyroY is the floating point gyro sensor value to display.
+ * \brief This sets the text of the `KeyValuePair` QML element showing the value for "Gyroscope Z" on the GUI.
+ * \param gyroZ is the floating point gyro sensor value to display.
  */
 void GuiHandler::setTextGyroZ(float gyroZ)
 {
@@ -184,7 +188,7 @@ void GuiHandler::setTextGyroZ(float gyroZ)
 }
 
 /*!
- * This sets the text of the `KeyValuePair` QML element showing the value for "Current status" on the GUI.
+ * \brief This sets the text of the `KeyValuePair` QML element showing the value for "Current status" on the GUI.
  * \param status is the status string to display.
  */
 void GuiHandler::setTextStatus(QString status)
@@ -193,7 +197,7 @@ void GuiHandler::setTextStatus(QString status)
 }
 
 /*!
- * This sets the text of the `KeyValuePair` QML element showing the value for "Speed" on the GUI.
+ * \brief This sets the text of the `KeyValuePair` QML element showing the value for "Speed" on the GUI.
  * \param speed is the floating point speed value to display.
  */
 void GuiHandler::setTextSpeed(float speed)
@@ -202,7 +206,7 @@ void GuiHandler::setTextSpeed(float speed)
 }
 
 /*!
- * This sets the angle of the `wheels` `GyroIndicator` QML element on the GUI, based on the wheel parameters acquired from V-REP.
+ * \brief This sets the angle of the `wheels` `GyroIndicator` QML element on the GUI, based on the wheel parameters acquired from V-REP.
  * \param wheels is an array that stores the speed of individual wheels.
  * \param D is the distance of wheels.
  */
@@ -222,7 +226,7 @@ void GuiHandler::setWheels(QVarLengthArray<float> wheels, float D)
 }
 
 /*!
- * This sets the angle of the `AccelY` `GyroIndicator` QML element on the GUI, based on the parameters acquired from V-REP.
+ * \brief This sets the angle of the `AccelY` `GyroIndicator` QML element on the GUI, based on the parameters acquired from V-REP.
  * \param wheels is an array that stores the speed of individual wheels.
  * \param accelY is the horizontal acceleration of the robot.
  */
@@ -242,7 +246,7 @@ void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
 }
 
 /*!
- * This sets the angle of the `CarGyroX` `GyroIndicator` QML element on the GUI.
+ * \brief This sets the angle of the `CarGyroX` `GyroIndicator` QML element on the GUI.
  * \param gyroX is the value to add to the angle value already displayed on the indicator.
  */
 void GuiHandler::setCarGyroX(float gyroX)
@@ -251,7 +255,7 @@ void GuiHandler::setCarGyroX(float gyroX)
 }
 
 /*!
- * This sets the angle of the `CarGyroY` `GyroIndicator` QML element on the GUI.
+ * \brief This sets the angle of the `CarGyroY` `GyroIndicator` QML element on the GUI.
  * \param gyroY is the value to add to the angle value already displayed on the indicator.
  */
 void GuiHandler::setCarGyroY(float gyroY)
@@ -260,7 +264,7 @@ void GuiHandler::setCarGyroY(float gyroY)
 }
 
 /*!
- * This sets the angle of the `CarGyroZ` `GyroIndicator` QML element on the GUI.
+ * \brief This sets the angle of the `CarGyroZ` `GyroIndicator` QML element on the GUI.
  * \param gyroZ is the value to add to the angle value already displayed on the indicator.
  */
 void GuiHandler::setCarGyroZ(float gyroZ)
@@ -269,7 +273,7 @@ void GuiHandler::setCarGyroZ(float gyroZ)
 }
 
 /*!
- * This adds a new sample to the `speedGraph` `Graph` QML element on the GUI, and redraws it.
+ * \brief This adds a new sample to the `speedGraph` `Graph` QML element on the GUI, and redraws it.
  * \param speed is the sample to add to the graph.
  */
 void GuiHandler::drawSpeedGraph(float speed)

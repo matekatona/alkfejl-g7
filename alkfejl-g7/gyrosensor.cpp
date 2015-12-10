@@ -18,7 +18,7 @@ GyroSensor::GyroSensor() :
 }
 
 /*!
- * \brief GyroSensor::clear_cache delete cached sensor values
+ * \brief GyroSensor::clear_cache deletes cached sensor values
  *
  * The next sensor read will result in reading new values from V-REP
  * \see SimComm::cache_expired

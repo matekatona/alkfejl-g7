@@ -1,3 +1,6 @@
+//! \file 
+//! \brief This file contains the GuiHandler class.
+
 #ifndef GUIHANDLER_H
 #define GUIHANDLER_H
 
@@ -5,7 +8,7 @@
 #include <QVarLengthArray>
 #include "qmlhandlercppside.h"
 
-/*! This class implements the event handlers for the Qt Quick controls. */
+/*! \brief This class implements the event handlers for the Qt Quick controls. */
 
 class GuiHandler : public QObject
 {

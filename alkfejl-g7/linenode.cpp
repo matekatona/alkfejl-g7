@@ -44,6 +44,14 @@
 
 #include <QtQuick/QSGSimpleMaterial>
 
+
+/*! 
+ * \brief This struct is part of a graph control implementation for QML.
+ *
+ * It has been taken from the stock QtQuick SceneGraph example. \n
+ * Documentation is available on the following URL: \n
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
 struct LineMaterial
 {
     QColor color;
@@ -51,6 +59,13 @@ struct LineMaterial
     float size;
 };
 
+/*! 
+ * \brief This class is part of a graph control implementation for QML.
+ *
+ * It has been taken from the stock QtQuick SceneGraph example. \n
+ * Documentation is available on the following URL: \n
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
 class LineShader : public QSGSimpleMaterialShader<LineMaterial>
 {
     QSG_DECLARE_SIMPLE_SHADER(LineShader, LineMaterial)
@@ -81,6 +96,13 @@ private:
     int id_size;
 };
 
+/*! 
+ * \brief This struct is part of a graph control implementation for QML.
+ *
+ * It has been taken from the stock QtQuick SceneGraph example. \n
+ * Documentation is available on the following URL: \n
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
 struct LineVertex {
     float x;
     float y;

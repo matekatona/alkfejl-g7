@@ -1,10 +1,14 @@
+//! \file 
+//! \brief This file contains the WheelSensor class.
+
 #ifndef WHEELSENSOR_H
 #define WHEELSENSOR_H
 
 #include "simcomm.h"
 
 /*!
- * This class is for reading the values of the wheel sensor of the robot.
+ * \brief This class is for reading the values of the wheel sensor of the robot.
+ *
  * It uses a cache to store sensor values to minimize communication with
  * the simulator. Every read value is cached, and expires after 70 ms. Repeated
  * reads within this 70 ms will return the same values.

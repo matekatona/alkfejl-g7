@@ -1,3 +1,6 @@
+//! \file 
+//! \brief This file contains the AlarmGenerator class.
+
 #ifndef ALARMGENERATOR_H
 #define ALARMGENERATOR_H
 

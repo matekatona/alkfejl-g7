@@ -1,3 +1,6 @@
+//! \file 
+//! \brief This file contains the AccelSensor class.
+
 #ifndef ACCELSENSOR_H
 #define ACCELSENSOR_H
 
