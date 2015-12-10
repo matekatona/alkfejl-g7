@@ -16,11 +16,13 @@ Item {
 
     function addValue(value)
     {
-        var newHistory=new Array(10);
+        /*var newHistory=new Array(10);
         newHistory[0]=value;
         for(var i=0;i<9;i++)
             newHistory[i+1]=history[i];
-        history=newHistory;
+        history=newHistory;*/
+        history.unshift(value);
+        history.pop();
     }
 
     Item {
