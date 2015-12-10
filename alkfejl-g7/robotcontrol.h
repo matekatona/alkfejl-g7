@@ -1,5 +1,5 @@
 //! \file 
-//! \brief This file contains the RobotControl class.
+//! \brief _Facade design pattern_. This file contains the RobotControl class.
 
 #ifndef COMMANDSOCKET_H
 #define COMMANDSOCKET_H
