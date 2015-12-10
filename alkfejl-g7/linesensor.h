@@ -6,6 +6,10 @@
 
 #define LINE_THRESHOLD 0.5f
 
+/*!
+ * This class is for reading the values of the line sensor of the robot.
+ */
+
 class LineSensor : public SimComm
 {
     Q_OBJECT

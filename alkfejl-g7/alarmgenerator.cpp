@@ -10,11 +10,12 @@ AlarmGenerator::AlarmGenerator()
 }
 
 /*!
- * \brief AlarmGenerator::setLineState determines line _foundness_
- *                                     TODO: introduce this word to the English language
+ * \brief AlarmGenerator::setLineState determines line _foundness_. \n
+ *
+ *                                     TODO: introduce the word _foundness_ to the English language.
  *
  * If all values are the same, sets `lineFound` to `false`, otherwise to `true`
- * \param lineVals linesensor values read from linesensor
+ * \param lineVals line sensor values read from line sensor
  */
 void
 AlarmGenerator::setLineState(QVarLengthArray<bool> lineVals)
@@ -39,8 +40,9 @@ AlarmGenerator::setLineState(QVarLengthArray<bool> lineVals)
 }
 
 /*!
- * \brief AlarmGenerator::setConnectionState determines socket connectedness
- *                                           TODO: introduce this word to the English language
+ * \brief AlarmGenerator::setConnectionState determines socket connectedness. \n
+ *
+ *                                           TODO: introduce the word _connectedness_ to the English language.
  *
  * If all sockets are connected, sets `isConnected` to `true`, otherwise to `false`
  * \param isConnected AND of all socket connection states
@@ -56,7 +58,7 @@ AlarmGenerator::setConnectionState(bool isConnected)
  *
  * Emits the `setAlarm()` signal with the color as paramter. The color is
  * determined by the previously set states.
- * \see the slot to which this signal is connected
+ * \see setAlarm signal 
  */
 void
 AlarmGenerator::updateAlarm()

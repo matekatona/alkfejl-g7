@@ -43,6 +43,13 @@
 
 #include <QSGGeometryNode>
 
+/*! 
+ * This class is part of a graph control implementation for QML. \n
+ * It has been taken from the stock QtQuick SceneGraph example. \n
+ * Documentation is available on the following URL: \n
+ * http://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html
+ */
+
 class LineNode : public QSGGeometryNode
 {
 public:

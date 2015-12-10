@@ -6,6 +6,17 @@
 #include "gyrosensor.h"
 #include "wheelsensor.h"
 #include "robotcontrol.h"
+/*
+ * The Robot class has one instance of every sensor, and one control socket.
+ * This is the interface between the GUI and the backend, and as such does not
+ * provide any special functionality, only translates GUI requests to commands
+ * for V-REP, and sensor data to GUI data.
+ * \see RobotControl
+ * \see LineSensor
+ * \see AccelSensor
+ * \see GyroSensor
+ * \see WheelSensor
+ */
 
 class Robot : public QObject
 {

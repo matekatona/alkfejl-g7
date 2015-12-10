@@ -8,14 +8,16 @@
 #define ALARM_RED       2
 
 /*!
- * \brief AlarmGenerator::AlarmGenerator this class handles the alarm on the GUI
+ * \brief This class handles the alarm indicator LED on the GUI.
  *
- * Based on two parameters, the class sets the color o the LED in the GUI. The
- * colors are as following:
+ * Based on two parameters, the class sets the color of the LED in the GUI. The
+ * colors are as following:\n
+ * <pre>
  *      YELLOW -> if not all sockets are connected
  *      RED    -> if all sockets are connected, but no line is found
  *      GREEN  -> if all sockets are connected, and a line is found
- * Whether a line is found or not is determined by the linesensor values: if all
+ * </pre>
+ * Whether a line is found or not is determined by the line sensor values: if all
  * values are the same, then no line is present, otherwise there is one.
  */
 

@@ -97,6 +97,7 @@ void GuiHandler::qmlbuttonSendSpeedClicked()
 
 /*! 
  * This is the click event handler of buttonCarSelfTest.
+ * It will emit another signal, `buttonCarSelfTestClicked`.
  */
 void GuiHandler::qmlbuttonCarSelfTestClicked()
 {
@@ -104,11 +105,19 @@ void GuiHandler::qmlbuttonCarSelfTestClicked()
     emit this->buttonCarSelfTestClicked();
 }
 
+/*!
+ * This calls the setAlert JavaScript method in `alertLamp`, to set the alert value.
+ * \param alert sets the `alertLamp` status indicator value. If it is true, `alertLamp` is ON.
+ */
 void GuiHandler::setAlert(bool alert)
 {
     QMetaObject::invokeMethod(this->alertLamp->object, "setAlert", Qt::DirectConnection, Q_ARG(QVariant, alert));
 }
 
+/*!
+ * This calls the setValues JavaScript method in `lineSens`, to set the ON/OFF status of the LEDs on the strip.
+ * \param leds is an array of boolean values to set the corresponding LEDs ON/OFF.
+ */
 void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
 {
     QVariantList values;
@@ -119,46 +128,84 @@ void GuiHandler::setLedStrip(QVarLengthArray<bool> leds)
     QMetaObject::invokeMethod(this->alertLamp->object, "setAlertLamp", Qt::DirectConnection);
 }
 
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration X" on the GUI.
+ * \param accelX is the floating point acceleration value to display.
+ */
 void GuiHandler::setTextAccelX(float accelX)
 {
     QMetaObject::invokeMethod(this->textAccelX->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(accelX)));
 }
+
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration Y" on the GUI.
+ * \param accelX is the floating point acceleration value to display.
+ */
 
 void GuiHandler::setTextAccelY(float accelY)
 {
     QMetaObject::invokeMethod(this->textAccelY->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(accelY)));
 }
 
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Acceleration Z" on the GUI.
+ * \param accelZ is the floating point acceleration value to display.
+ */
 void GuiHandler::setTextAccelZ(float accelZ)
 {
     QMetaObject::invokeMethod(this->textAccelZ->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(accelZ)));
 }
 
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Gyroscope X" on the GUI.
+ * \param gyroX is the floating point gyro sensor value to display.
+ */
 void GuiHandler::setTextGyroX(float gyroX)
 {
     QMetaObject::invokeMethod(this->textGyroX->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroX)));
 }
 
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Gyroscope Y" on the GUI.
+ * \param gyroY is the floating point gyro sensor value to display.
+ */
 void GuiHandler::setTextGyroY(float gyroY)
 {
     QMetaObject::invokeMethod(this->textGyroY->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroY)));
 }
 
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Gyroscope Z" on the GUI.
+ * \param gyroY is the floating point gyro sensor value to display.
+ */
 void GuiHandler::setTextGyroZ(float gyroZ)
 {
     QMetaObject::invokeMethod(this->textGyroZ->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(gyroZ)));
 }
 
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Current status" on the GUI.
+ * \param status is the status string to display.
+ */
 void GuiHandler::setTextStatus(QString status)
 {
     QMetaObject::invokeMethod(this->textCurStatus->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, status));
 }
 
+/*!
+ * This sets the text of the `KeyValuePair` QML element showing the value for "Speed" on the GUI.
+ * \param speed is the floating point speed value to display.
+ */
 void GuiHandler::setTextSpeed(float speed)
 {
     QMetaObject::invokeMethod(this->textCurSpeed->object, "setValue", Qt::DirectConnection, Q_ARG(QVariant, QString::number(speed)));
 }
 
+/*!
+ * This sets the angle of the `wheels` `GyroIndicator` QML element on the GUI, based on the wheel parameters acquired from V-REP.
+ * \param wheels is an array that stores the speed of individual wheels.
+ * \param D is the distance of wheels.
+ */
 void GuiHandler::setWheels(QVarLengthArray<float> wheels, float D)
 {
     float v, R, angle;
@@ -174,6 +221,11 @@ void GuiHandler::setWheels(QVarLengthArray<float> wheels, float D)
     QMetaObject::invokeMethod(this->wheels->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }
 
+/*!
+ * This sets the angle of the `AccelY` `GyroIndicator` QML element on the GUI, based on the parameters acquired from V-REP.
+ * \param wheels is an array that stores the speed of individual wheels.
+ * \param accelY is the horizontal acceleration of the robot.
+ */
 void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
 {
     float v, R, angle;
@@ -189,21 +241,37 @@ void GuiHandler::setCarAccelY(QVarLengthArray<float> wheels, float accelY)
     QMetaObject::invokeMethod(this->carAccelY->object, "setAngle", Qt::DirectConnection, Q_ARG(QVariant, angle));
 }
 
+/*!
+ * This sets the angle of the `CarGyroX` `GyroIndicator` QML element on the GUI.
+ * \param gyroX is the value to add to the angle value already displayed on the indicator.
+ */
 void GuiHandler::setCarGyroX(float gyroX)
 {
     QMetaObject::invokeMethod(this->carGyroX->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroX));
 }
 
+/*!
+ * This sets the angle of the `CarGyroY` `GyroIndicator` QML element on the GUI.
+ * \param gyroY is the value to add to the angle value already displayed on the indicator.
+ */
 void GuiHandler::setCarGyroY(float gyroY)
 {
     QMetaObject::invokeMethod(this->carGyroY->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroY));
 }
 
+/*!
+ * This sets the angle of the `CarGyroZ` `GyroIndicator` QML element on the GUI.
+ * \param gyroZ is the value to add to the angle value already displayed on the indicator.
+ */
 void GuiHandler::setCarGyroZ(float gyroZ)
 {
     QMetaObject::invokeMethod(this->carGyroZ->object, "addAngle", Qt::DirectConnection, Q_ARG(QVariant, gyroZ));
 }
 
+/*!
+ * This adds a new sample to the `speedGraph` `Graph` QML element on the GUI, and redraws it.
+ * \param speed is the sample to add to the graph.
+ */
 void GuiHandler::drawSpeedGraph(float speed)
 {
     QMetaObject::invokeMethod(this->speedGraph->object, "newSample", Qt::DirectConnection, Q_ARG(QVariant, (-speed/3.0)+0.5));

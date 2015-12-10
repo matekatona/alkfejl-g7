@@ -2,7 +2,7 @@
 
 /*!
  * \brief WheelSensor::WheelSensor creates sensor object, that is connected to
- *        the wheelsensor port of VREP
+ *        the wheelsensor port of V-REP
  */
 WheelSensor::WheelSensor()
     : SimComm(PORT_NUM_WHEEL)  // call superclass constructor with correct port number
@@ -18,7 +18,7 @@ WheelSensor::WheelSensor()
 /*!
  * \brief WheelSensor::clear_cache delete cached sensor values
  *
- * The next sensor read will result in reading new values from VREP
+ * The next sensor read will result in reading new values from V-REP
  * \see SimComm::cache_expired
  */
 void
@@ -32,7 +32,7 @@ WheelSensor::reset_cache()
  * \brief WheelSensor::getLeft get speed of left wheel
  *
  * If a valid value is found in cache, tha cached value is returned. Otherwise
- * new values are read from VREP, put into the cache, and returned.
+ * new values are read from V-REP, put into the cache, and returned.
  * \see SimComm::read
  * \return left wheel speed in m/s?
  */
@@ -73,7 +73,7 @@ WheelSensor::getLeft()
  * \brief WheelSensor::getRight get speed of right wheel
  *
  * If a valid value is found in cache, tha cached value is returned. Otherwise
- * new values are read from VREP, put into the cache, and returned.
+ * new values are read from V-REP, put into the cache, and returned.
  * \see SimComm::read
  * \return right wheel speed in m/s?
  */

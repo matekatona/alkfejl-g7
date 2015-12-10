@@ -61,13 +61,15 @@ private:
     QMLHandlerCppSide *buttonCarSelfTest;
 
 signals:
-    void buttonConDisconClicked();
-    void buttonSendStatusClicked(QString status);
-    void buttonSendSpeedClicked(float speed);
-    void buttonCarSelfTestClicked();
+    void buttonConDisconClicked(); //!< This signal is emitted by `qmlbuttonConDisconClicked`.
+    void buttonSendStatusClicked(QString status); //!< This signal is emitted by `qmlbuttonSendStatusClicked`, and is connected to the `status` slot of `Robot`, which will actually send the new status to V-REP.
+												  //!< \param status is the new status of the `Robot` instance.
+    void buttonSendSpeedClicked(float speed); //!< This signal is emitted by `qmlbuttonSendSpeedClicked`, and is connected to the `speed` slot of `Robot`, which will actually send the new speed to V-REP.
+											  //!< \param speed is the new speed of the `Robot` instance.
+    void buttonCarSelfTestClicked(); //!< This signal is emitted by `qmlbuttonCarSelfTestClicked`.
 
 public slots:
-    void qmlbuttonConDisconClicked();
+    void qmlbuttonConDisconClicked(); 
     void qmlbuttonSendStatusClicked();
     void qmlbuttonSendSpeedClicked();
     void qmlbuttonCarSelfTestClicked();

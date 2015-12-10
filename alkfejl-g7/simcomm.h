@@ -16,7 +16,7 @@ using namespace std;
 
 
 /*! 
- * This class is the base of all classes that communicate with VREP. 
+ * This class is the base of all classes that communicate with V-REP. 
  * It handles the control socket (TCP) and the communication protocol.
  */
 class SimComm : public QObject

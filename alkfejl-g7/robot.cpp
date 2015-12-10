@@ -3,30 +3,20 @@
 
 /*!
  * \brief Robot::Robot creates a robot object, trough which the GUI can
- *                     communicate with all VREP sockets in an organized way
- *
- * The Robot class has one instance of every sensor, and one control socket.
- * This is the interface between the GUI and the backend, and as such does not
- * provide any special functionality, only translates GUI requests to commands
- * for VREP, and sensor data to GUI data.
- * \see RobotControl
- * \see LineSensor
- * \see AccelSensor
- * \see GyroSensor
- * \see WheelSensor
+ *                     communicate with all V-REP sockets in an organized way
  */
 Robot::Robot()
     : control(new RobotControl()),  // order of initialization is crucial!!!
-      line(new LineSensor()),       // VREP will freeze with any other order
-      accel(new AccelSensor()),     // but we have no time to fix this in VREP
-      gyro(new GyroSensor()),       // and noone will notice anyway
+      line(new LineSensor()),       // V-REP will freeze with any other order
+      accel(new AccelSensor()),     // but we have no time to fix this in V-REP
+      gyro(new GyroSensor()),       // and no one will notice anyway
       wheel(new WheelSensor())      // at least we hope so
 {
     // etwas
 }
 
 /*!
- * \brief Robot::connect connects all sockets to VREP
+ * \brief Robot::connect connects all sockets to V-REP
  */
 void
 Robot::connect()
@@ -39,7 +29,7 @@ Robot::connect()
 }
 
 /*!
- * \brief Robot::disconnect disconnects all sockets from VREP
+ * \brief Robot::disconnect disconnects all sockets from V-REP
  */
 void
 Robot::disconnect()
@@ -75,7 +65,7 @@ Robot::status(QString status)
  * \brief Robot::update slot to send an update request to all sensors
  *
  * This slot will emit signals to update all GUI elements with sensor data read
- * from VREP
+ * from V-REP
  */
 void
 Robot::update(){
