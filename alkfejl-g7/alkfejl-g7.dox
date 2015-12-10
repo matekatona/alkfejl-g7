@@ -1,6 +1,16 @@
 /**
 \mainpage Documentation
 
+\section Video
+
+<a href="../alkfejl-g7-video.html">Open video</a>
+
+\section  Screenshots
+
+\image html "../screenshot-1.png" 
+\n 
+\image html "../screenshot-2.png"
+
 \section howto How to build
 
 You can build *alkfejl-g7* with Qt 5.5.1 on Windows, by opening the `alkfejl-g7/alkfejl-g7.pro` project file in Qt Creator.
@@ -19,5 +29,24 @@ You can start the application by typing:
 @code
 ./alkfejl-g7
 @endcode
+
+\section uml UML diagrams
+
+\subsection uml1 Simple class diagram
+
+\image html "../uml-classes.png"
+
+\subsection uml2 Detailed class diagram
+
+\image html "../uml-classes-detailed.png"
+
+\subsection uml3 Sequence diagram
+
+\image html "../uml-seq-diag-1.png"
+
+\note 
+- There is no acknowledge on state change. 
+- The sensor read operations are scheduled by a timer.
+
 
 */
