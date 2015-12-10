@@ -16,79 +16,27 @@ class WheelSensor extends SimComm {}
 ## Detailed UML diagrams
 
 ![Alt text](http://g.gravizo.com/g?
-/**
-*SimComm
-*@opt all
-*/
-class SimComm extends QObject{
-    QTCPSocket socket;
-    protected QString read%28%29;
-    protected void write%28QString cmd%29;
-    public void connect%28%29;
-    public void disconnect%28%29;
-    public bool isConnected%28%29;
-}
-/**
-*LineSensor
-*@opt all
-*/
-class LineSensor extends SimComm {
-	bool[] values;
-    public QVarLengthArray getValues%28%29;
-}
-/**
-*AccelSensor
-*@opt all
-*/
-class AccelSensor extends SimComm {
-    float[] values;
-    public float getX%28%29;
-    public float getY%28%29;
-    public float getZ%28%29;
-}
-/**
-*GyroSensor
-*@opt all
-*/
-class GyroSensor extends SimComm {
-    float[] values;
-    public float getX%28%29;
-    public float getY%28%29;
-    public float getZ%28%29;
-}
-/**
-*WheelSensor
-*@opt all
-*/
-class WheelSensor extends SimComm {
-    float[] values;
-    public float getLeft%28%29;
-    public float getRight%28%29;
-    public QVarLengthArray getWheels%28%29;
-}
-/**
-*RobotControl
-*@opt all
-*/
-class RobotControl extends SimComm {
-  float speed;
-  QString status;
-	public QString getStatus%28%29;
-	public void setStatus%28QString status%29;
-	public float getSpeed%28%29;
-	public void setSpeed%28float speed%29;
-}
-/**
-*AlarmGenerator
-*@opt all
-*/
-class AlarmGenerator extends QObject {
-    int color;
-    void setLineState%28QVarLengthArray lineVals%29;
-    void setConnectionState%28bool connectionState%29;
-    void updateColor%28%29;
-    int getColor%28%29;
-})
+/**SimComm 
+*@opt all*/
+class SimComm extends QObject{QTCPSocket socket;protected QString read%28%29;protected void write%28QString cmd%29; public void connect%28%29;public void disconnect%28%29;public bool isConnected%28%29;} 
+/**LineSensor
+*@opt all*/
+class LineSensor extends SimComm{bool[]values;public QVarLengthArray getValues%28%29;}
+/**AccelSensor
+*@opt all*/ 
+class AccelSensor extends SimComm{float[] values;public float getX%28%29;public float getY%28%29;public float getZ%28%29;}
+/**GyroSensor
+*@opt all*/
+class GyroSensor extends SimComm{float[] values;public float getX%28%29;public float getY%28%29;public float getZ%28%29;}
+/**WheelSensor
+@opt all*/
+class WheelSensor extends SimComm{float[]values;public float getLeft%28%29;public float getRight%28%29;public QVarLengthArray getWheels%28%29;}
+/**RobotControl
+*@opt all*/
+class RobotControl extends SimComm{float speed;QString status;public QString getStatus%28%29;public void setStatus%28QString status%29;public float getSpeed%28%29;public void setSpeed%28float speed%29;}
+/**AlarmGenerator
+*@opt all*/
+class AlarmGenerator extends QObject{int color;void setLineState%28QVarLengthArray lineVals%29;void setConnectionState%28bool connectionState%29;void updateColor%28%29;int getColor%28%29;})
 
 ![Alt text](http://g.gravizo.com/g?
 /**
