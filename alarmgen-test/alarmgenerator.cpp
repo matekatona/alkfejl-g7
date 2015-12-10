@@ -95,3 +95,13 @@ AlarmGenerator::updateAlarm()
 {
     emit this->setAlarm(this->color);
 }
+
+/*!
+ * \brief AlarmGenerator::getColor
+ * \return
+ */
+int
+AlarmGenerator::getColor()
+{
+    return this->color;
+}
