@@ -19,5 +19,6 @@
         <file>shaders/noisy.fsh</file>
         <file>shaders/line.vsh</file>
         <file>shaders/line.fsh</file>
+        <file>TextHistory.qml</file>
     </qresource>
 </RCC>

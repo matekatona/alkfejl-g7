@@ -28,6 +28,7 @@ public:
             QMLHandlerCppSide *carGyroX, \
             QMLHandlerCppSide *carGyroY, \
             QMLHandlerCppSide *carGyroZ, \
+            QMLHandlerCppSide *statusHistory, \
             QMLHandlerCppSide *speedGraph, \
             QMLHandlerCppSide *buttonConDiscon, \
             QMLHandlerCppSide *buttonSendStatus, \
@@ -52,6 +53,7 @@ private:
     QMLHandlerCppSide *carGyroX;
     QMLHandlerCppSide *carGyroY;
     QMLHandlerCppSide *carGyroZ;
+    QMLHandlerCppSide *statusHistory;
     QMLHandlerCppSide *speedGraph;
     QMLHandlerCppSide *buttonConDiscon;
     QMLHandlerCppSide *buttonSendStatus;
@@ -87,6 +89,7 @@ public slots:
     void setCarGyroY(float gyroY);
     void setCarGyroZ(float gyroZ);
     void drawSpeedGraph(float speed);
+    void addStatusHistory(QString status);
 
     void robotConnected();
     void robotDisconnected();

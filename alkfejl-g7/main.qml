@@ -11,7 +11,7 @@ Window {
     objectName: "mainWindow";
     visible: true
     minimumWidth: 900;
-    minimumHeight: 700;
+    minimumHeight: 650;
 
     property bool testPhase: true;
     property int angle: 0;
@@ -28,9 +28,16 @@ Window {
 
     function test(){
         testTimer.running=true;
+        buttonConDiscon.enabled=false;
+        buttonSendStatus.enabled=false;
+        buttonSendSpeed.enabled=false;
     }
 
     function timeTick(){
+        buttonConDiscon.enabled=false;
+        buttonSendStatus.enabled=false;
+        buttonSendSpeed.enabled=false;
+
         if(mainWindow.testPhase){
             gyroX.setAngle(mainWindow.angle);
             gyroY.setAngle(mainWindow.angle);
@@ -58,7 +65,7 @@ Window {
             mainWindow.sensors.shift();
             mainWindow.sensors[20]=!temp;
 
-            alertLamp.alert=(alertLamp.alert+1)%3;
+            alertLamp.setAlert((alertLamp.alert+1)%3);
 
             textAccelX.setValue(angle);
             textAccelY.setValue(angle);
@@ -66,6 +73,8 @@ Window {
             textGyroX.setValue(angle);
             textGyroY.setValue(angle);
             textGyroZ.setValue(angle);
+
+            statusHistory.addValue(angle);
         }
 
         if(mainWindow.angle>360){
@@ -77,13 +86,19 @@ Window {
                 mainWindow.testPhase=true;
                 testTimer.running=false;
                 lineSens.setValues(mainWindow.sensorsInit);
-                alertLamp.alert=1;
+                alertLamp.setAlert(1);
                 textAccelX.setValue("UNKNOWN");
                 textAccelY.setValue("UNKNOWN");
                 textAccelZ.setValue("UNKNOWN");
                 textGyroX.setValue("UNKNOWN");
                 textGyroY.setValue("UNKNOWN");
                 textGyroZ.setValue("UNKNOWN");
+                for(var i=0; i<10; i++)
+                    statusHistory.addValue("UNKNOWN");
+
+                buttonConDiscon.enabled=true;
+                buttonSendStatus.enabled=true;
+                buttonSendSpeed.enabled=true;
             }
         }
     }
@@ -131,7 +146,7 @@ Window {
         GyroIndicator{
             id: wheels;
             objectName: "wheels";
-            anchors.left: parent.left;
+            anchors.right: parent.right;
             anchors.bottom: accelY.top;
             view: "top";
             title: "Wheels";
@@ -140,8 +155,8 @@ Window {
         GyroIndicator{
             id: accelY;
             objectName: "carAccelY"
-            anchors.left: parent.left;
-            anchors.bottom: parent.bottom;
+            anchors.right: parent.right;
+            anchors.bottom: gyroX.top;
             view: "top";
             title: "AccelY";
         }
@@ -151,11 +166,13 @@ Window {
 
             anchors.top: parent.top;
             anchors.left: parent.left;
-            anchors.right: graphContainer.left;
             anchors.margins: mainWindow.buttonMargin;
+
+            width: 140;
 
             Button{
                 id: buttonGUISelfTest;
+                objectName: "buttonGUISelfTest";
                 implicitWidth: 150;
                 implicitHeight: 50;
                 anchors.horizontalCenter: parent.horizontalCenter;
@@ -164,6 +181,8 @@ Window {
                 onClicked: {
                     testTimer.running=true;
                 }
+
+                enabled: !buttonCarSelfTest.enabled;
             }
 
             Button{
@@ -173,6 +192,8 @@ Window {
                 implicitHeight: 50;
                 anchors.horizontalCenter: parent.horizontalCenter;
                 text: qsTr("Car Self Test");
+
+                enabled: false;
             }
 
             AlertLamp{
@@ -181,6 +202,12 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 alertLabel: "Disconnected";
                 alert: 1;
+            }
+
+            TextHistory{
+                id: statusHistory;
+                objectName: "statusHistory";
+                anchors.top: alertLamp.bottom;
             }
         }
 
@@ -197,7 +224,7 @@ Window {
             id: graphContainer;
 
             anchors.top: parent.top;
-            anchors.left: wheels.right;
+            anchors.left: leftControlContainer.right;
             anchors.right: gyroZ.left;
             anchors.bottom: parent.bottom;
 

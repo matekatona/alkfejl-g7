@@ -38,13 +38,14 @@ int main(int argc, char *argv[])
     QMLHandlerCppSide carGyroX(engine.rootObjects()[0], "carGyroX");
     QMLHandlerCppSide carGyroY(engine.rootObjects()[0], "carGyroY");
     QMLHandlerCppSide carGyroZ(engine.rootObjects()[0], "carGyroZ");
+    QMLHandlerCppSide statusHistory(engine.rootObjects()[0], "statusHistory");
     QMLHandlerCppSide speedGraph(engine.rootObjects()[0], "speedGraph");
     QMLHandlerCppSide buttonConDiscon(engine.rootObjects()[0], "buttonConDiscon");
     QMLHandlerCppSide buttonSendStatus(engine.rootObjects()[0], "buttonSendStatus");
     QMLHandlerCppSide buttonSendSpeed(engine.rootObjects()[0], "buttonSendSpeed");
     QMLHandlerCppSide buttonCarSelfTest(engine.rootObjects()[0], "buttonCarSelfTest");
 
-    GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &speedGraph, &buttonConDiscon, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
+    GuiHandler guihandle(&alertLamp, &lineSens, &textAccelX, &textAccelY, &textAccelZ, &textGyroX, &textGyroY, &textGyroZ, &textCurStatus, &comboSetStatus, &textCurSpeed, &editSetSpeed, &wheels, &carAccelY, &carGyroX, &carGyroY, &carGyroZ, &statusHistory, &speedGraph, &buttonConDiscon, &buttonSendStatus, &buttonSendSpeed, &buttonCarSelfTest);
     Robot mikrobi;
 
     QObject::connect(&guihandle, SIGNAL(buttonConClicked()), &mikrobi, SLOT(connect()));
@@ -72,6 +73,7 @@ int main(int argc, char *argv[])
     QObject::connect(&mikrobi, SIGNAL(setCarGyroY(float)), &guihandle, SLOT(setCarGyroY(float)));
     QObject::connect(&mikrobi, SIGNAL(setCarGyroZ(float)), &guihandle, SLOT(setCarGyroZ(float)));
     QObject::connect(&mikrobi, SIGNAL(drawSpeedGraph(float)), &guihandle, SLOT(drawSpeedGraph(float)));
+    QObject::connect(&mikrobi, SIGNAL(setTextStatus(QString)), &guihandle, SLOT(addStatusHistory(QString)));
 
     return app.exec();
 }
